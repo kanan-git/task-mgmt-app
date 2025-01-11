@@ -1,17 +1,39 @@
-<div style="border: 1px solid red;">
+{% load static %}
+
+<div class="card" style="border: 1px solid red;">
     <div>
-        <button> IS STARRED </button>
+        <span>
+            <button>
+                <img src="{% static 'img/star-svgrepo-com-empty.svg' %}" alt="not_starred" style="width: 30px;">
+            </button>
+            <!-- <button>
+                <img src="{% static 'img/star-svgrepo-com-filled.svg' %}" alt="not_starred" style="width: 30px;">
+            </button> -->
+        </span>
+        <span>
+            <button> UPDATE TASK ■ ICON </button>
+            <button> DELETE TASK ■ ICON </button>
+        </span>
     </div>
 
     <div>
-        <p> TASK TITLE </p>
+        <p> TASK DESCRIPTION </p>
         <p> TASK CATEGORY </p>
-        <p> TASK SUMMARY </p>
+        <img src="#" alt="#"> <!-- CUSTOM BACKGROUND IMAGE BY CATEGORY WITH OVERLAY AND EFFECTS -->
     </div>
 
     <div>
-        <button> PRIORITY LEVEL </button>
-        <button> STATUS </button>
+        <button> PRIORITY LEVEL • ANIMATED NUMBER ICONS WITH FRAME </button>
+        <div>
+            <button> STATUS (Incomplete | W.I.P.) • ANIMATED EFFECT AND FRAME </button>
+
+            <button> - </button>
+            <span>
+                1 <!-- Milestone point as integer -->
+                <span></span> <!-- Milestone point as progression bar as background gradient, progress with percentage -->
+            </span>
+            <button> + </button>
+        </div>
     </div>
 
     <!-- TASK CARD IMAGE BY CATEGORY ON BACKGROUND OVERLAY -->

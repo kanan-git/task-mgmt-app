@@ -1,37 +1,78 @@
-<nav>
+{% load static %}
+
+<nav style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; background-color: rgb(235,235,235);">
     <span>
-        <p> TM LOGO IMG </p>
+        <a href="{% url 'tasks_list' %}">
+            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} style="width: 50px; height: auto;">
+        </a>
     </span>
     
     <span>
-        <ul>
-            <!-- IF GUEST -->
-            <li> Home </li>
-            <li> About </li>
-            <li> Contact </li>
-
-            <!-- ELSE MEMBER -->
-             <li> Home </li>
-             <li> Create Task </li>
-             <li> About </li>
-             <li> Contact </li>
+        <ul style="display: flex; gap: 10px; list-style: none;">
+            {% if user == 'guest' %}
+                <!-- IF GUEST -->
+                <li>
+                    <a href="{% url 'tasks_list' %}"> Home </a>
+                </li>
+                <li>
+                    <a href="{% url 'about' %}"> About </a>
+                </li>
+                <li>
+                    <a href="{% url 'contact' %}"> Contact </a>
+                </li>
+            {% else %}
+                <!-- ELSE MEMBER -->
+                <li> Home </li>
+                <li> Create Task </li>
+                <li> About </li>
+                <li> Contact </li>
+            {% endif %}
         </ul>
     </span>
 
-    <span>
-        <p> PROFILE IMAGE </p> <!-- DEFAULT IF GUEST, ELSE USER'S IMAGE -->
+    <span style="
+    display: flex;
+    position: relative;
+    " >
+        <!-- USER PROFILE IMAGE -->
+        {% if user == 'guest' %}
+            <img src="{% static 'img/icons/profile-circle-svgrepo-com.svg' %}" 
+            alt="guest" style="width: 50px;" 
+            onmouseenter={profile_dropdown_show()} 
+            onmouseleave={profile_dropdown_hide()}>
+        {% else %}
+            <img src="{% static 'img/profiles/' %}" 
+            alt="user_0" 
+            onmouseenter={profile_dropdown_show()} 
+            onmouseleave={profile_dropdown_hide()}>
+        {% endif %}
 
         <!-- DROPDOWN LIST -->
-        <ul>
-            <!-- IF GUEST -->
-            <li> Login </li>
-            <li> Register </li>
-
-            <!-- ELSE MEMBER -->
-            <li> Dashboard </li>
-            <li> Starred </li>
-            <li> Log </li>
-            <li> Logout </li>
+        <ul style="
+        display: none;
+        list-style: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: rgb(255,255,255);
+        border: 1px solid rgb(200,200,200);
+        border-radius: 4px;
+        z-index: 1;
+        " 
+        id="profile_dropdown" 
+        onmouseover={profile_dropdown_show()} 
+        onmouseleave={profile_dropdown_hide()}>
+            {% if user == 'guest' %}
+                <!-- IF GUEST -->
+                <li> Login </li>
+                <li> Register </li>
+            {% else %}
+                <!-- ELSE MEMBER -->
+                <li> Dashboard </li>
+                <li> Starred </li>
+                <li> Log </li>
+                <li> Logout </li>
+            {% endif %}
         </ul>
     </span>
 </nav>

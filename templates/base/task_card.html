@@ -1,40 +1,58 @@
 {% load static %}
 
-<div class="card" style="border: 1px solid red;">
-    <div>
+<div style="border: 1px solid rgb(128,128,128); width: 450px; height: 250px; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-around; align-items: center; background-color: rgb(240, 220, 220);">
+    <div style="display: flex; justify-content: space-between;">
         <span>
             <button>
-                <img src="{% static 'img/star-svgrepo-com-empty.svg' %}" alt="not_starred" style="width: 30px;">
+                {% if temp_all_cards_is_starred %}
+                    <img src="{% static 'img/icons/star-svgrepo-com-empty.svg' %}" alt="not_starred" style="width: 30px;">
+                {% else %}
+                    <img src="{% static 'img/icons/star-svgrepo-com-filled.svg' %}" alt="starred" style="width: 30px;">
+                {% endif %}
             </button>
-            <!-- <button>
-                <img src="{% static 'img/star-svgrepo-com-filled.svg' %}" alt="not_starred" style="width: 30px;">
-            </button> -->
+
+            <span>
+                {{ temp_all_cards_category }}
+            </span>
         </span>
         <span>
-            <button> UPDATE TASK ■ ICON </button>
-            <button> DELETE TASK ■ ICON </button>
+            <button>
+                <img src="{% static 'img/icons/edit-svgrepo-com.svg' %}" alt="update_task" style="width: 30px;">
+            </button>
+
+            <button>
+                <img src="{% static 'img/icons/trash-bin-trash-svgrepo-com.svg' %}" alt="delete_task" style="width: 30px;">
+            </button>
         </span>
     </div>
 
     <div>
         <p> TASK DESCRIPTION </p>
-        <p> TASK CATEGORY </p>
-        <img src="#" alt="#"> <!-- CUSTOM BACKGROUND IMAGE BY CATEGORY WITH OVERLAY AND EFFECTS -->
     </div>
 
-    <div>
-        <button> PRIORITY LEVEL • ANIMATED NUMBER ICONS WITH FRAME </button>
-        <div>
-            <button> STATUS (Incomplete | W.I.P.) • ANIMATED EFFECT AND FRAME </button>
+    <div style="display: flex;">
+        <button>
+            < {{ temp_all_cards_priority }} > <!-- ANIMATED FLAME, PARTICLE AND FRAME RAISE, CHANGE COLOR FROM 1 TO 10, TIER EFFECTS -->
+        </button>
 
-            <button> - </button>
-            <span>
-                1 <!-- Milestone point as integer -->
-                <span></span> <!-- Milestone point as progression bar as background gradient, progress with percentage -->
-            </span>
-            <button> + </button>
+        <div>
+            Status:
+            {% if temp_all_cards_type == 'instant' %}
+                <button> incomplete </button>
+                <button> work_in_progress </button>
+                <button> done </button>
+            {% else %}
+                <button> - </button>
+
+                <span>
+                    {{ temp_all_cards_progress }} / of MAX_COUNT
+                    <span></span> <!-- Milestone point as progression bar as background gradient, progress with percentage -->
+                </span>
+
+                <button> + </button>
+            {% endif %}
         </div>
     </div>
 
-    <!-- TASK CARD IMAGE BY CATEGORY ON BACKGROUND OVERLAY -->
+    <!--  <img src="{% static 'img/categ/' %}" alt="CUSTOM BACKGROUND IMAGE BY CATEGORY WITH OVERLAY AND EFFECTS"> -->
 </div>

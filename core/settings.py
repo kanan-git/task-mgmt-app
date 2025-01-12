@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # ADDED APPS
+    # CUSTOM ADDED APPS
     'accounts.apps.AccountsConfig',
     'tasks.apps.TasksConfig',
 ]
@@ -60,10 +60,12 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # CUSTOM INSIDE OF LIST
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media', # CUSTOM ADDED
+
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -117,13 +119,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = 'static/'
-STATICFILES_DIRS = [path.join(BASE_DIR, 'static/')]
+# STATIC_ROOT = 'static/' # CUSTOM ADDED
+STATICFILES_DIRS = [path.join(BASE_DIR, 'static/')] # CUSTOM ADDED
+
+# MEDIA_ROOT = path.join(BASE_DIR, 'media') # CUSTOM ADDED
+# MEDIA_URL = '/media/' # CUSTOM ADDED
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

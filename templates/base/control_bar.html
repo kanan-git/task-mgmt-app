@@ -1,15 +1,43 @@
+{% load static %}
+
 <!-- ELEMENTS OF THE CONTROL BAR -->
-<div>
+<div style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(200,225,250);">
     <div>
-        <button> FILTER </button> <!-- filter button (done or incomplete or work in progress, category, added time, update time, point, type, ...) -->
+        <button>
+            FILTER
+            <img src="{% static 'img/icons/filter-svgrepo-com.svg' %}" alt="filter" style="width: 30px;">
+        </button> <!-- filter button, show or hide filter aside (done or incomplete or work in progress, category, added time, update time, point, type, ...) -->
     </div>
+
     <div>
         <input type="search" placeholder="Search">
         <input type="submit" id="search_btn" value="">
     </div>
 
-    <div>
-        <button> SORT BY </button> <!-- sort button (alphabet, priority point, added time, update time, ...) -->
-        <button> GRID </button> <!-- view modes button (grid 3, grid 8, or just grid, list) -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <button>
+            {% if sort == 'descending' %}
+                <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_descending" style="width: 30px;">
+            {% else %}
+                <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_ascending" style="width: 30px;">
+            {% endif %}
+        </button> <!-- sort button for direction (ascending or descending) -->
+    
+        <label for="sort_by">
+            Sort by:
+            <select name="sort_by" id="sort_by">
+                <option value="alphabet"> Alphabet </option> <!-- ***** select tag or from backend, form part ***** -->
+                <option value="priority_point"> Priority Point </option>
+                <option value="added_time"> Added Time </option>
+                <option value="update_time"> Update Time </option>
+            </select> <!-- sort by button (alphabet, priority point, added time, update time, ...) -->
+        </label>
+        <button>
+            {% if view_mode == 'grid_cards' %}
+                <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;">
+            {% elif view_mode == 'list_cards' %}
+                <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;">
+            {% endif %}
+        </button> <!-- view modes button (grid or list) -->
     </div>
  </div>

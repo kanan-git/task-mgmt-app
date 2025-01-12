@@ -34,13 +34,23 @@ from .forms import TaskForm
     - last day, February 5, 2025, III
 
     /!\ CANCEL READ OPERATION, TASKS WILL BE AS CARDS, IF TASK DESCRIPTION IS LONG, SHOW SUMMARY AND ADD BUTTON FOR READ MORE / READ LESS
+    /!\ dashboard ve bezilerini deqiqlesdir tasks app yoxsa accounts app ine aiddir
 """
 
 
 # contains active user's tasks
 def tasks_list(request):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+        'sort': 'descending',
+        'view_mode': 'grid_cards',
+
+        'temp_all_cards_count': 5, # count from database
+        'temp_all_cards_is_starred': True, # True False
+        'temp_all_cards_category': 'category_0',
+        'temp_all_cards_priority': '1', # 1-10
+        'temp_all_cards_type': 'instant', # instant milestones
+        'temp_all_cards_progress': '0', # 0-MAX_COUNT
     }
     return render(request, 'tasks/tasks_list.html', context)
 
@@ -67,14 +77,6 @@ def create_task(request):
         'untitled_data': 'empty'
     }
     return render(request, 'tasks/create_task.html', context)
-
-
-# cRud operation, read selected task detailed
-def read_task(request, pk):
-    context = {
-        'untitled_data': 'empty'
-    }
-    return render(request, 'tasks/read_task.html', context)
 
 
 # crUd operation, update selected task

@@ -27,7 +27,7 @@
     </div>
 
     <div>
-        <p> TASK DESCRIPTION </p>
+        <p> TASK DESCRIPTION </p> <!-- SET LARGE LIMIT LIKE 256, IF DESCRIPTION IS OVERFLOW, CREATE READ MORE BUTTON FOR TOGGLE MORE/LESS or SCROLBAR-->
     </div>
 
     <div style="display: flex;">
@@ -37,7 +37,7 @@
 
         <div>
             Status:
-            {% if temp_all_cards_type == 'instant' %}
+            {% if temp_all_cards_type == 'milestones' %}
                 <button> incomplete </button>
                 <button> work_in_progress </button>
                 <button> done </button>

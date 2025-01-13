@@ -34,14 +34,14 @@
     display: flex;
     position: relative;
     " >
-        <!-- USER PROFILE IMAGE -->
+        <!-- USER PROFILE IMAGE ***** CANCEL PROFILE IMAGE-->
         {% if user == 'guest' %}
             <img src="{% static 'img/icons/profile-circle-svgrepo-com.svg' %}" 
             alt="guest" style="width: 50px;" 
             onmouseenter={profile_dropdown_show()} 
             onmouseleave={profile_dropdown_hide()}>
         {% else %}
-            <img src="{% static 'img/profiles/' %}" 
+            <img src="{% static 'img/' %}" 
             alt="user_0" 
             onmouseenter={profile_dropdown_show()} 
             onmouseleave={profile_dropdown_hide()}>

@@ -21,25 +21,18 @@ from .forms import TaskForm
     - Verilənlər Bazası: PostgreSQL.
     - API: Task idarəetməsi üçün endpointlər.
 
-    #===== Applications of the Project =====#
-    - users
-    - tasks
-
-    #===== Milestones & Deadline =====#
-    + first day, January 5, 2025, VII
-    ~ milestone 1, January 12, 2025, VII
-    - milestone 2, January 19, 2025, VII
-    - milestone 3, January 26, 2025, VII
-    - milestone 4, February 2, 2025, VII
-    - last day, February 5, 2025, III
-
-    /!\ CANCEL READ OPERATION, TASKS WILL BE AS CARDS, IF TASK DESCRIPTION IS LONG, SHOW SUMMARY AND ADD BUTTON FOR READ MORE / READ LESS
-    /!\ dashboard ve bezilerini deqiqlesdir tasks app yoxsa accounts app ine aiddir
+    #===== Deadline =====#
+    - February 5, 2025 (III)
 """
 
 
 # contains active user's tasks
 def tasks_list(request):
+    if Task.objects.count() == 0:
+        tasks = False
+    else:
+        tasks = Task.objects.all()
+
     context = {
         'user': 'guest',
         'sort': 'descending',
@@ -51,7 +44,10 @@ def tasks_list(request):
         'temp_all_cards_priority': '1', # 1-10
         'temp_all_cards_type': 'instant', # instant milestones
         'temp_all_cards_progress': '0', # 0-MAX_COUNT
+
+        'tasks': tasks
     }
+    
     return render(request, 'tasks/tasks_list.html', context)
 
 

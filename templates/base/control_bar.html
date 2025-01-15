@@ -3,27 +3,27 @@
 <!-- ELEMENTS OF THE CONTROL BAR -->
 <div style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(200,225,250);">
     <div>
-        <button>
+        <button onclick={ToggleFilterPanel()}>
             FILTER
             <img src="{% static 'img/icons/filter-svgrepo-com.svg' %}" alt="filter" style="width: 30px;">
         </button> <!-- filter button, show or hide filter aside (done or incomplete or work in progress, category, added time, update time, point, type, ...) -->
     </div>
 
     <div>
-        <input type="search" placeholder="Search">
-        <input type="submit" id="search_btn" value="">
+        <input type="search" id="search_input" placeholder="Search">
+        <input type="submit" id="search_btn" value="" onclick={SearchForTasks()}>
     </div>
 
     <div style="display: flex; align-items: center; gap: 10px;">
-        <button>
+        <button id="sort_direction_btn" onclick={SortDirection()}>
             {% if sort == 'descending' %}
-                <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_descending" style="width: 30px;">
+                <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_descending" style="width: 30px;" id="sort_direct_ico">
             {% else %}
-                <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_ascending" style="width: 30px;">
+                <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_ascending" style="width: 30px;" id="sort_direct_ico">
             {% endif %}
         </button> <!-- sort button for direction (ascending or descending) -->
     
-        <label for="sort_by">
+        <label for="sort_by" onclick={SortTasksBy()}>
             Sort by:
             <select name="sort_by" id="sort_by">
                 <option value="alphabet"> Alphabet </option> <!-- ***** select tag or from backend, form part ***** -->
@@ -32,11 +32,11 @@
                 <option value="update_time"> Update Time </option>
             </select> <!-- sort by button (alphabet, priority point, added time, update time, ...) -->
         </label>
-        <button>
+        <button id="select_view" onclick={SelectView()}>
             {% if view_mode == 'grid_cards' %}
-                <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;">
+                <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;" id="select_view_ico">
             {% elif view_mode == 'list_cards' %}
-                <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;">
+                <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;" id="select_view_ico">
             {% endif %}
         </button> <!-- view modes button (grid or list) -->
     </div>

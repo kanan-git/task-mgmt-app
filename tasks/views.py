@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Task
+from .models import Task, Category
 from .forms import TaskForm
 
 # GUIDE AS MULTI-LINE STRING
@@ -28,26 +28,29 @@ from .forms import TaskForm
 
 # contains active user's tasks
 def tasks_list(request):
-    if Task.objects.count() == 0:
-        tasks = False
+    count_of_tasks = Task.objects.count()
+    count_of_categories = Category.objects.count()
+
+    if count_of_tasks == 0:
+        tasks = False # or empty list
     else:
         tasks = Task.objects.all()
+
+    if count_of_categories == 0:
+        list_of_categories = False # or empty list
+    else:
+        list_of_categories = Category.objects.all()
 
     context = {
         'user': 'guest',
         'sort': 'descending',
         'view_mode': 'grid_cards',
 
-        'temp_all_cards_count': 5, # count from database
-        'temp_all_cards_is_starred': True, # True False
-        'temp_all_cards_category': 'category_0',
-        'temp_all_cards_priority': '1', # 1-10
-        'temp_all_cards_type': 'instant', # instant milestones
-        'temp_all_cards_progress': '0', # 0-MAX_COUNT
-
-        'tasks': tasks
+        'tasks': tasks,
+        'count': count_of_tasks,
+        'list_of_categories': list_of_categories,
     }
-    
+
     return render(request, 'tasks/tasks_list.html', context)
 
 

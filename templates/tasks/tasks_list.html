@@ -18,18 +18,14 @@
         <div style="display: flex; justify-content: center; margin: 20px 10px 20px 10px;">
             {% include '../base/filter.html' %}
 
-            <main>
-                <h2 style="color: rgb(255,255,255);"> TASKS: {{ temp_all_cards_count }} </h2>
+            <main style="min-height: 400px;">
+                <h2 style="color: rgb(255,255,255);"> TASKS: {{ tasks.count }} </h2>
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap; padding: 10px;">
-                    {% include '../base/task_card.html' %}
-                    {% include '../base/task_card.html' %}
-                    {% include '../base/task_card.html' %}
-                    {% include '../base/task_card.html' %}
-                    {% include '../base/task_card.html' %}
-
                     {% if tasks %}
-                        {{ tasks.todo }}
+                        {% for card in tasks %}
+                            {% include '../base/task_card.html' %}
+                        {% endfor %}
                     {% endif %}
                 </div>
             </main>

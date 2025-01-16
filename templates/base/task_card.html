@@ -11,14 +11,14 @@ display: flex;
 flex-direction: column; 
 justify-content: space-around; 
 align-items: center; 
-background-color: rgb(230, 220, 220);">
+background-color: rgb(230, 220, 220);"> <!-- . -->
 <!-- COLOR GRADING WITH CHATGPT LATER -->
     <div style="
     width: 100%;
     display: flex; 
     justify-content: space-around;
     align-items: center;
-    ">
+    "> <!-- . -->
         <!-- <span>
             <button style="outline: none; border: none; background-color: transparent;">
                 {% if card.is_starred == 0 %}
@@ -34,12 +34,12 @@ background-color: rgb(230, 220, 220);">
         </span>
 
         <span>
-            <button style="outline: none; border: none; background-color: transparent;">
-                <img src="{% static 'img/icons/edit-svgrepo-com.svg' %}" alt="update_task" style="width: 30px; height: 30px;">
+            <button style="outline: none; border: none; background-color: transparent;"> <!-- . -->
+                <img src="{% static 'img/icons/edit-svgrepo-com.svg' %}" alt="update_task" style="width: 30px; height: 30px;"> <!-- . -->
             </button>
 
-            <button style="outline: none; border: none; background-color: transparent;">
-                <img src="{% static 'img/icons/trash-bin-trash-svgrepo-com.svg' %}" alt="delete_task" style="width: 30px; height: 30px;">
+            <button style="outline: none; border: none; background-color: transparent;"> <!-- . -->
+                <img src="{% static 'img/icons/trash-bin-trash-svgrepo-com.svg' %}" alt="delete_task" style="width: 30px; height: 30px;"> <!-- . -->
             </button>
         </span>
     </div>
@@ -47,10 +47,10 @@ background-color: rgb(230, 220, 220);">
     <div style="
     width: 100%;
     margin: 20px 0px;
-    ">
+    "> <!-- . -->
         <p style="
         text-align: center;
-        ">
+        "> <!-- . -->
             {{ card.todo }}
         </p> <!-- SET LARGE LIMIT LIKE 256, IF DESCRIPTION IS OVERFLOW, CREATE READ MORE BUTTON FOR TOGGLE MORE/LESS or SCROLBAR-->
 
@@ -65,7 +65,7 @@ background-color: rgb(230, 220, 220);">
             width: 90%;
             max-height: 100px;
             overflow-y: auto;
-            ">
+            "> <!-- . -->
                 {% for category in card.category_of_task.all %}
                     <span>
                         {{ category.name }}
@@ -79,7 +79,7 @@ background-color: rgb(230, 220, 220);">
     width: 100%;
     display: flex;
     justify-content: space-around;
-    ">
+    "> <!-- . -->
         <button>
             {{ card.priority_level }}  <!-- ANIMATED FLAME, PARTICLE AND FRAME RAISE, CHANGE COLOR FROM 1 TO 10, TIER EFFECTS -->
         </button>
@@ -95,7 +95,7 @@ background-color: rgb(230, 220, 220);">
                     cursor: pointer;
                     filter: drop-shadow(0px 0px 10px rgb(255,200,150));
                     border-radius: 5px;
-                    "> Incomplete </button>
+                    "> Incomplete </button> <!-- . -->
                 {% elif card.todo_status == 2 %}
                     <button style="
                     width: auto;
@@ -105,7 +105,7 @@ background-color: rgb(230, 220, 220);">
                     cursor: pointer;
                     filter: drop-shadow(0px 0px 10px rgb(255,255,150));
                     border-radius: 5px;
-                    "> Work In Progress </button>
+                    "> Work In Progress </button> <!-- . -->
                 {% elif card.todo_status == 3 %}
                     <button style="
                     width: auto;
@@ -115,18 +115,18 @@ background-color: rgb(230, 220, 220);">
                     cursor: pointer;
                     filter: drop-shadow(0px 0px 10px rgb(120,220,120));
                     border-radius: 5px;
-                    "> Done </button>
+                    "> Done </button> <!-- . -->
                 {% endif %}
             {% else %}
                 <span style="
                 position: relative;
                 border: 1px solid rgb(180,180,180);
                 width: 200px;
-                ">
+                "> <!-- . -->
                     <span style="
                     position: relative;
                     z-index: 5;
-                    ">
+                    "> <!-- . -->
                         {{ card.progression_start }} of {{ card.progression_end }}
                     </span>
 
@@ -139,14 +139,14 @@ background-color: rgb(230, 220, 220);">
                     overflow: hidden;
                     background-color: transparent;
                     z-index: 1;
-                    ">
+                    "> <!-- . -->
                         <span style="
                         position: absolute;
                         width: 200px;
                         height: 100%;
                         background: linear-gradient(to right, rgba(255,255,128,1.0), rgba(255,128,0,1.0));
                         z-index: 2;
-                        "></span>
+                        "></span> <!-- . -->
                     </span>
                 </span>
 

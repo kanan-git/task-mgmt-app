@@ -1,0 +1,9 @@
+.btn {
+    background-color: rgb(255,0,0);
+    cursor: pointer;
+    transition: 150ms ease-in-out;
+}
+
+.btn:hover {
+    background-color: rgb(255,255,255);
+}

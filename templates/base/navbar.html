@@ -1,14 +1,14 @@
 {% load static %}
 
-<nav style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; background-color: rgb(235,235,235);">
+<nav style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; background-color: rgb(235,235,235);"> <!-- . -->
     <span>
         <a href="{% url 'tasks_list' %}">
-            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} style="width: 50px; height: auto;">
+            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} width="50px" style="width: 50px; height: auto;"> <!-- . -->
         </a>
     </span>
     
     <span>
-        <ul style="display: flex; gap: 10px; list-style: none;">
+        <ul style="display: flex; gap: 10px; list-style: none;"> <!-- . -->
             {% if user == 'guest' %}
                 <!-- IF GUEST -->
                 <li>
@@ -33,18 +33,18 @@
     <span style="
     display: flex;
     position: relative;
-    " >
+    " > <!-- . -->
         <!-- USER PROFILE IMAGE ***** CANCEL PROFILE IMAGE-->
         {% if user == 'guest' %}
             <img src="{% static 'img/icons/profile-circle-svgrepo-com.svg' %}" 
             alt="guest" style="width: 50px;" 
             onmouseenter={profile_dropdown_show()} 
-            onmouseleave={profile_dropdown_hide()}>
+            onmouseleave={profile_dropdown_hide()}> <!-- . -->
         {% else %}
             <img src="{% static 'img/' %}" 
             alt="user_0" 
             onmouseenter={profile_dropdown_show()} 
-            onmouseleave={profile_dropdown_hide()}>
+            onmouseleave={profile_dropdown_hide()}> <!-- . -->
         {% endif %}
 
         <!-- DROPDOWN LIST -->
@@ -61,7 +61,7 @@
         " 
         id="profile_dropdown" 
         onmouseover={profile_dropdown_show()} 
-        onmouseleave={profile_dropdown_hide()}>
+        onmouseleave={profile_dropdown_hide()}> <!-- . -->
             {% if user == 'guest' %}
                 <!-- IF GUEST -->
                 <li> Login </li>

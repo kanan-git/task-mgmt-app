@@ -6,27 +6,34 @@
     TM | Home
 {% endblock %}
 
+<!-- . -->
+{% load static %}
+
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <!-- ADD NAVBAR -->
     {% include '../base/navbar.html' %}
 
     <!-- CONTAINER -->
-    <div style="background-color: rgb(100,100,100);">
+    <div style="background-color: rgb(100,100,100);"> <!-- . -->
         {% include '../base/control_bar.html' %}
 
-        <div style="display: flex; justify-content: center; margin: 20px 10px 20px 10px;">
+        <div> <!-- style="display: flex; justify-content: center; margin: 20px 10px 20px 10px;" -->
             {% include '../base/filter.html' %}
 
-            <main style="min-height: 400px;">
-                <h2 style="color: rgb(255,255,255);"> TASKS: {{ tasks.count }} </h2>
+            <main style="min-height: 400px;"> <!-- . -->
+                <h2 style="color: rgb(255,255,255);"> TASKS: {{ tasks.count }} </h2> <!-- . -->
 
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; padding: 10px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; padding: 10px;"> <!-- . -->
                     {% if tasks %}
                         {% for card in tasks %}
                             {% include '../base/task_card.html' %}
                         {% endfor %}
                     {% endif %}
+                </div>
+
+                <div>
+                    REMOVE BUTTON FOR ALL COMPLETED TASKS
                 </div>
             </main>
         </div>

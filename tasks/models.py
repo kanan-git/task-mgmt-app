@@ -117,4 +117,4 @@ class Task(models.Model):
             all_categories_of_current_task += f'{(category.name)},'
         categ_str = all_categories_of_current_task[0:-1:1]
 
-        return f'#{self.id} → Categories: {categ_str}, Type: {self.type_of_task} ◄|► Task: {self.todo} ◄|► Added: {self.added_time}, Updated: {self.updated_time}'
+        return f'#{self.id} ▲▼ Categories: {categ_str} ←→ Type: {self.type_of_task} ▲▼ Task: {self.todo} ▲▼ Added: {self.added_time} ←→ Updated: {self.updated_time}'

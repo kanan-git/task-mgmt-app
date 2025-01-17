@@ -14,9 +14,13 @@ function ToggleFilterPanel() {
     current_style_value = document.getElementById('filter_panel').style.display
     if(current_style_value == `block`) {
         document.getElementById('filter_panel').style.display = `none`
+        document.getElementById('filter_panel').style.visibility = `hidden`
+        document.getElementById('filter_panel').style.opacity = `0%`
     }
     else if(current_style_value == `none`) {
         document.getElementById('filter_panel').style.display = `block`
+        document.getElementById('filter_panel').style.visibility = `visible`
+        document.getElementById('filter_panel').style.opacity = `100%`
     }
 }
 
@@ -28,12 +32,14 @@ function SearchForTasks() {
 
 
 function SortDirection() {
-    var sort_direct_btn = document.getElementById('sort_direction_btn')
     var sort_direct_img = document.getElementById('sort_direct_ico')
-    var btn_descending_src = 'static/img/icons/sort-from-bottom-to-top-svgrepo-com.svg'
-    var btn_descending_alt = 'sort_descending'
-    var btn_ascending_src = 'static/img/icons/sort-from-top-to-bottom-svgrepo-com.svg'
-    var btn_ascending_alt = 'sort_ascending'
+    console.log(sort_direct_img.src)
+    if(sort_direct_img.src == 'http://127.0.0.1:8000/static/img/icons/sort-from-bottom-to-top-svgrepo-com.svg') {
+        document.getElementById('sort_direct_ico').src = 'http://127.0.0.1:8000/static/img/icons/sort-from-top-to-bottom-svgrepo-com.svg'
+    }
+    else if(sort_direct_img.src == 'http://127.0.0.1:8000/static/img/icons/sort-from-top-to-bottom-svgrepo-com.svg') {
+        document.getElementById('sort_direct_ico').src = 'http://127.0.0.1:8000/static/img/icons/sort-from-bottom-to-top-svgrepo-com.svg'
+    }
 }
 
 
@@ -43,6 +49,13 @@ function SortTasksBy() {
 
 
 function SelectView() {
-    var view_btn = document.getElementById('select_view')
     var view_img = document.getElementById('select_view_ico')
+    var sort_direct_img = document.getElementById('sort_direct_ico')
+    console.log(sort_direct_img.src)
+    if(view_img.src == 'http://127.0.0.1:8000/static/img/icons/grid-view-svgrepo-com.svg') {
+        document.getElementById('select_view_ico').src = 'http://127.0.0.1:8000/static/img/icons/view-list-bullet-rtl-svgrepo-com.svg'
+    }
+    else if(view_img.src == 'http://127.0.0.1:8000/static/img/icons/view-list-bullet-rtl-svgrepo-com.svg') {
+        document.getElementById('select_view_ico').src = 'http://127.0.0.1:8000/static/img/icons/grid-view-svgrepo-com.svg'
+    }
 }

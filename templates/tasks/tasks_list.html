@@ -6,39 +6,53 @@
     TM | Home
 {% endblock %}
 
-<!-- . -->
+<!-- ALLOWING STATIC FILES -->
 {% load static %}
 
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
-    <!-- ADD NAVBAR -->
-    {% include '../base/navbar.html' %}
-
     <!-- CONTAINER -->
-    <div style="background-color: rgb(100,100,100);"> <!-- . -->
+    <div style="background-color: rgb(100,100,100); min-height: 850px;"> <!-- . -->
         {% include '../base/control_bar.html' %}
 
-        <div> <!-- style="display: flex; justify-content: center; margin: 20px 10px 20px 10px;" -->
+        <div style="display: flex; justify-content: center; margin: 20px 10px 0px 10px;"> <!-- style="display: flex; justify-content: center; margin: 20px 10px 20px 10px;" -->
             {% include '../base/filter.html' %}
 
-            <main style="min-height: 400px;"> <!-- . -->
-                <h2 style="color: rgb(255,255,255);"> TASKS: {{ tasks.count }} </h2> <!-- . -->
+            <main style="width: 100%;"> <!-- . --> <!-- GRID_VIEW_CLASS/LIST_VIEW_CLASS, WITH SAME HTML STRUCTURE -->
+                <div style="
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                "> <!-- . -->
+                    <h2 style="color: rgb(255,255,255);">
+                        {% if tasks.count > 0 %}
+                            TASKS: {{ tasks.count }}
+                        {% else %}
+                            TASKS: 0
+                        {% endif %}
+                    </h2> <!-- . -->
 
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; padding: 10px;"> <!-- . -->
+                    <button>
+                        Clear
+                    </button> <!-- REMOVE BUTTON FOR ALL COMPLETED TASKS | ACCEPT WITH POP UP WINDOW BEFORE POST -->
+                </div>
+
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px;"> <!-- . -->
                     {% if tasks %}
                         {% for card in tasks %}
                             {% include '../base/task_card.html' %}
                         {% endfor %}
+                    {% else %}
+                        <div style="display: flex; justify-content: center; align-items: center; font-size: 5em">
+                            Empty
+                        </div>
                     {% endif %}
                 </div>
 
                 <div>
-                    REMOVE BUTTON FOR ALL COMPLETED TASKS
+                    <!-- PAGINATION IF OVER THE CHOOSEN LIMIT / SHOW MORE BUTTON FOR LOADING -->
                 </div>
             </main>
         </div>
     </div>
-
-    <!-- BRINGING STATIC FOOTER DATA FROM FILE -->
-    {% include '../base/footer.html' %}
 {% endblock %}

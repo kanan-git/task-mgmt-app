@@ -1,14 +1,15 @@
+<!-- ALLOWING STATIC FILES -->
 {% load static %}
 
-<nav style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; background-color: rgb(235,235,235);"> <!-- . -->
+<nav style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(235,235,235); min-height: 60px;"> <!-- style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; background-color: rgb(235,235,235);" -->
     <span>
         <a href="{% url 'tasks_list' %}">
-            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} width="50px" style="width: 50px; height: auto;"> <!-- . -->
+            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} width="50px"> <!-- style="width: 50px; height: auto;" -->
         </a>
     </span>
-    
-    <span>
-        <ul style="display: flex; gap: 10px; list-style: none;"> <!-- . -->
+
+    <span style="display: flex; align-items: center;">
+        <ul style="display: flex; gap: 30px; list-style: none; align-items: center; margin: 0; padding: 0;"> <!-- style="display: flex; gap: 10px; list-style: none; align-items: center; margin: 0; padding: 0;" -->
             {% if user == 'guest' %}
                 <!-- IF GUEST -->
                 <li>
@@ -22,57 +23,80 @@
                 </li>
             {% else %}
                 <!-- ELSE MEMBER -->
-                <li> Home </li>
-                <li> Create Task </li>
-                <li> About </li>
-                <li> Contact </li>
+                <li>
+                    <a href="{% url 'tasks_list' %}"> Home </a>
+                </li>
+                <li>
+                    <a href="{% url 'create_task' %}"> Create Task </a>
+                </li>
+                <li>
+                    <a href="{% url 'about' %}"> About </a>
+                </li>
+                <li>
+                    <a href="{% url 'contact' %}"> Contact </a>
+                </li>
             {% endif %}
         </ul>
     </span>
 
-    <span style="
-    display: flex;
-    position: relative;
-    " > <!-- . -->
-        <!-- USER PROFILE IMAGE ***** CANCEL PROFILE IMAGE-->
-        {% if user == 'guest' %}
-            <img src="{% static 'img/icons/profile-circle-svgrepo-com.svg' %}" 
-            alt="guest" style="width: 50px;" 
-            onmouseenter={profile_dropdown_show()} 
-            onmouseleave={profile_dropdown_hide()}> <!-- . -->
-        {% else %}
-            <img src="{% static 'img/' %}" 
-            alt="user_0" 
-            onmouseenter={profile_dropdown_show()} 
-            onmouseleave={profile_dropdown_hide()}> <!-- . -->
-        {% endif %}
+    <span"> <!-- style="display: flex; position: relative; gap: 20px;" -->
+        <span style="display: flex; position: relative; gap: 20px;">
+            <span>
+                {% if user == 'guest' %}
+                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0;"> <b> GUEST </b> </p>
+                {% else %}
+                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0;"> <b> USER 001 </b> </p>
+                {% endif %}
 
-        <!-- DROPDOWN LIST -->
-        <ul style="
-        display: none;
-        list-style: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: rgb(255,255,255);
-        border: 1px solid rgb(200,200,200);
-        border-radius: 4px;
-        z-index: 1;
-        " 
-        id="profile_dropdown" 
-        onmouseover={profile_dropdown_show()} 
-        onmouseleave={profile_dropdown_hide()}> <!-- . -->
-            {% if user == 'guest' %}
-                <!-- IF GUEST -->
-                <li> Login </li>
-                <li> Register </li>
-            {% else %}
-                <!-- ELSE MEMBER -->
-                <li> Dashboard </li>
-                <li> Starred </li>
-                <li> Log </li>
-                <li> Logout </li>
-            {% endif %}
-        </ul>
+                <!-- dropdown with bootstrap instead custom css -->
+
+                <!-- DROPDOWN LIST -->
+                <ul id="profile_dropdown" onmouseover={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="display: none; list-style: none; padding: 0;"> <!-- style="display: none; list-style: none; position: absolute; top: 100%; left: 0; background-color: rgb(255,255,255); border: 1px solid rgb(200,200,200); border-radius: 4px; z-index: 1;" -->
+                    {% if user == 'guest' %}
+                    <!-- IF GUEST -->
+                        <li>
+                            <a href="{% url 'sign_in' %}"> Login </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'sign_up' %}"> Register </a>
+                        </li>
+                    {% else %}
+                        <!-- ELSE MEMBER -->
+                        <li>
+                            <a href="{% url 'dashboard' %}"> Dashboard </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'contact' %}"> Log </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'contact' %}"> Logout </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </span>
+
+            <span>
+                <button id="select_language" onmouseenter={language_dropdown_show()} onmouseleave={language_dropdown_hide()}> EN </button>
+
+                <ul id="lang_dropdown" onmouseover={language_dropdown_show()} onmouseleave={language_dropdown_hide()} style="display: none; list-style: none; padding: 0;">
+                    <li id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128);">
+                        <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" id="flag_us" style="width: 30px;">
+                        <span> EN </span>
+                    </li>
+                    <li id="lang_az" onclick={change_language(this,2)}>
+                        <img src="{% static 'img/flags/flag-az-svgrepo-com.svg/' %}" alt="azerbaijani" id="flag_az" style="width: 30px;">
+                        <span> AZ </span>
+                    </li>
+                    <li id="lang_tr" onclick={change_language(this,3)}>
+                        <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg/' %}" alt="turkish" id="flag_tr" style="width: 30px;">
+                        <span> TR </span>
+                    </li>
+                    <li id="lang_ru" onclick={change_language(this,4)}>
+                        <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg/' %}" alt="russian" id="flag_ru" style="width: 30px;">
+                        <span> RU </span>
+                    </li>
+                </ul>
+            </span>
+        </span>
     </span>
 </nav>

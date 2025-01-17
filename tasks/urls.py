@@ -15,5 +15,5 @@ urlpatterns =[
 
     # path group for rest of pages
     path('about/', tasks_view.about, name='about'),
-    path('contact/', tasks_view.contact, name='contact')
+    path('contact/', tasks_view.contact, name='contact'),
 ]

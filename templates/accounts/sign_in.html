@@ -6,10 +6,30 @@
     TM | Authentication
 {% endblock %}
 
-<!-- . -->
+<!-- ALLOWING STATIC FILES -->
 {% load static %}
 
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
-    <div> LOGIN </div>
+    <div>
+        <a href="{% url 'tasks_list' %}">
+            ◄ Back to Home Page
+        </a>
+    </div>
+
+    <div>
+        LOGIN
+        <br>
+        {{ untitled_data }}
+    </div>
+
+    <div>
+        <a href="#">
+            Forgot password
+        </a>
+
+        <a href="{% url 'sign_up' %}">
+            Register
+        </a>
+    </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+<!-- ALLOWING STATIC FILES -->
 {% load static %}
 
 <div style="
@@ -19,16 +20,6 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
     justify-content: space-around;
     align-items: center;
     "> <!-- . -->
-        <!-- <span>
-            <button style="outline: none; border: none; background-color: transparent;">
-                {% if card.is_starred == 0 %}
-                    <img src="{% static 'img/icons/star-svgrepo-com-empty.svg' %}" alt="not_starred" style="width: 30px; height: 30px;">
-                {% else %}
-                    <img src="{% static 'img/icons/star-svgrepo-com-filled.svg' %}" alt="starred" style="width: 30px; height: 30px;">
-                {% endif %}
-            </button>
-        </span> -->
-
         <span>
             ID: {{ card.id }}
         </span>
@@ -80,42 +71,44 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
     display: flex;
     justify-content: space-around;
     "> <!-- . -->
-        <button>
-            {{ card.priority_level }}  <!-- ANIMATED FLAME, PARTICLE AND FRAME RAISE, CHANGE COLOR FROM 1 TO 10, TIER EFFECTS -->
-        </button>
+        <div class="priority_badge">
+            ◄ {{ card.priority_level }} ►
+            <!-- ANIMATED FLAME, PARTICLE AND FRAME RAISE, CHANGE COLOR FROM 1 TO 10, TIER EFFECTS -->
+            <!-- bootstrap animated for priority and status -->
+        </div>
 
         <div>
             {% if card.type_of_task_id == 1 %}
                 {% if card.todo_status == 1 %}
-                    <button style="
+                    <div style="
                     width: auto;
                     border: 1px solid rgb(255,255,255);
                     background-color: rgb(255,180,130);
                     outline: none;
-                    cursor: pointer;
+                    padding: 5px;
                     filter: drop-shadow(0px 0px 10px rgb(255,200,150));
                     border-radius: 5px;
-                    "> Incomplete </button> <!-- . -->
+                    "> Incomplete </div> <!-- . -->
                 {% elif card.todo_status == 2 %}
-                    <button style="
+                    <div style="
                     width: auto;
                     border: 1px solid rgb(255,255,255);
                     background-color: rgb(255,255,100);
                     outline: none;
-                    cursor: pointer;
+                    padding: 5px;
                     filter: drop-shadow(0px 0px 10px rgb(255,255,150));
                     border-radius: 5px;
-                    "> Work In Progress </button> <!-- . -->
+                    "> Work In Progress </div> <!-- . -->
                 {% elif card.todo_status == 3 %}
-                    <button style="
+                    <div style="
                     width: auto;
                     border: 1px solid rgb(255,255,255);
                     background-color: rgb(100,200,100);
                     outline: none;
-                    cursor: pointer;
+                    padding: 5px;
                     filter: drop-shadow(0px 0px 10px rgb(120,220,120));
                     border-radius: 5px;
-                    "> Done </button> <!-- . -->
+                    "> Done </div> <!-- . -->
                 {% endif %}
             {% else %}
                 <span style="
@@ -126,8 +119,13 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     <span style="
                     position: relative;
                     z-index: 5;
+                    padding: 10px;
                     "> <!-- . -->
-                        {{ card.progression_start }} of {{ card.progression_end }}
+                        {% if card.progression_start != card.progression_end %}
+                            {{ card.progression_start }} of {{ card.progression_end }}
+                        {% else %}
+                            COMPLETED
+                        {% endif %}
                     </span>
 
                     <span id="progression_bar" style="
@@ -140,11 +138,11 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     background-color: transparent;
                     z-index: 1;
                     "> <!-- . -->
-                        <span style="
+                        <span id="bar_stat" style="
                         position: absolute;
                         width: 200px;
                         height: 100%;
-                        background: linear-gradient(to right, rgba(255,255,128,1.0), rgba(255,128,0,1.0));
+                        background: linear-gradient(to right, rgba(255,255,128,1.0), rgba(255,200,50,1.0));
                         z-index: 2;
                         "></span> <!-- . -->
                     </span>
@@ -153,19 +151,9 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                 <span style="display: none;">
                     <span id="hidden_start_tag">{{card.progression_start}}</span>
                     <span id="hidden_end_tag">{{card.progression_end}}</span>
-                    <script>
-                        function milestone_percentage() {
-                            var value_start = document.getElementById('hidden_start_tag').innerText
-                            var value_end = document.getElementById('hidden_end_tag').innerText
-                            var result = (value_start/value_end)*100
-                            var bar = document.getElementById('progression_bar').style.width = `${result}%`
-                        }
-                        milestone_percentage()
-                    </script>
+                    <script src="{% static 'js/task_card.js' %}"></script>
                 </span>
             {% endif %}
         </div>
     </div>
-
-    <!--  <img src="{% static 'img/categ/' %}" alt="CUSTOM BACKGROUND IMAGE BY CATEGORY WITH OVERLAY AND EFFECTS"> -->
 </div>

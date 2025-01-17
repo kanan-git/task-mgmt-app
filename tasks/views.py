@@ -29,35 +29,47 @@ from .forms import TaskForm
 # contains active user's tasks
 def tasks_list(request):
     count_of_tasks = Task.objects.count()
-    count_of_categories = Category.objects.count()
+    # count_of_categories = Category.objects.count()
 
     if count_of_tasks == 0:
         tasks = False # or empty list
     else:
         tasks = Task.objects.all()
 
-    if count_of_categories == 0:
-        list_of_categories = False # or empty list
-    else:
-        list_of_categories = Category.objects.all()
+    # if count_of_categories == 0:
+    #     list_of_categories = False # or empty list
+    # else:
+    #     list_of_categories = Category.objects.all()
 
     context = {
-        'user': 'guest',
+        'user': 'id_001', # guest id_001
+
         'sort': 'descending',
         'view_mode': 'grid_cards',
 
         'tasks': tasks,
         'count': count_of_tasks,
-        'list_of_categories': list_of_categories,
+        # 'list_of_categories': list_of_categories,
+
+        'is_nav': True,
     }
 
-    return render(request, 'tasks/tasks_list.html', context)
+    if context['user'] == 'guest':
+        print('login first')
+        return render(request, 'accounts/sign_in.html')
+    elif context['user'] == 'id_001':
+        print('welcome "user 001"')
+        return render(request, 'tasks/tasks_list.html', context)
 
 
 # user will see him/her statistic information
 def dashboard(request):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+
+        'untitled_data': 'empty',
+
+        'is_nav': True,
     }
     return render(request, 'tasks/dashboard.html', context)
 
@@ -65,7 +77,11 @@ def dashboard(request):
 # log history of tasks, their status and event information
 def log(request):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+
+        'untitled_data': 'empty',
+
+        'is_nav': True,
     }
     return render(request, 'tasks/log.html', context)
 
@@ -73,7 +89,11 @@ def log(request):
 # Crud operation, create new task
 def create_task(request):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+
+        'untitled_data': 'empty',
+
+        'is_nav': True,
     }
     return render(request, 'tasks/create_task.html', context)
 
@@ -81,7 +101,11 @@ def create_task(request):
 # crUd operation, update selected task
 def update_task(request, pk):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+
+        'untitled_data': 'empty',
+
+        'is_nav': True,
     }
     return render(request, 'tasks/update_task.html', context)
 
@@ -94,7 +118,11 @@ def delete_task(request, pk):
 # opening the about page
 def about(request):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+
+        'untitled_data': 'empty',
+
+        'is_nav': True,
     }
     return render(request, 'tasks/about.html', context)
 
@@ -102,6 +130,10 @@ def about(request):
 # opening the contact page
 def contact(request):
     context = {
-        'untitled_data': 'empty'
+        'user': 'guest',
+
+        'untitled_data': 'empty',
+
+        'is_nav': True,
     }
     return render(request, 'tasks/contact.html', context)

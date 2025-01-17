@@ -1,4 +1,20 @@
-<aside style="display: none;" id="filter_panel"> <!-- display: none block -->  <!-- style="display: none;" -->
+<!-- ALLOWING STATIC FILES -->
+{% load static %}
+
+<!-- . -->
+<aside 
+style="
+display: none;
+visibility: hidden;
+transition: 150ms ease-in-out;
+opacity: 0%;
+padding: 20px;
+border: 1px solid rgb(128,128,128);
+background-color: rgb(250, 240, 240);
+max-width: 20%;
+" 
+id="filter_panel"
+> <!-- display: none block -->  <!-- style="display: none;" -->
     <div>
         <h3>
             Filter
@@ -6,19 +22,108 @@
     </div>
 
     <div>
-        Show All or select checkboxes of Incomplete, Work In Progress, Done tasks
+        Show by Status:
+        <br>
+
+        <input type="radio" name="filter_status" id="filter_stat_all">
+        <label for="filter_stat_all"> All </label>
+        
+        <input type="radio" name="filter_status" id="filter_stat_inc">
+        <label for="filter_stat_inc"> Incomplete </label>
+        
+        <input type="radio" name="filter_status" id="filter_stat_wip">
+        <label for="filter_stat_wip"> Work In Progress </label>
+        
+        <input type="radio" name="filter_status" id="filter_stat_don">
+        <label for="filter_stat_don"> Done </label>
     </div>
     <div>
-        Show by Categories, home, workout, study, hobby, entertaintment, unset
+        Show by Category:
+        <br>
+        
+        <input type="checkbox" name="filter_categ" id="filter_categ_personal">
+        <label for="filter_categ_personal"> Personal </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_work">
+        <label for="filter_categ_work"> Work / PRO </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_home">
+        <label for="filter_categ_home"> Home </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_urgent">
+        <label for="filter_categ_urgent"> Urgent </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_study">
+        <label for="filter_categ_study"> Study / School </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_health">
+        <label for="filter_categ_health"> Health & Sport </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_shopping">
+        <label for="filter_categ_shopping"> Shopping </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_finance">
+        <label for="filter_categ_finance"> Finance </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_travel">
+        <label for="filter_categ_travel"> Travel </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_social">
+        <label for="filter_categ_social"> Social/Events </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_maintenance">
+        <label for="filter_categ_maintenance"> Maintenance </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_ltg">
+        <label for="filter_categ_ltg"> Long Term Goals </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_misc">
+        <label for="filter_categ_misc"> Miscellaneous </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_team">
+        <label for="filter_categ_team"> Team </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_creative">
+        <label for="filter_categ_creative"> Creative </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_learning">
+        <label for="filter_categ_learning"> Learning & DEV </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_family">
+        <label for="filter_categ_family"> Family </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_tech">
+        <label for="filter_categ_tech"> Technology / IT </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_volunteer">
+        <label for="filter_categ_volunteer"> Volunteer </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_projects">
+        <label for="filter_categ_projects"> Projects </label>
+
+        <input type="checkbox" name="filter_categ" id="filter_categ_unset">
+        <label for="filter_categ_unset"> Unset </label>
+
     </div>
     <div>
-        Filter by Added Time, Update Time, Completed at
+        Show by Priority Point: <!-- MAKE CONDITION TO HANDLING MIN>=MAX POSSIBLE ISSUE -->
+        <br>
+        From: ←→ 1 <input id="filter_priority_min" type="range" min="1" max="10" step="1" value="1"> 10
+        <br>
+        To: ←→ 1 <input id="filter_priority_max" type="range" min="1" max="10" step="1" value="10"> 10
     </div>
     <div>
-        Filter by Priority Point
-    </div>
-    <div>
-        Filter by Type, Milestone or Instant
+        Show by Type:
+        <br>
+
+        <input type="radio" name="filter_type" id="filter_type_all" checked>
+        <label for="filter_type_all" style="text-transform: capitalize;"> all </label>
+
+        <input type="radio" name="filter_type" id="filter_type_mil">
+        <label for="filter_type_mil" style="text-transform: capitalize;"> milestone </label>
+
+        <input type="radio" name="filter_type" id="filter_type_ins">
+        <label for="filter_type_ins" style="text-transform: capitalize;"> instant </label>
     </div>
     
     <div>

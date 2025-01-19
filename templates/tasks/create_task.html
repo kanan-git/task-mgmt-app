@@ -11,6 +11,17 @@
 
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
-    <div style="background-color: rgb(100,100,100); min-height: 850px;"> CREATE TASK </div>
-    {{ untitled_data }}
+    <div style="background-color: rgb(100,100,100); min-height: 850px;">
+        <h3> CREATE NEW TASK: </h3>
+
+        <br>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ task_form.as_p }}
+
+            <button type="submit"> + Create </button>
+        </form>
+    </div>
 {% endblock %}

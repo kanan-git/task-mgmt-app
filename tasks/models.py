@@ -106,7 +106,7 @@ class Task(models.Model):
     progression_start = models.IntegerField(default=0)
     progression_end = models.IntegerField(default=1) # REQUIRES TRY EXCEPT OR ANY ERROR HANDLER, ONLY ALLOW START<END
 
-    is_starred = models.BooleanField(default=False)
+    # is_starred = models.BooleanField(default=False)
 
     added_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)

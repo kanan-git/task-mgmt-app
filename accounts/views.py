@@ -24,4 +24,4 @@ def sign_up(request):
 
 
 def sign_out(request):
-    return redirect('tasks/tasks_list')
+    return redirect('tasks_list')

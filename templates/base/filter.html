@@ -11,7 +11,7 @@ opacity: 0%;
 padding: 20px;
 border: 1px solid rgb(128,128,128);
 background-color: rgb(250, 240, 240);
-max-width: 20%;
+max-width: 25%;
 " 
 id="filter_panel"
 > <!-- display: none block -->  <!-- style="display: none;" -->
@@ -21,8 +21,10 @@ id="filter_panel"
         </h3>
     </div>
 
+    <br>
+
     <div>
-        Show by Status:
+        <b> Show by Status: </b>
         <br>
 
         <input type="radio" name="filter_status" id="filter_stat_all">
@@ -37,8 +39,11 @@ id="filter_panel"
         <input type="radio" name="filter_status" id="filter_stat_don">
         <label for="filter_stat_don"> Done </label>
     </div>
+
+    <br>
+
     <div>
-        Show by Category:
+        <b> Show by Category: </b>
         <br>
         
         <input type="checkbox" name="filter_categ" id="filter_categ_personal">
@@ -103,17 +108,22 @@ id="filter_panel"
 
         <input type="checkbox" name="filter_categ" id="filter_categ_unset">
         <label for="filter_categ_unset"> Unset </label>
-
     </div>
+
+    <br>
+
     <div>
-        Show by Priority Point: <!-- MAKE CONDITION TO HANDLING MIN>=MAX POSSIBLE ISSUE -->
+        <b> Show by Priority Point: </b> <!-- MAKE CONDITION TO HANDLING MIN>=MAX POSSIBLE ISSUE -->
         <br>
         From: ←→ 1 <input id="filter_priority_min" type="range" min="1" max="10" step="1" value="1"> 10
         <br>
         To: ←→ 1 <input id="filter_priority_max" type="range" min="1" max="10" step="1" value="10"> 10
     </div>
+
+    <br>
+
     <div>
-        Show by Type:
+        <b> Show by Type: </b>
         <br>
 
         <input type="radio" name="filter_type" id="filter_type_all" checked>
@@ -125,8 +135,10 @@ id="filter_panel"
         <input type="radio" name="filter_type" id="filter_type_ins">
         <label for="filter_type_ins" style="text-transform: capitalize;"> instant </label>
     </div>
+
+    <br>
     
     <div>
-        <input type="submit" value="Filter"> <!-- DEPENDS ON WILL FILTER BE AS A FORM OR REALTIME SYSTEM -->
+        <input style="background-color: rgb(255, 255, 255); border: 1px solid rgb(128,128,128);" type="submit" value="Filter"> <!-- DEPENDS ON WILL FILTER BE AS A FORM OR REALTIME SYSTEM -->
     </div>
 </aside>

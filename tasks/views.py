@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Task, Category
+from .models import Task
 from .forms import TaskForm
 
 # GUIDE AS MULTI-LINE STRING
@@ -29,29 +29,24 @@ from .forms import TaskForm
 # contains active user's tasks
 def tasks_list(request):
     count_of_tasks = Task.objects.count()
-    # count_of_categories = Category.objects.count()
 
     if count_of_tasks == 0:
         tasks = False # or empty list
     else:
         tasks = Task.objects.all()
 
-    # if count_of_categories == 0:
-    #     list_of_categories = False # or empty list
-    # else:
-    #     list_of_categories = Category.objects.all()
-
     context = {
-        'user': 'id_001', # guest id_001
+        'user': 'id_001', # id_001 guest
 
-        'sort': 'descending',
-        'view_mode': 'grid_cards',
+        'sort': 'descending', # ascending descending
+        'view_mode': 'grid_cards', # grid_cards list_cards
+
+        'current_language': 'en', # en az tr ru
 
         'tasks': tasks,
         'count': count_of_tasks,
-        # 'list_of_categories': list_of_categories,
 
-        'is_nav': True,
+        'is_nav': True, # True False
     }
 
     if context['user'] == 'guest':
@@ -88,31 +83,64 @@ def log(request):
 
 # Crud operation, create new task
 def create_task(request):
-    context = {
-        'user': 'guest',
+    if request.method == 'POST':
+        task_form = TaskForm(request.POST)
 
-        'untitled_data': 'empty',
+        if task_form.is_valid():
+            task_form.save()
 
-        'is_nav': True,
-    }
-    return render(request, 'tasks/create_task.html', context)
+            return redirect('tasks_list')
+    else:
+        task_form = TaskForm()
+
+        context = {
+            'user': 'guest',
+
+            'untitled_data': 'empty',
+
+            'is_nav': True,
+
+            'task_form': task_form,
+        }
+
+        return render(request, 'tasks/create_task.html', context)
 
 
 # crUd operation, update selected task
 def update_task(request, pk):
-    context = {
-        'user': 'guest',
+    task = get_object_or_404(Task, id=pk)
 
-        'untitled_data': 'empty',
+    if request.method == 'POST':
+        task_form = TaskForm(request.POST, instance=task)
 
-        'is_nav': True,
-    }
+        if task_form.is_valid():
+            task_form.save()
+
+            return redirect('tasks_list')
+    else:
+        task_form = TaskForm(instance=task)
+        
+        context = {
+            'user': 'guest',
+
+            'untitled_data': 'empty',
+
+            'is_nav': True,
+
+            'task_form': task_form,
+
+            'active_card': task,
+        }
+        
     return render(request, 'tasks/update_task.html', context)
 
 
 # cruD operation, delete selected task
 def delete_task(request, pk):
-    return redirect('tasks/tasks_list')
+    selected_task = Task.objects.get(id=pk)
+    selected_task.delete()
+    messages.success(request, f'Task ID:{pk} successfully removed.')
+    return redirect('tasks_list')
 
 
 # opening the about page

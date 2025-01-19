@@ -1,8 +1,8 @@
-function milestone_percentage() {
-    var value_start = document.getElementById('hidden_start_tag').innerText
-    var value_end = document.getElementById('hidden_end_tag').innerText
-    var bar = document.getElementById('progression_bar')
-    var bar_status = document.getElementById('bar_stat')
+function milestone_percentage(card_id) {
+    var value_start = document.getElementById(`hidden_start_tag_${card_id}`).innerText
+    var value_end = document.getElementById(`hidden_end_tag_${card_id}`).innerText
+    var bar = document.getElementById(`progression_bar_${card_id}`)
+    var bar_status = document.getElementById(`bar_stat_${card_id}`)
     var result = (value_start/value_end)*100
     bar.style.width = `${result}%`
     if(result < 100) {
@@ -10,5 +10,5 @@ function milestone_percentage() {
     } else {
         bar_status.style.background = `radial-gradient(rgba(0,200,0,1.0), rgba(128,255,128,1.0))`
     }
+    // console.log(`Card ID: ${card_id}`, '←—→', `Done: ${value_start}`, '←—→', `Total: ${value_end}`)
 }
-milestone_percentage()

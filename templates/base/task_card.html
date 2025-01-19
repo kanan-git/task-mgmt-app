@@ -3,8 +3,8 @@
 
 <div style="
 border: 1px solid rgb(128,128,128); 
-width: 450px; 
-height: 250px; 
+width: 500px; 
+height: 350px; 
 border-radius: 5px; 
 padding: 10px;
 overflow: hidden; 
@@ -21,17 +21,18 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
     align-items: center;
     "> <!-- . -->
         <span>
-            ID: {{ card.id }}
+            <b> ID: </b>
+            {{ card.id }}
         </span>
 
         <span>
-            <button style="outline: none; border: none; background-color: transparent;"> <!-- . -->
+            <a href="{% url 'update_task' card.id %}" style="outline: none; border: none; background-color: transparent; text-decoration: none;"> <!-- . -->
                 <img src="{% static 'img/icons/edit-svgrepo-com.svg' %}" alt="update_task" style="width: 30px; height: 30px;"> <!-- . -->
-            </button>
+            </a>
 
-            <button style="outline: none; border: none; background-color: transparent;"> <!-- . -->
+            <a href="{% url 'delete_task' card.id %}" style="outline: none; border: none; background-color: transparent; text-decoration: none;"> <!-- . -->
                 <img src="{% static 'img/icons/trash-bin-trash-svgrepo-com.svg' %}" alt="delete_task" style="width: 30px; height: 30px;"> <!-- . -->
-            </button>
+            </a>
         </span>
     </div>
 
@@ -42,6 +43,7 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
         <p style="
         text-align: center;
         "> <!-- . -->
+            <b> TO DO: </b>
             {{ card.todo }}
         </p> <!-- SET LARGE LIMIT LIKE 256, IF DESCRIPTION IS OVERFLOW, CREATE READ MORE BUTTON FOR TOGGLE MORE/LESS or SCROLBAR-->
 
@@ -57,13 +59,38 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
             max-height: 100px;
             overflow-y: auto;
             "> <!-- . -->
-                {% for category in card.category_of_task.all %}
+                <b> Categories: </b>
+                {% if card.category_of_task.all %}
+                    {% for category in card.category_of_task.all %}
+                        <span>
+                            {{ category.name }}
+                        </span>
+                    {% endfor %}
+                {% else %}
                     <span>
-                        {{ category.name }}
+                        Unset
                     </span>
-                {% endfor %}
+                {% endif %}
             </div>
-        </span> <!-- LIST ALL CATEGORIES WHICH CURRENT CARD HAVE -->
+        </span>
+
+        <hr>
+
+        <span style="
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        ">
+            <p>
+                <b> Created: </b>
+                {{card.added_time}}
+            </p>
+            <p>
+                <b> Updated: </b>
+                {{card.updated_time}}
+            </p>
+        </span>
     </div>
 
     <div style="
@@ -72,12 +99,13 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
     justify-content: space-around;
     "> <!-- . -->
         <div class="priority_badge">
-            ◄ {{ card.priority_level }} ►
+            {{ card.priority_level }}
             <!-- ANIMATED FLAME, PARTICLE AND FRAME RAISE, CHANGE COLOR FROM 1 TO 10, TIER EFFECTS -->
             <!-- bootstrap animated for priority and status -->
         </div>
 
-        <div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <b> Status: </b>
             {% if card.type_of_task_id == 1 %}
                 {% if card.todo_status == 1 %}
                     <div style="
@@ -120,6 +148,7 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     position: relative;
                     z-index: 5;
                     padding: 10px;
+                    width: 100%;
                     "> <!-- . -->
                         {% if card.progression_start != card.progression_end %}
                             {{ card.progression_start }} of {{ card.progression_end }}
@@ -128,7 +157,7 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                         {% endif %}
                     </span>
 
-                    <span id="progression_bar" style="
+                    <span id="progression_bar_{{card.id}}" style="
                     position: absolute;
                     left: 0;
                     top: 0;
@@ -138,7 +167,7 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     background-color: transparent;
                     z-index: 1;
                     "> <!-- . -->
-                        <span id="bar_stat" style="
+                        <span id="bar_stat_{{card.id}}" style="
                         position: absolute;
                         width: 200px;
                         height: 100%;
@@ -149,9 +178,9 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                 </span>
 
                 <span style="display: none;">
-                    <span id="hidden_start_tag">{{card.progression_start}}</span>
-                    <span id="hidden_end_tag">{{card.progression_end}}</span>
-                    <script src="{% static 'js/task_card.js' %}"></script>
+                    <span id="hidden_start_tag_{{card.id}}">{{card.progression_start}}</span>
+                    <span id="hidden_end_tag_{{card.id}}">{{card.progression_end}}</span>
+                    <script src="{% static 'js/task_card.js' %}" id="{{card.id}}" onload="milestone_percentage(this.id)"></script>
                 </span>
             {% endif %}
         </div>

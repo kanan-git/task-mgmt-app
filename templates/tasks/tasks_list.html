@@ -11,6 +11,15 @@
 
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
+    <!-- NOTIFICATIONS -->
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <p> {{ message }} </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <!-- CONTAINER -->
     <div style="background-color: rgb(100,100,100); min-height: 850px;"> <!-- . -->
         {% include '../base/control_bar.html' %}
@@ -38,13 +47,85 @@
                 </div>
 
                 <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px;"> <!-- . -->
-                    {% if tasks %}
-                        {% for card in tasks %}
-                            {% include '../base/task_card.html' %}
-                        {% endfor %}
-                    {% else %}
-                        <div style="display: flex; justify-content: center; align-items: center; font-size: 5em">
-                            Empty
+                    {% if view_mode == 'grid_cards' %}
+                        <!-- HOMEPAGE WITH GRID VIEW -->
+                        {% if tasks %}
+                            {% for card in tasks %}
+                                {% include '../base/task_card.html' %}
+                            {% endfor %}
+                        {% else %}
+                            <div style="display: flex; justify-content: center; align-items: center; font-size: 5em">
+                                Empty
+                            </div>
+                        {% endif %}
+                    {% elif view_mode == 'list_cards' %}
+                        <!-- HOMEPAGE WITH LIST VIEW -->
+                        <div>
+                            <table style="background-color: rgb(255,255,255); border-collapse: collapse; border: 1px solid rgb(0,0,0);">
+                                <tr>
+                                    <th style="border: 1px solid rgb(0,0,0);"> ID </th>
+                                    <th style="border: 1px solid rgb(0,0,0);"> Update/Delete </th>
+                                    <th style="border: 1px solid rgb(0,0,0);"> To Do </th>
+                                    <th style="border: 1px solid rgb(0,0,0);"> Categories </th>
+                                    <th style="border: 1px solid rgb(0,0,0);"> Priority Point </th>
+                                    <th style="border: 1px solid rgb(0,0,0);"> Status </th>
+                                </tr>
+
+                                {% if tasks %}
+                                    {% for card in tasks %}
+                                        <tr>
+                                            <td style="border: 1px solid rgb(0,0,0);">
+                                                {{card.id}}
+                                            </td>
+                                            <td style="border: 1px solid rgb(0,0,0);">
+                                                <a href="{% url 'update_task' card.id %}"> Update </a>
+                                                <a href="{% url 'delete_task' card.id %}"> Delete </a>
+                                            </td>
+                                            <td style="border: 1px solid rgb(0,0,0);">
+                                                {{card.todo}}
+                                            </td>
+                                            <td style="border: 1px solid rgb(0,0,0);">
+                                                {% if card.category_of_task.all %}
+                                                    {% for category in card.category_of_task.all %}
+                                                            {{ category.name }},
+                                                    {% endfor %}
+                                                {% else %}
+                                                    Unset
+                                                {% endif %}
+                                            </td>
+                                            <td style="border: 1px solid rgb(0,0,0);">
+                                                {{card.priority_level}}
+                                            </td>
+                                            <td style="border: 1px solid rgb(0,0,0);">
+                                                {% if card.type_of_task_id == 1 %}
+                                                    {% if card.todo_status == 1 %}
+                                                        Incomplete
+                                                    {% elif card.todo_status == 2 %}
+                                                        WIP
+                                                    {% elif card.todo_status == 3 %}
+                                                        Done
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if card.progression_start != card.progression_end %}
+                                                        {{ card.progression_start }} of {{ card.progression_end }}
+                                                    {% else %}
+                                                        Completed
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                {% endif %}
+                            </table>
                         </div>
                     {% endif %}
                 </div>

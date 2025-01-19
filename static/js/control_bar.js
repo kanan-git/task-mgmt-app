@@ -4,6 +4,7 @@ function CustomOnLoadEvent() {
     created_img.alt = 'search'
     created_img.style.width = '30px'
     created_img.style.height = '30px'
+    created_img.style.cursor = `pointer`
     var search_button = document.getElementById('search_btn')
     search_button.parentNode.replaceChild(created_img, search_button)
 }

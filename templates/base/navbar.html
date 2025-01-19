@@ -13,86 +13,130 @@
             {% if user == 'guest' %}
                 <!-- IF GUEST -->
                 <li>
-                    <a href="{% url 'tasks_list' %}"> Home </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'tasks_list' %}"> Home </a>
                 </li>
                 <li>
-                    <a href="{% url 'about' %}"> About </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'about' %}"> About </a>
                 </li>
                 <li>
-                    <a href="{% url 'contact' %}"> Contact </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'contact' %}"> Contact </a>
                 </li>
             {% else %}
                 <!-- ELSE MEMBER -->
                 <li>
-                    <a href="{% url 'tasks_list' %}"> Home </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'tasks_list' %}"> Home </a>
                 </li>
                 <li>
-                    <a href="{% url 'create_task' %}"> Create Task </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'create_task' %}"> Create Task </a>
                 </li>
                 <li>
-                    <a href="{% url 'about' %}"> About </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'about' %}"> About </a>
                 </li>
                 <li>
-                    <a href="{% url 'contact' %}"> Contact </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'contact' %}"> Contact </a>
                 </li>
             {% endif %}
         </ul>
     </span>
 
-    <span"> <!-- style="display: flex; position: relative; gap: 20px;" -->
-        <span style="display: flex; position: relative; gap: 20px;">
-            <span>
+    <span> <!-- style="display: flex; position: relative; gap: 20px;" -->
+        <span style="
+        display: flex; 
+        gap: 20px; 
+        align-items: center;
+        ">
+            <span style="
+            position: relative; 
+            padding: 0;
+            ">
                 {% if user == 'guest' %}
-                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0;"> <b> GUEST </b> </p>
+                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0; height: 100%;"> <b> GUEST </b> </p>
                 {% else %}
-                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0;"> <b> USER 001 </b> </p>
+                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0; height: 100%;"> <b> USER 001 </b> </p>
                 {% endif %}
 
                 <!-- dropdown with bootstrap instead custom css -->
 
                 <!-- DROPDOWN LIST -->
-                <ul id="profile_dropdown" onmouseover={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="display: none; list-style: none; padding: 0;"> <!-- style="display: none; list-style: none; position: absolute; top: 100%; left: 0; background-color: rgb(255,255,255); border: 1px solid rgb(200,200,200); border-radius: 4px; z-index: 1;" -->
+                <ul id="profile_dropdown" onmouseover={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="
+                display: none; 
+                list-style: none; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                background-color: rgb(255,255,255); 
+                border: 1px solid rgb(200,200,200); 
+                border-radius: 4px; 
+                z-index: 1; 
+                padding: 20px;
+                width: 150px;
+                height: fit-content;
+                line-height: 200%;
+                "> <!-- style="" -->
                     {% if user == 'guest' %}
                     <!-- IF GUEST -->
                         <li>
-                            <a href="{% url 'sign_in' %}"> Login </a>
+                            <a href="{% url 'sign_in' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Login </a>
                         </li>
                         <li>
-                            <a href="{% url 'sign_up' %}"> Register </a>
+                            <a href="{% url 'sign_up' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Register </a>
                         </li>
                     {% else %}
                         <!-- ELSE MEMBER -->
                         <li>
-                            <a href="{% url 'dashboard' %}"> Dashboard </a>
+                            <a href="{% url 'dashboard' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Dashboard </a>
                         </li>
                         <li>
-                            <a href="{% url 'contact' %}"> Log </a>
+                            <a href="{% url 'contact' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Log </a>
                         </li>
                         <li>
-                            <a href="{% url 'contact' %}"> Logout </a>
+                            <a href="{% url 'contact' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Logout </a>
                         </li>
                     {% endif %}
                 </ul>
             </span>
 
-            <span>
-                <button id="select_language" onmouseenter={language_dropdown_show()} onmouseleave={language_dropdown_hide()}> EN </button>
+            <span style="
+            position: relative; 
+            padding: 0;
+            ">
+                <button id="select_language" style="
+                border: none; 
+                outline: none;
+                margin-bottom: 0; height: 100%;
+                " onmouseenter={language_dropdown_show()} onmouseleave={language_dropdown_hide()}>
+                <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="flag_en" style="width: 30px;">
+                    EN
+                </button>
 
-                <ul id="lang_dropdown" onmouseover={language_dropdown_show()} onmouseleave={language_dropdown_hide()} style="display: none; list-style: none; padding: 0;">
-                    <li id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128);">
+                <ul id="lang_dropdown" onmouseover={language_dropdown_show()} onmouseleave={language_dropdown_hide()} style="
+                display: none; 
+                list-style: none; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                background-color: rgb(255,255,255); 
+                border: 1px solid rgb(200,200,200); 
+                border-radius: 4px; 
+                z-index: 1; 
+                padding: 20px;
+                width: 100px;
+                height: fit-content;
+                ">
+                    <li id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
                         <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" id="flag_us" style="width: 30px;">
                         <span> EN </span>
                     </li>
                     <li id="lang_az" onclick={change_language(this,2)}>
-                        <img src="{% static 'img/flags/flag-az-svgrepo-com.svg/' %}" alt="azerbaijani" id="flag_az" style="width: 30px;">
+                        <img src="{% static 'img/flags/flag-az-svgrepo-com.svg' %}" alt="azerbaijani" id="flag_az" style="width: 30px;">
                         <span> AZ </span>
                     </li>
                     <li id="lang_tr" onclick={change_language(this,3)}>
-                        <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg/' %}" alt="turkish" id="flag_tr" style="width: 30px;">
+                        <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg' %}" alt="turkish" id="flag_tr" style="width: 30px;">
                         <span> TR </span>
                     </li>
                     <li id="lang_ru" onclick={change_language(this,4)}>
-                        <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg/' %}" alt="russian" id="flag_ru" style="width: 30px;">
+                        <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg' %}" alt="russian" id="flag_ru" style="width: 30px;">
                         <span> RU </span>
                     </li>
                 </ul>

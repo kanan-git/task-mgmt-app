@@ -82,6 +82,7 @@ def log(request):
 
 
 # Crud operation, create new task
+@login_required
 def create_task(request):
     if request.method == 'POST':
         task_form = TaskForm(request.POST)
@@ -107,6 +108,7 @@ def create_task(request):
 
 
 # crUd operation, update selected task
+@login_required
 def update_task(request, pk):
     task = get_object_or_404(Task, id=pk)
 
@@ -136,6 +138,7 @@ def update_task(request, pk):
 
 
 # cruD operation, delete selected task
+@login_required
 def delete_task(request, pk):
     selected_task = Task.objects.get(id=pk)
     selected_task.delete()

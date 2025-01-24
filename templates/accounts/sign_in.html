@@ -18,9 +18,17 @@
     </div>
 
     <div>
-        LOGIN
+        <h2> LOGIN </h2>
+        
         <br>
-        {{ untitled_data }}
+        
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" value="Sign In">
+        </form>
     </div>
 
     <div>

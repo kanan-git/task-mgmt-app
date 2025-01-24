@@ -18,9 +18,17 @@
     </div>
 
     <div>
-        REGISTER
+        <h2> REGISTER </h2>
+        
         <br>
-        {{ untitled_data }}
+
+        <form method="post">
+            {% csrf_token %}
+    
+            {{ creation_form.as_p}}
+    
+            <input type="submit" value="Sign Up">
+        </form>
     </div>
 
     <div>

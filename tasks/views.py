@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import Task
 from .forms import TaskForm
@@ -28,20 +29,69 @@ from .forms import TaskForm
 
 # contains active user's tasks
 def tasks_list(request):
-    count_of_tasks = Task.objects.count()
+    # COUNTING EXIST ELEMENTS INSIDE DATABASE
+    if request.user.is_authenticated:
+        # count_of_tasks = Task.objects.count()
+        count_of_tasks = User.objects.get(id=request.user.id).tasks.all().count()
+    else:
+        count_of_tasks = 0
 
+    # DEFAULT PARAMETERS FOR CONTROL BAR
+    sorting_direction = 'ascending'
+    sorting_type = 'updated_time'
+    view_mode = 'grid_cards'
+    current_language  = 'en'
+
+    # CHANGING SORT DIRECTION
+    if request.POST.get('direction') == 'ascending':
+        sorting_direction = 'ascending'
+    elif request.POST.get('direction') == 'descending':
+        sorting_direction = 'descending'
+
+    # CHANGING SORT TYPE
+    if request.POST.get('sort_by') == 'todo':
+        sorting_type = 'todo'
+    elif request.POST.get('sort_by') == 'priority_level':
+        sorting_type = 'priority_level'
+    elif request.POST.get('sort_by') == 'added_time':
+        sorting_type = 'added_time'
+    elif request.POST.get('sort_by') == 'updated_time':
+        sorting_type = 'updated_time'
+
+    # GET ALL TASKS IF THERE IS ANY
     if count_of_tasks == 0:
         tasks = False # or empty list
     else:
-        tasks = Task.objects.all()
+        # tasks = Task.objects.all()
+        if sorting_direction == 'ascending':
+            # tasks = Task.objects.all().order_by(sorting_type)
+            tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)
+        elif sorting_direction == 'descending':
+            # tasks = Task.objects.all().order_by(sorting_type).reverse()
+            tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type).reverse()
 
+    # HANDLING VIEW MODES OF TASK CARDS
+    if request.POST.get('view') == 'list_cards':
+        view_mode = 'grid_cards'
+    elif request.POST.get('view') == 'grid_cards':
+        view_mode = 'list_cards'
+
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
+    # SENDING REQUIRED INFORMATION TO THE HOMEPAGE
     context = {
-        'user': 'id_001', # id_001 guest
+        'user': nickname,
+        'auth_stat': auth_stat,
 
-        'sort': 'descending', # ascending descending
-        'view_mode': 'grid_cards', # grid_cards list_cards
-
-        'current_language': 'en', # en az tr ru
+        'sort_direction': sorting_direction,
+        'sort_type': sorting_type,
+        'view_mode': view_mode,
+        'current_language': current_language,
 
         'tasks': tasks,
         'count': count_of_tasks,
@@ -49,41 +99,68 @@ def tasks_list(request):
         'is_nav': True, # True False
     }
 
-    if context['user'] == 'guest':
-        print('login first')
+    # ...
+    if auth_stat == False:
+        # print('login first')
         return render(request, 'accounts/sign_in.html')
-    elif context['user'] == 'id_001':
-        print('welcome "user 001"')
+    elif auth_stat == True:
+        # print(f'welcome {nickname}')
+        # messages.info(request, f'welcome {nickname}')
         return render(request, 'tasks/tasks_list.html', context)
 
 
 # user will see him/her statistic information
 def dashboard(request):
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
     context = {
-        'user': 'guest',
+        'user': nickname,
+        'auth_stat': auth_stat,
 
         'untitled_data': 'empty',
 
         'is_nav': True,
     }
+
     return render(request, 'tasks/dashboard.html', context)
 
 
 # log history of tasks, their status and event information
 def log(request):
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
     context = {
-        'user': 'guest',
+        'user': nickname,
+        'auth_stat': auth_stat,
 
         'untitled_data': 'empty',
 
         'is_nav': True,
     }
+
     return render(request, 'tasks/log.html', context)
 
 
 # Crud operation, create new task
 @login_required
 def create_task(request):
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
     if request.method == 'POST':
         task_form = TaskForm(request.POST)
 
@@ -95,7 +172,8 @@ def create_task(request):
         task_form = TaskForm()
 
         context = {
-            'user': 'guest',
+            'user': nickname,
+            'auth_stat': auth_stat,
 
             'untitled_data': 'empty',
 
@@ -110,6 +188,13 @@ def create_task(request):
 # crUd operation, update selected task
 @login_required
 def update_task(request, pk):
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
     task = get_object_or_404(Task, id=pk)
 
     if request.method == 'POST':
@@ -123,7 +208,8 @@ def update_task(request, pk):
         task_form = TaskForm(instance=task)
         
         context = {
-            'user': 'guest',
+            'user': nickname,
+            'auth_stat': auth_stat,
 
             'untitled_data': 'empty',
 
@@ -148,8 +234,16 @@ def delete_task(request, pk):
 
 # opening the about page
 def about(request):
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
     context = {
-        'user': 'guest',
+        'user': nickname,
+        'auth_stat': auth_stat,
 
         'untitled_data': 'empty',
 
@@ -160,8 +254,16 @@ def about(request):
 
 # opening the contact page
 def contact(request):
+    auth_stat = request.user.is_authenticated
+
+    if request.user.is_authenticated:
+        nickname = f'{request.user.first_name} {request.user.last_name}'
+    else:
+        nickname = 'Guest'
+
     context = {
-        'user': 'guest',
+        'user': nickname,
+        'auth_stat': auth_stat,
 
         'untitled_data': 'empty',
 

@@ -12,13 +12,13 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <!-- NOTIFICATIONS -->
-    <div>
+    <!-- <div>
         {% if messages %}
             {% for message in messages %}
                 <p> {{ message }} </p>
             {% endfor %}
         {% endif %}
-    </div>
+    </div> -->
 
     <!-- CONTAINER -->
     <div style="background-color: rgb(100,100,100); min-height: 850px;"> <!-- . -->
@@ -35,7 +35,8 @@
                 "> <!-- . -->
                     <h2 style="color: rgb(255,255,255);">
                         {% if tasks.count > 0 %}
-                            TASKS: {{ tasks.count }}
+                            <!-- TASKS: {{ tasks.count }} -->
+                            TASKS: {{ count }}
                         {% else %}
                             TASKS: 0
                         {% endif %}

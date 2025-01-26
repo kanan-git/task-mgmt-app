@@ -1,5 +1,6 @@
 # IMPORT BUILT-IN LIBRARIES
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 # INFO
@@ -110,6 +111,8 @@ class Task(models.Model):
 
     added_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
+
+    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tasks', null=True)
     
     def __str__(self):
         all_categories_of_current_task = ''

@@ -15,26 +15,45 @@
         <input type="submit" id="search_btn" value="" onclick={SearchForTasks()}>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 10px;"> <!-- . -->
-        <button id="sort_direction_btn" onclick={SortDirection()}>
-            <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico"> <!-- . -->
-        </button> <!-- sort button for direction (ascending or descending) -->
-    
-        <label for="sort_by" onclick={SortTasksBy()}>
-            Sort by:
-            <select name="sort_by" id="sort_by">
-                <option value="update_time"> Update Time </option> <!-- ***** select tag or from backend, form part ***** -->
-                <option value="added_time"> Added Time </option>
-                <option value="alphabet"> Alphabet </option>
-                <option value="priority_point"> Priority Point </option>
-            </select> <!-- sort by button (alphabet, priority point, added time, update time, ...) -->
-        </label>
-        <button id="select_view" onclick={SelectView()}>
-            {% if view_mode == 'grid_cards' %}
-                <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;" id="select_view_ico"> <!-- . -->
-            {% elif view_mode == 'list_cards' %}
-                <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;" id="select_view_ico"> <!-- . -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <form method="post" id="sort_direction_btn">
+            {% csrf_token %}
+            {% if sort_direction == 'ascending' %}
+                <button type="submit" value="descending" name="direction">
+                    <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
+                </button>
+            {% elif sort_direction == 'descending' %}
+                <button type="submit" value="ascending" name="direction">
+                    <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
+                </button>
             {% endif %}
-        </button> <!-- view modes button (grid or list) -->
+        </form>
+    
+        <label for="sort_by" onclick={SortTasksBy()} style="display: flex; gap: 5px; align-items: center;">
+            <b> Sort by: </b>
+            <form method="post">
+                {% csrf_token %}
+                <select name="sort_by" id="sort_by">
+                    <option value="updated_time"> Update Time </option>
+                    <option value="added_time"> Added Time </option>
+                    <option value="todo"> Alphabet </option>
+                    <option value="priority_level"> Priority Point </option>
+                </select>
+                <button type="submit"> Sort </button>
+            </form>
+        </label>
+
+        <form id="select_view" method="post">
+            {% csrf_token %}
+            {% if view_mode == 'grid_cards' %}
+                <button type="submit" value="grid_cards" name="view">
+                    <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;" id="select_view_ico">
+                </button>
+            {% elif view_mode == 'list_cards' %}
+                <button type="submit" value="list_cards" name="view">
+                    <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;" id="select_view_ico">
+                </button>
+            {% endif %}
+        </form> <!-- view modes button (grid or list) -->
     </div>
  </div>

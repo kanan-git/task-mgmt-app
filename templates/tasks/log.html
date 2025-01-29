@@ -20,17 +20,25 @@
             <table>
                 <tr>
                     <th> № </th>
-                    <th> Category (Error Message, Success Message, Authentication, ...) </th>
+                    <th> Category </th> <!-- Create, Update, Delete, Error, Authentication -->
                     <th> Event </th>
                     <th> Date & Time </th>
                 </tr>
 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                {% if log %}
+                    {% for row in log %}
+                        <tr id={{row.id}}>
+                            <td> {{ row.id }}  </td>
+                            <td> {{ row.category }}  </td>
+                            <td> {{ row.event }}  </td>
+                            <td> {{ row.datentime }}  </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <p> EMPTY </p>
+                    </tr>
+                {% endif %}
             </table>
 
             <div>

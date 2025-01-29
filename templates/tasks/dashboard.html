@@ -14,9 +14,25 @@
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
         <h3> MY DASHBOARD </h3>
 
-        <br>
+        <hr>
 
         <div>
+            <h4> Profile Information </h4>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form }}
+                
+                <input type="submit" placeholder="Update">
+            </form>
+        </div>
+
+        <hr>
+
+        <div>
+            <h4> Graphic Data </h4>
+
             <div>
                 <!-- 2 AXIS GRAPH FOR SOME DATA -->
             </div>
@@ -28,7 +44,11 @@
             </div>
         </div>
 
+        <hr>
+
         <div>
+            <h4> Statistics of Your Activity </h4>
+
             <div>
                 <!-- CARD 1 FOR SOME DATA -->
             </div>

@@ -1,10 +1,10 @@
 # IMPORT BUILT-IN LIBRARIES
 from django import forms
 
-from .models import Account
+from .models import Profile
 
 
 class AccountForm(forms.ModelForm):
     class Meta:
-        model = Account
-        exclude = ()
+        model = Profile
+        exclude = ('firstname', 'lastname')

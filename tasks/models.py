@@ -73,10 +73,8 @@ from django.contrib.auth.models import User
 # TASK CATEGORIES (home, workout, study, hobby, entertaintment, unset, ...)
 class Category(models.Model):
     name = models.CharField(max_length=16)
-
     def __str__(self):
         return self.name
-
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categories'
@@ -85,35 +83,36 @@ class Category(models.Model):
 # TASK TYPE WILL DEFINE IS TASK WILL HAVE MILESTONES (0 > 3 > 15 ...) OR JUST WILL INCOMPLETE/DONE (0 or 1)
 class TypeOfTask(models.Model):
     name = models.CharField(max_length=16)
-
     def __str__(self):
         return self.name
+
+
+# LOG HISTORY OF USER'S
+class LogHistory(models.Model):
+    LOG_CATEGORIES = [('create','Create'), ('update','Update'), ('delete','Delete'), ('error','Error'), ('authentication','Authentication')]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.CharField(choices=LOG_CATEGORIES, max_length=16)
+    event = models.TextField()
+    datentime = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.id} • {self.category} • {self.event} • {self.datentime}'
 
 
 # MODEL FOR TASK CARD
 class Task(models.Model):
     PRIORITY_OPTIONS = [(1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9), (10,10)]
     STATUS_OPTIONS = [(1,'1 → Incomplete'), (2,'2 → Work In Progress'), (3,'3 → Done')]
-
     category_of_task = models.ManyToManyField(Category, null=True, blank=True)
     type_of_task = models.ForeignKey(TypeOfTask, on_delete=models.CASCADE, null=True, blank=True)
-
     todo = models.TextField(max_length=256, null=True, blank=True)
-
     priority_level = models.IntegerField(choices=PRIORITY_OPTIONS, default=1)
-
     todo_status = models.IntegerField(choices=STATUS_OPTIONS, default=1) # CONDITION IN HERE FOR SEPARATION, WHEN CHOOSE TYPE OF TASK, ONLY NECESSARY MODEL MUST BE VISIBLE
-
     progression_start = models.IntegerField(default=0)
     progression_end = models.IntegerField(default=1) # REQUIRES TRY EXCEPT OR ANY ERROR HANDLER, ONLY ALLOW START<END
-
     # is_starred = models.BooleanField(default=False)
-
     added_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
-
-    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tasks', null=True)
-    
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='tasks', null=True)
     def __str__(self):
         all_categories_of_current_task = ''
         for category in self.category_of_task.all():

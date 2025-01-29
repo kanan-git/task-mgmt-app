@@ -1,30 +1,21 @@
+# IMPORT BUILT-IN LIBRARIES
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponse
 
-from .models import Task
+# IMPORT CUSTOM MODEL & FUNCTIONS
+from .models import Task, LogHistory
 from .forms import TaskForm
+from accounts.models import Profile
+from accounts.forms import AccountForm
 
-# GUIDE AS MULTI-LINE STRING
-"""
-    // Application, komandalara tapşırıqların idarə edilməsində kömək edəcəkdir. //
 
-    #===== ƏsasFunksionallıqlar =====#
-    1. İstifadəçi və komanda idarəetməsi.
-    2. Taskların yaradılması, yenilənməsi və tamamlanması.
-    3. Tapşırıq üçün prioritetlərin təyin edilməsi.
-    4. Task tarixçəsinin saxlanması.
-    5. Statistik hesabatların yaradılması.
-
-    #===== Texniki Tələblər =====#
-    - Backend: Django, Django Rest Framework.
-    - Verilənlər Bazası: PostgreSQL.
-    - API: Task idarəetməsi üçün endpointlər.
-
-    #===== Deadline =====#
-    - February 5, 2025 (III)
-"""
+# save all events as user's log history
+def log_history(profile, type, message):
+    LogHistory.objects.create(user=profile, category=type, event=message)
 
 
 # contains active user's tasks
@@ -99,10 +90,9 @@ def tasks_list(request):
         'is_nav': True, # True False
     }
 
-    # ...
+    # OUTPUT
     if auth_stat == False:
-        # print('login first')
-        return render(request, 'accounts/sign_in.html')
+        return redirect('sign_in')
     elif auth_stat == True:
         # print(f'welcome {nickname}')
         # messages.info(request, f'welcome {nickname}')
@@ -118,11 +108,21 @@ def dashboard(request):
     else:
         nickname = 'Guest'
 
+    if request.method == 'POST':
+        form = AccountForm(request.POST, instance=Profile())
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = AccountForm(instance=Profile())
+    
     context = {
         'user': nickname,
         'auth_stat': auth_stat,
 
         'untitled_data': 'empty',
+
+        'form': form,
 
         'is_nav': True,
     }
@@ -133,6 +133,7 @@ def dashboard(request):
 # log history of tasks, their status and event information
 def log(request):
     auth_stat = request.user.is_authenticated
+    log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
 
     if request.user.is_authenticated:
         nickname = f'{request.user.first_name} {request.user.last_name}'
@@ -143,7 +144,7 @@ def log(request):
         'user': nickname,
         'auth_stat': auth_stat,
 
-        'untitled_data': 'empty',
+        'log': log_of_user,
 
         'is_nav': True,
     }
@@ -165,8 +166,11 @@ def create_task(request):
         task_form = TaskForm(request.POST)
 
         if task_form.is_valid():
-            task_form.save()
-
+            form = task_form.save(commit=False)
+            form.assigned_to = request.user
+            form.save()
+            # message = messages.success(request, f'New task {task_form.save().id} successfully created.')
+            log_history(request.user, 'create', f'New task {task_form.save().id} successfully created.')
             return redirect('tasks_list')
     else:
         task_form = TaskForm()
@@ -202,7 +206,7 @@ def update_task(request, pk):
 
         if task_form.is_valid():
             task_form.save()
-
+            log_history(request.user, 'update', f'Task #{task_form.save().id} successfully updated.')
             return redirect('tasks_list')
     else:
         task_form = TaskForm(instance=task)
@@ -227,6 +231,7 @@ def update_task(request, pk):
 @login_required
 def delete_task(request, pk):
     selected_task = Task.objects.get(id=pk)
+    log_history(request.user, 'delete', f'Task #{pk} permanently deleted.')
     selected_task.delete()
     messages.success(request, f'Task ID:{pk} successfully removed.')
     return redirect('tasks_list')

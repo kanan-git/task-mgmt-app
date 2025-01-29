@@ -10,8 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
-from os import path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h49*k)rt_ij%=q_l0q2z8i$ze&n(hhif$!miz_s@5b6to=hipu'
+# SECRET_KEY = 'django-insecure-h49*k)rt_ij%=q_l0q2z8i$ze&n(hhif$!miz_s@5b6to=hipu'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -124,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 # STATIC_ROOT = 'static/' # CUSTOM ADDED
-STATICFILES_DIRS = [path.join(BASE_DIR, 'static/')] # CUSTOM ADDED
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')] # CUSTOM ADDED
 
 # MEDIA_ROOT = path.join(BASE_DIR, 'media') # CUSTOM ADDED
 # MEDIA_URL = '/media/' # CUSTOM ADDED

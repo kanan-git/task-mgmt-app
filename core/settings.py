@@ -30,7 +30,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,12 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # INSTALLED APPS
+    'rest_framework',
+    # 'rest_framework.authtoken',
+    'corsheaders',
+
     # CUSTOM ADDED APPS
     'accounts.apps.AccountsConfig',
     'tasks.apps.TasksConfig',
 ]
 
 MIDDLEWARE = [
+    # DEFAULT DJANGO APPS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,7 +63,30 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # INSTALLED APPS
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_REPLACE_HTTP_REFERER = True
+# CORS_ALLOW_HEADERS = '*'
+# CORS_EXPOSE_HEADERS = ['Set-Cookie']
+# CORS_ALLOWED_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH',]
+# CORS_ALLOWED_HOSTS = [
+#     'localhost",
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://localhost',
+#     'https://localhost:3000',
+#     'https://localhost:5500',
+#     'http://localhost',
+#     'http://localhost:3000',
+#     'http://localhost:5500',
+# ]
+# CORS_ALLOW_CREDENTIALS: True
+
 
 ROOT_URLCONF = 'core.urls'
 

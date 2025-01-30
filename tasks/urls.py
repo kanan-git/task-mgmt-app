@@ -16,4 +16,7 @@ urlpatterns =[
     # path group for rest of pages
     path('about/', tasks_view.about, name='about'),
     path('contact/', tasks_view.contact, name='contact'),
+
+    # api url
+    path('api/', tasks_view.TaskView.as_view(), name='tasks_api'),
 ]

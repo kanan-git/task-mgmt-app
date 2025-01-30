@@ -6,11 +6,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 
+# INSTALLED LIBRARIES
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 # IMPORT CUSTOM MODEL & FUNCTIONS
 from .models import Task, LogHistory
 from .forms import TaskForm
 from accounts.models import Profile
 from accounts.forms import AccountForm
+from .serializers import TaskSerializer
 
 
 # save all events as user's log history
@@ -275,3 +281,35 @@ def contact(request):
         'is_nav': True,
     }
     return render(request, 'tasks/contact.html', context)
+
+# class based view for Django Rest API
+class TaskView(APIView):
+    def get(self, request, *args, **kwargs):
+        result = Task.objects.all()
+        serializers = TaskSerializer(result, many=True)
+        return Response(
+            {
+                'status': 'success', 
+                'data': serializers.data
+            }, 
+            status = 200
+        )
+    def post(self, request):
+        serializer = TaskSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {
+                    'status': 'success', 
+                    'data': serializer.data
+                }, 
+                status = status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {
+                    'status': 'error', 
+                    'data': serializer.errors
+                }, 
+                status = status.HTTP_400_BAD_REQUEST
+            )

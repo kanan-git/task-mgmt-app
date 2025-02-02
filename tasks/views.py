@@ -55,7 +55,8 @@ def tasks_list(request):
     elif request.POST.get('sort_by') == 'updated_time':
         sorting_type = 'updated_time'
 
-    # GET ALL TASKS IF THERE IS ANY
+    # # GET ALL TASKS IF THERE IS ANY
+    # tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type) or False
     if count_of_tasks == 0:
         tasks = False # or empty list
     else:
@@ -66,6 +67,16 @@ def tasks_list(request):
         elif sorting_direction == 'descending':
             # tasks = Task.objects.all().order_by(sorting_type).reverse()
             tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type).reverse()
+
+    #========================================#
+    # print(request.GET.get('view'))
+    # print(request.GET.get('direction'))
+    # print(request.GET.get('sortby'))
+    # x = request.POST.get('language') or 'english'
+    # print(x)
+    # print(request.GET.get('search'))
+    print(request.GET.get('filter'))
+    #========================================#
 
     # HANDLING VIEW MODES OF TASK CARDS
     if request.POST.get('view') == 'list_cards':
@@ -79,6 +90,16 @@ def tasks_list(request):
         nickname = f'{request.user.first_name} {request.user.last_name}'
     else:
         nickname = 'Guest'
+
+    # http://localhost:8000/?sort=down&view=list
+    # if request.GET.get('sort') == 'down':
+    #     print('it is descending')
+    # elif request.GET.get('sort') == 'up':
+    #     print('it is ascending')
+    # if request.GET.get('view') == 'grid':
+    #     print('it is grid view')
+    # elif request.GET.get('view') == 'list':
+    #     print('it is list view')
 
     # SENDING REQUIRED INFORMATION TO THE HOMEPAGE
     context = {

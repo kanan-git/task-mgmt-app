@@ -105,8 +105,8 @@
                 outline: none;
                 margin-bottom: 0; height: 100%;
                 " onmouseenter={language_dropdown_show()} onmouseleave={language_dropdown_hide()}>
-                <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="flag_en" style="width: 30px;">
-                    EN
+                    <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="language" style="width: 30px;">
+                    <span> EN </span>
                 </button>
 
                 <ul id="lang_dropdown" onmouseover={language_dropdown_show()} onmouseleave={language_dropdown_hide()} style="
@@ -120,25 +120,53 @@
                 border-radius: 4px; 
                 z-index: 1; 
                 padding: 20px;
-                width: 100px;
+                width: 120px;
                 height: fit-content;
                 ">
-                    <li id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
-                        <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" id="flag_us" style="width: 30px;">
+                    <!-- <li id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" name="english" id="flag-us" style="width: 30px;">
                         <span> EN </span>
                     </li>
                     <li id="lang_az" onclick={change_language(this,2)}>
-                        <img src="{% static 'img/flags/flag-az-svgrepo-com.svg' %}" alt="azerbaijani" id="flag_az" style="width: 30px;">
+                        <img src="{% static 'img/flags/flag-az-svgrepo-com.svg' %}" alt="azerbaijani" name="azerbaijani" id="flag-az" style="width: 30px;">
                         <span> AZ </span>
                     </li>
                     <li id="lang_tr" onclick={change_language(this,3)}>
-                        <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg' %}" alt="turkish" id="flag_tr" style="width: 30px;">
+                        <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg' %}" alt="turkish" name="turkish" id="flag-tr" style="width: 30px;">
                         <span> TR </span>
                     </li>
                     <li id="lang_ru" onclick={change_language(this,4)}>
-                        <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg' %}" alt="russian" id="flag_ru" style="width: 30px;">
+                        <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg' %}" alt="russian" name="russian" id="flag-ru" style="width: 30px;">
                         <span> RU </span>
-                    </li>
+                    </li> -->
+                    <form method="post" id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="english" name="language">
+                            {% csrf_token %}
+                            <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" name="english" id="flag-us" style="width: 30px;">
+                            <span> EN </span>
+                        </button>
+                    </form>
+                    <form method="post" id="lang_az" onclick={change_language(this,2)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="azerbaijani" name="language">
+                            {% csrf_token %}
+                            <img src="{% static 'img/flags/flag-az-svgrepo-com.svg' %}" alt="azerbaijani" name="azerbaijani" id="flag-az" style="width: 30px;">
+                            <span> AZ </span>
+                        </button>
+                    </form>
+                    <form method="post" id="lang_tr" onclick={change_language(this,3)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="turkish" name="language">
+                            {% csrf_token %}
+                            <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg' %}" alt="turkish" name="turkish" id="flag-tr" style="width: 30px;">
+                            <span> TR </span>
+                        </button>
+                    </form>
+                    <form method="post" id="lang_ru" onclick={change_language(this,4)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="russian" name="language">
+                            {% csrf_token %}
+                            <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg' %}" alt="russian" name="russian" id="flag-ru" style="width: 30px;">
+                            <span> RU </span>
+                        </button>
+                    </form>
                 </ul>
             </span>
         </span>

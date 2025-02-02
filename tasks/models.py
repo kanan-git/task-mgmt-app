@@ -90,7 +90,7 @@ class TypeOfTask(models.Model):
 # LOG HISTORY OF USER'S
 class LogHistory(models.Model):
     LOG_CATEGORIES = [('create','Create'), ('update','Update'), ('delete','Delete'), ('error','Error'), ('authentication','Authentication')]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # related_name='user'
     category = models.CharField(choices=LOG_CATEGORIES, max_length=16)
     event = models.TextField()
     datentime = models.DateTimeField(auto_now_add=True)
@@ -103,7 +103,7 @@ class Task(models.Model):
     PRIORITY_OPTIONS = [(1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9), (10,10)]
     STATUS_OPTIONS = [(1,'1 → Incomplete'), (2,'2 → Work In Progress'), (3,'3 → Done')]
     category_of_task = models.ManyToManyField(Category, null=True, blank=True)
-    type_of_task = models.ForeignKey(TypeOfTask, on_delete=models.CASCADE, null=True, blank=True)
+    type_of_task = models.ForeignKey(TypeOfTask, on_delete=models.CASCADE, null=True, blank=True) # related_name='tasks'
     todo = models.TextField(max_length=256, null=True, blank=True)
     priority_level = models.IntegerField(choices=PRIORITY_OPTIONS, default=1)
     todo_status = models.IntegerField(choices=STATUS_OPTIONS, default=1) # CONDITION IN HERE FOR SEPARATION, WHEN CHOOSE TYPE OF TASK, ONLY NECESSARY MODEL MUST BE VISIBLE

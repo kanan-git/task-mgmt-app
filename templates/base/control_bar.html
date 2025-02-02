@@ -12,24 +12,34 @@
 
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 5px;">
         <input type="search" id="search_input" placeholder="Search for tasks" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
-        <input type="submit" id="search_btn" value="" onclick={SearchForTasks()}>
+        <!-- <input type="submit" id="search_btn" value="" onclick="SearchForTasks()"> -->
+        <button style="background-color: transparent; border: none; outline: none;">
+            <img src="{% static '/img/icons/magnifier-svgrepo-com.svg' %}" alt="search_btn" width="30px" height="30px" style="background-color: transparent; border: none; outline: none;" onclick="SearchForTasks()">
+        </button>
     </div>
 
     <div style="display: flex; align-items: center; gap: 10px;">
-        <form method="post" id="sort_direction_btn">
+        <!-- <form method="post" id="sort_direction_btn">
             {% csrf_token %}
             {% if sort_direction == 'ascending' %}
                 <button type="submit" value="descending" name="direction">
-                    <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
+                    <a href="{% url 'tasks_list' %}?direct=descending">
+                        <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
+                    </a>
                 </button>
             {% elif sort_direction == 'descending' %}
                 <button type="submit" value="ascending" name="direction">
-                    <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
+                    <a href="{% url 'tasks_list' %}?direct=ascending">
+                        <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
+                    </a>
                 </button>
             {% endif %}
-        </form>
-    
-        <label for="sort_by" onclick={SortTasksBy()} style="display: flex; gap: 5px; align-items: center;">
+        </form> -->
+        <span>
+            <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_direction" style="width: 30px;" id="sort_direct_ico" onclick="SortDirection()">
+        </span>
+        |
+        <!-- <label for="sort_by" onclick={SortTasksBy()} style="display: flex; gap: 5px; align-items: center;">
             <b> Sort by: </b>
             <form method="post">
                 {% csrf_token %}
@@ -41,9 +51,18 @@
                 </select>
                 <button type="submit"> Sort </button>
             </form>
-        </label>
-
-        <form id="select_view" method="post">
+        </label> -->
+        <span>
+            <b> Sort by: </b>
+            <select name="sort_by" id="sort_by" onchange="SortTasksBy()">
+                <option value="updated_time"> Update Time </option>
+                <option value="added_time"> Added Time </option>
+                <option value="todo"> Alphabet </option>
+                <option value="priority_level"> Priority Point </option>
+            </select>
+        </span>
+        |
+        <!-- <form id="select_view" method="post">
             {% csrf_token %}
             {% if view_mode == 'grid_cards' %}
                 <button type="submit" value="grid_cards" name="view">
@@ -54,6 +73,9 @@
                     <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;" id="select_view_ico">
                 </button>
             {% endif %}
-        </form> <!-- view modes button (grid or list) -->
+        </form> -->
+        <span>
+            <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;" id="select_view_ico" onclick="SelectView()">
+        </span>
     </div>
  </div>

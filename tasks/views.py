@@ -55,7 +55,6 @@ def tasks_list(request):
         pages = [1]
         tasks_of_page = []
     else:
-        #===== .order_by(type) - both by parameters, add when active | all tries is for considering a possible scenario, which user can change filter or search or other parameter after called task by static request, so that two or more parameter wont work together or directly will raise an error =====#
 
         if sorting_direction == 'ascending':
                 tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)

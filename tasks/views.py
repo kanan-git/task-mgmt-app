@@ -24,82 +24,72 @@ def log_history(profile, type, message):
     LogHistory.objects.create(user=profile, category=type, event=message)
 
 
-# contains active user's tasks
+# HOMEPAGE
 def tasks_list(request):
     # COUNTING EXIST ELEMENTS INSIDE DATABASE
     if request.user.is_authenticated:
-        # count_of_tasks = Task.objects.count()
         count_of_tasks = User.objects.get(id=request.user.id).tasks.all().count()
     else:
         count_of_tasks = 0
 
-    # DEFAULT PARAMETERS FOR CONTROL BAR
-    sorting_direction = 'ascending'
-    sorting_type = 'updated_time'
-    view_mode = 'grid_cards'
-    current_language  = 'en'
+    # GET URL PARAMETERS OR DEFAULT
+    view_mode = request.GET.get('view') or 'grid'
+    current_language = request.GET.get('lang') or 'english'
+    sorting_direction = request.GET.get('direction') or 'ascending'
+    sorting_type = request.GET.get('sortby') or 'updated_time'
+    # searched_string = request.GET.get('search')
+    # filter_elements_mark_q = request.GET.get('filter_elements_???')
 
-    # CHANGING SORT DIRECTION
-    if request.POST.get('direction') == 'ascending':
-        sorting_direction = 'ascending'
-    elif request.POST.get('direction') == 'descending':
-        sorting_direction = 'descending'
+    # COUNTING HOW MANY PAGE WILL BE THERE
+    last_page = count_of_tasks // 9
+    pages = []
+    if count_of_tasks % 9 > 0:
+        last_page += 1
+    for index in range(1, last_page+1):
+            pages.append(index)
 
-    # CHANGING SORT TYPE
-    if request.POST.get('sort_by') == 'todo':
-        sorting_type = 'todo'
-    elif request.POST.get('sort_by') == 'priority_level':
-        sorting_type = 'priority_level'
-    elif request.POST.get('sort_by') == 'added_time':
-        sorting_type = 'added_time'
-    elif request.POST.get('sort_by') == 'updated_time':
-        sorting_type = 'updated_time'
-
-    # # GET ALL TASKS IF THERE IS ANY
-    # tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type) or False
+    # GET USER'S TASKS
     if count_of_tasks == 0:
-        tasks = False # or empty list
+        tasks = False
+        last_page = 1
+        pages = [1]
+        tasks_of_page = []
     else:
-        # tasks = Task.objects.all()
+        #===== .order_by(type) - both by parameters, add when active | all tries is for considering a possible scenario, which user can change filter or search or other parameter after called task by static request, so that two or more parameter wont work together or directly will raise an error =====#
+
         if sorting_direction == 'ascending':
-            # tasks = Task.objects.all().order_by(sorting_type)
-            tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)
+                tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)
         elif sorting_direction == 'descending':
-            # tasks = Task.objects.all().order_by(sorting_type).reverse()
             tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type).reverse()
 
-    #========================================#
-    # print(request.GET.get('view'))
-    # print(request.GET.get('direction'))
-    # print(request.GET.get('sortby'))
-    # x = request.POST.get('language') or 'english'
-    # print(x)
-    # print(request.GET.get('search'))
-    print(request.GET.get('filter'))
-    #========================================#
+        if request.GET.get('page'):
+            page_number = int(request.GET.get('page'))
+            first_index_of_the_page = (page_number-1)*9
+            final_index_of_the_page = 9*page_number-1
+            if final_index_of_the_page >= count_of_tasks:
+                final_index_of_the_page = count_of_tasks-1
+            tasks_of_page = []
 
-    # HANDLING VIEW MODES OF TASK CARDS
-    if request.POST.get('view') == 'list_cards':
-        view_mode = 'grid_cards'
-    elif request.POST.get('view') == 'grid_cards':
-        view_mode = 'list_cards'
+            for i in range(first_index_of_the_page, final_index_of_the_page+1):
+                tasks_of_page.append(tasks[i])
+        else:
+            page_number = 1
+            first_index_of_the_page = 0
+            final_index_of_the_page = 8
+            if final_index_of_the_page >= count_of_tasks:
+                final_index_of_the_page = count_of_tasks-1
+            tasks_of_page = []
 
+            for i in range(first_index_of_the_page, final_index_of_the_page+1):
+                tasks_of_page.append(tasks[i])
+        
+
+    # AUTHENTICATED OR GUEST
     auth_stat = request.user.is_authenticated
-
     if request.user.is_authenticated:
         nickname = f'{request.user.first_name} {request.user.last_name}'
     else:
         nickname = 'Guest'
-
-    # http://localhost:8000/?sort=down&view=list
-    # if request.GET.get('sort') == 'down':
-    #     print('it is descending')
-    # elif request.GET.get('sort') == 'up':
-    #     print('it is ascending')
-    # if request.GET.get('view') == 'grid':
-    #     print('it is grid view')
-    # elif request.GET.get('view') == 'list':
-    #     print('it is list view')
 
     # SENDING REQUIRED INFORMATION TO THE HOMEPAGE
     context = {
@@ -111,7 +101,9 @@ def tasks_list(request):
         'view_mode': view_mode,
         'current_language': current_language,
 
-        'tasks': tasks,
+        # 'tasks': tasks,
+        'tasks': tasks_of_page,
+        'pages': pages,
         'count': count_of_tasks,
 
         'is_nav': True, # True False
@@ -121,7 +113,6 @@ def tasks_list(request):
     if auth_stat == False:
         return redirect('sign_in')
     elif auth_stat == True:
-        # print(f'welcome {nickname}')
         # messages.info(request, f'welcome {nickname}')
         return render(request, 'tasks/tasks_list.html', context)
 
@@ -302,6 +293,7 @@ def contact(request):
         'is_nav': True,
     }
     return render(request, 'tasks/contact.html', context)
+
 
 # class based view for Django Rest API
 class TaskView(APIView):

@@ -2,78 +2,116 @@
 {% load static %}
 
 <!-- ELEMENTS OF THE CONTROL BAR -->
-<div style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(200,200,200); min-height: 50px;"> <!-- . -->
+<div style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(200,200,200); min-height: 50px;">
     <div>
-        <button onclick={ToggleFilterPanel()}>
-            FILTER
-            <img src="{% static 'img/icons/filter-svgrepo-com.svg' %}" alt="filter" style="width: 30px;"> <!-- . -->
-        </button> <!-- filter button, show or hide filter aside (done or incomplete or work in progress, category, added time, update time, point, type, ...) -->
+        <button onclick={ToggleFilterPanel()} style="border: none; outline: none; background-color: transparent;">
+            <b>
+                {% if current_language == 'english' %}
+                    FILTER
+                {% elif current_language == 'azerbaijani' %}
+                    FİLTR
+                {% elif current_language == 'turkish' %}
+                    FİLTRE
+                {% elif current_language == 'russian' %}
+                    ФИЛЬТР
+                {% else %}
+                    FILTER
+                {% endif %}
+            </b>
+            <img src="{% static 'img/icons/filter-svgrepo-com.svg' %}" alt="filter" style="width: 30px;">
+        </button>
     </div>
 
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 5px;">
-        <input type="search" id="search_input" placeholder="Search for tasks" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
-        <!-- <input type="submit" id="search_btn" value="" onclick="SearchForTasks()"> -->
+        {% if current_language == 'english' %}
+            <input type="search" id="search_input" placeholder="Search for tasks" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
+        {% elif current_language == 'azerbaijani' %}
+            <input type="search" id="search_input" placeholder="Tapşırıqlar üçün axtarış et" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
+        {% elif current_language == 'turkish' %}
+            <input type="search" id="search_input" placeholder="Görevleri ara" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
+        {% elif current_language == 'russian' %}
+            <input type="search" id="search_input" placeholder="Поиск задач" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
+        {% else %}
+            <input type="search" id="search_input" placeholder="Search for tasks" style="outline: none; border: 1px solid rgb(160,160,160); border-radius: 20px; width: 500px; height: 40px; padding: 5px 10px;">
+        {% endif %}
         <button style="background-color: transparent; border: none; outline: none;">
             <img src="{% static '/img/icons/magnifier-svgrepo-com.svg' %}" alt="search_btn" width="30px" height="30px" style="background-color: transparent; border: none; outline: none;" onclick="SearchForTasks()">
         </button>
     </div>
 
     <div style="display: flex; align-items: center; gap: 10px;">
-        <!-- <form method="post" id="sort_direction_btn">
-            {% csrf_token %}
-            {% if sort_direction == 'ascending' %}
-                <button type="submit" value="descending" name="direction">
-                    <a href="{% url 'tasks_list' %}?direct=descending">
-                        <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
-                    </a>
-                </button>
-            {% elif sort_direction == 'descending' %}
-                <button type="submit" value="ascending" name="direction">
-                    <a href="{% url 'tasks_list' %}?direct=ascending">
-                        <img src="{% static 'img/icons/sort-from-bottom-to-top-svgrepo-com.svg' %}" alt="sort_by" style="width: 30px;" id="sort_direct_ico">
-                    </a>
-                </button>
-            {% endif %}
-        </form> -->
         <span>
             <img src="{% static 'img/icons/sort-from-top-to-bottom-svgrepo-com.svg' %}" alt="sort_direction" style="width: 30px;" id="sort_direct_ico" onclick="SortDirection()">
         </span>
         |
-        <!-- <label for="sort_by" onclick={SortTasksBy()} style="display: flex; gap: 5px; align-items: center;">
-            <b> Sort by: </b>
-            <form method="post">
-                {% csrf_token %}
-                <select name="sort_by" id="sort_by">
-                    <option value="updated_time"> Update Time </option>
-                    <option value="added_time"> Added Time </option>
-                    <option value="todo"> Alphabet </option>
-                    <option value="priority_level"> Priority Point </option>
-                </select>
-                <button type="submit"> Sort </button>
-            </form>
-        </label> -->
         <span>
-            <b> Sort by: </b>
+            {% if current_language == 'english' %}
+                <b> Sort by: </b>
+            {% elif current_language == 'azerbaijani' %}
+                <b>  Sırala: </b>
+            {% elif current_language == 'turkish' %}
+                <b>  Göre Sırala: </b>
+            {% elif current_language == 'russian' %}
+                <b>  Сортировать по: </b>
+            {% else %}
+                <b> Sort by: </b>
+            {% endif %}
             <select name="sort_by" id="sort_by" onchange="SortTasksBy()">
-                <option value="updated_time"> Update Time </option>
-                <option value="added_time"> Added Time </option>
-                <option value="todo"> Alphabet </option>
-                <option value="priority_level"> Priority Point </option>
+                <option value="updated_time">
+                {% if current_language == 'english' %}
+                    Update Time
+                {% elif current_language == 'azerbaijani' %}
+                    Yeniləmə Vaxtı
+                {% elif current_language == 'turkish' %}
+                    Güncelleme Zamanı
+                {% elif current_language == 'russian' %}
+                    Время Обновления
+                {% else %}
+                    Update Time
+                {% endif %}
+                </option>
+                <option value="added_time">
+                {% if current_language == 'english' %}
+                    Added Time
+                {% elif current_language == 'azerbaijani' %}
+                    Əlavə Edilmə Vaxt
+                {% elif current_language == 'turkish' %}
+                    Eklenen Zaman
+                {% elif current_language == 'russian' %}
+                    Добавленное Время
+                {% else %}
+                    Added Time
+                {% endif %}
+                </option>
+                <option value="todo">
+                {% if current_language == 'english' %}
+                    Alphabet
+                {% elif current_language == 'azerbaijani' %}
+                    Əlifba
+                {% elif current_language == 'turkish' %}
+                    Alfabe
+                {% elif current_language == 'russian' %}
+                    Алфавит
+                {% else %}
+                    Alphabet
+                {% endif %}
+                </option>
+                <option value="priority_level">
+                {% if current_language == 'english' %}
+                    Priority Point
+                {% elif current_language == 'azerbaijani' %}
+                    Prioritet Dərəcəsi
+                {% elif current_language == 'turkish' %}
+                    Öncelik Puanı
+                {% elif current_language == 'russian' %}
+                    Уровень Приоритета
+                {% else %}
+                    Priority Point
+                {% endif %}
+                </option>
             </select>
         </span>
         |
-        <!-- <form id="select_view" method="post">
-            {% csrf_token %}
-            {% if view_mode == 'grid_cards' %}
-                <button type="submit" value="grid_cards" name="view">
-                    <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;" id="select_view_ico">
-                </button>
-            {% elif view_mode == 'list_cards' %}
-                <button type="submit" value="list_cards" name="view">
-                    <img src="{% static 'img/icons/view-list-bullet-rtl-svgrepo-com.svg' %}" alt="list_view" style="width: 30px;" id="select_view_ico">
-                </button>
-            {% endif %}
-        </form> -->
         <span>
             <img src="{% static 'img/icons/grid-view-svgrepo-com.svg' %}" alt="grid_view" style="width: 30px;" id="select_view_ico" onclick="SelectView()">
         </span>

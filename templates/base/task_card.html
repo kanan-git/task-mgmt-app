@@ -43,7 +43,19 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
         <p style="
         text-align: center;
         "> <!-- . -->
-            <b> TO DO: </b>
+            <b>
+                {% if current_language == 'english' %}
+                    TO DO:
+                {% elif current_language == 'azerbaijani' %}
+                    TAPŞIRIQ:
+                {% elif current_language == 'turkish' %}
+                    GÖREV:
+                {% elif current_language == 'russian' %}
+                    ЗАДАЧА:
+                {% else %}
+                    TO DO:
+                {% endif %}
+            </b>
             {{ card.todo }}
         </p> <!-- SET LARGE LIMIT LIKE 256, IF DESCRIPTION IS OVERFLOW, CREATE READ MORE BUTTON FOR TOGGLE MORE/LESS or SCROLBAR-->
 
@@ -59,7 +71,19 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
             max-height: 100px;
             overflow-y: auto;
             "> <!-- . -->
-                <b> Categories: </b>
+                <b>
+                    {% if current_language == 'english' %}
+                        Categories:
+                    {% elif current_language == 'azerbaijani' %}
+                        Kateqoriyalar:
+                    {% elif current_language == 'turkish' %}
+                        Kategoriler:
+                    {% elif current_language == 'russian' %}
+                        Категории:
+                    {% else %}
+                        Categories:
+                    {% endif %}
+                </b>
                 {% if card.category_of_task.all %}
                     {% for category in card.category_of_task.all %}
                         <span>
@@ -83,11 +107,35 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
         justify-content: space-around;
         ">
             <p>
-                <b> Created: </b>
+                <b>
+                    {% if current_language == 'english' %}
+                        Created:
+                    {% elif current_language == 'azerbaijani' %}
+                        Yaradıldı:
+                    {% elif current_language == 'turkish' %}
+                        Oluşturuldu:
+                    {% elif current_language == 'russian' %}
+                        Созданный:
+                    {% else %}
+                        Created:
+                    {% endif %}
+                </b>
                 {{card.added_time}}
             </p>
             <p>
-                <b> Updated: </b>
+                <b>
+                    {% if current_language == 'english' %}
+                        Updated:
+                    {% elif current_language == 'azerbaijani' %}
+                        Yenilənib:
+                    {% elif current_language == 'turkish' %}
+                        Güncellendi:
+                    {% elif current_language == 'russian' %}
+                        Обновлено:
+                    {% else %}
+                        Updated:
+                    {% endif %}
+                </b>
                 {{card.updated_time}}
             </p>
         </span>
@@ -105,7 +153,19 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
         </div>
 
         <div style="display: flex; align-items: center; gap: 10px;">
-            <b> Status: </b>
+            <b>
+                {% if current_language == 'english' %}
+                    Status:
+                {% elif current_language == 'azerbaijani' %}
+                    Vəziyyət:
+                {% elif current_language == 'turkish' %}
+                    Durum:
+                {% elif current_language == 'russian' %}
+                    Статус:
+                {% else %}
+                    Status:
+                {% endif %}
+            </b>
             {% if card.type_of_task_id == 1 %}
                 {% if card.todo_status == 1 %}
                     <div style="
@@ -116,7 +176,19 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     padding: 5px;
                     filter: drop-shadow(0px 0px 10px rgb(255,200,150));
                     border-radius: 5px;
-                    "> Incomplete </div> <!-- . -->
+                    ">
+                        {% if current_language == 'english' %}
+                            Incomplete
+                        {% elif current_language == 'azerbaijani' %}
+                            Başlanmayıb
+                        {% elif current_language == 'turkish' %}
+                            Henüz başlamadı
+                        {% elif current_language == 'russian' %}
+                            Еще не начато
+                        {% else %}
+                            Incomplete
+                        {% endif %}
+                    </div> <!-- . -->
                 {% elif card.todo_status == 2 %}
                     <div style="
                     width: auto;
@@ -126,7 +198,19 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     padding: 5px;
                     filter: drop-shadow(0px 0px 10px rgb(255,255,150));
                     border-radius: 5px;
-                    "> Work In Progress </div> <!-- . -->
+                    ">
+                        {% if current_language == 'english' %}
+                            Work In Progress  
+                        {% elif current_language == 'azerbaijani' %}
+                            Davam Edən İş
+                        {% elif current_language == 'turkish' %}
+                            Devam Eden Çalışma
+                        {% elif current_language == 'russian' %}
+                            Работа в Процессе
+                        {% else %}
+                            Work In Progress
+                        {% endif %}
+                    </div> <!-- . -->
                 {% elif card.todo_status == 3 %}
                     <div style="
                     width: auto;
@@ -136,7 +220,19 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                     padding: 5px;
                     filter: drop-shadow(0px 0px 10px rgb(120,220,120));
                     border-radius: 5px;
-                    "> Done </div> <!-- . -->
+                    ">
+                        {% if current_language == 'english' %}
+                            Done
+                        {% elif current_language == 'azerbaijani' %}
+                            Bitdi
+                        {% elif current_language == 'turkish' %}
+                            Tamamlandı
+                        {% elif current_language == 'russian' %}
+                            Готово
+                        {% else %}
+                            Done
+                        {% endif %}
+                    </div> <!-- . -->
                 {% endif %}
             {% else %}
                 <span style="
@@ -153,7 +249,17 @@ background-color: rgb(230, 220, 220);"> <!-- . -->
                         {% if card.progression_start != card.progression_end %}
                             {{ card.progression_start }} of {{ card.progression_end }}
                         {% else %}
-                            COMPLETED
+                            {% if current_language == 'english' %}
+                                COMPLETED
+                            {% elif current_language == 'azerbaijani' %}
+                                BİTDİ
+                            {% elif current_language == 'turkish' %}
+                                TAMAMLANDI
+                            {% elif current_language == 'russian' %}
+                                ЗАВЕРШЕННЫЙ
+                            {% else %}
+                                COMPLETED
+                            {% endif %}
                         {% endif %}
                     </span>
 

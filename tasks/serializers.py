@@ -21,8 +21,6 @@ class TypeSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    # PRIORITY_OPTIONS = [(1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9), (10,10)]
-    # STATUS_OPTIONS = [(1,'1 → Incomplete'), (2,'2 → Work In Progress'), (3,'3 → Done')]
     category_of_task = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), many=True, required=True)
     type_of_task = serializers.PrimaryKeyRelatedField(queryset=TypeOfTask.objects.all, required=True)
     todo = serializers.CharField(max_length=256, required=False)
@@ -46,8 +44,5 @@ class TaskSerializer(serializers.ModelSerializer):
         instance.todo_status = validated_data.get('todo_status', instance.todo_status)
         instance.progression_start = validated_data.get('progression_start', instance.progression_start)
         instance.progression_end = validated_data.get('progression_end', instance.progression_end)
-        # instance.added_time = validated_data.get('added_time', instance.added_time)
-        # instance.updated_time = validated_data.get('updated_time', instance.updated_time)
-        # instance.assigned_to = validated_data.get('assigned_to', instance.assigned_to)
         instance.save()
         return instance

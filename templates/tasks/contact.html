@@ -12,56 +12,202 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3> CONTACT US </h3>
+        <h3>
+            {% if current_language == 'english' %}
+                CONTACT US
+            {% elif current_language == 'azerbaijani' %}
+                BİZİMLƏ ƏLAQƏ
+            {% elif current_language == 'turkish' %}
+                BİZE ULAŞIN
+            {% elif current_language == 'russian' %}
+                СВЯЗАТЬСЯ С НАМИ
+            {% else %}
+                CONTACT US
+            {% endif %}
+        </h3>
 
         <br>
 
         <div>
             <div>
-                Google/Yandex/Any MAP with free API
+                >> Google/Yandex/Any MAP with free API HERE <<
             </div>
 
             <div>
-                We’d love to hear from you! Whether you have questions, feedback, or need help with the app, don’t hesitate to reach out.
-                <br>
-                <br>
-                Email:
-                <br>
-                For support or inquiries, you can email us directly at support@taskmanagementapp.com. We aim to respond within 24 hours.
-                <br>
-                <br>
-                Social Media:
-                <br>
-                Stay connected with us on our social channels:
-                <br>
-                <span>
-                    <button>
-                        Facebook
-                        <img src="" alt="">
-                    </button>
-                    <button>
-                        Twitter
-                        <img src="" alt="">
-                    </button>
-                    <button>
-                        LinkedIn
-                        <img src="" alt="">
-                    </button>
-                </span>
-                <br>
-                Feedback:
-                <br>
-                Your feedback is important to us. If you have any suggestions or ideas for improvement, we’re always open to hearing how we can make Task Management App even better.
-                <br>
-                <br>
-                We're here to help, and we’ll do our best to respond to your query as soon as possible!
+                {% if current_language == 'english' %}
+                    We’d love to hear from you! Whether you have questions, feedback, or need help with the app, don’t hesitate to reach out.
+                    <br>
+                    <br>
+                    Email:
+                    <br>
+                    For support or inquiries, you can email us directly at support@taskmanagementapp.com. We aim to respond within 24 hours.
+                    <br>
+                    <br>
+                    Social Media:
+                    <br>
+                    Stay connected with us on our social channels:
+                    <br>
+                    <span>
+                        <button>
+                            Facebook
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            Twitter
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            LinkedIn
+                            <img src="" alt="">
+                        </button>
+                    </span>
+                    <br>
+                    Feedback:
+                    <br>
+                    Your feedback is important to us. If you have any suggestions or ideas for improvement, we’re always open to hearing how we can make Task Management App even better.
+                    <br>
+                    <br>
+                    We're here to help, and we’ll do our best to respond to your query as soon as possible!
+                {% elif current_language == 'azerbaijani' %}
+                    Sizdən eşitmək istərdik! Suallarınız, rəyiniz və ya proqramla bağlı köməyə ehtiyacınız olub-olmamasından asılı olmayaraq, əlaqə saxlamaqdan çəkinməyin.
+                    <br>
+                    <br>
+                    E-poçt:
+                    <br>
+                    Dəstək və ya sorğular üçün bizə birbaşa support@taskmanagementapp.com ünvanına e-poçt göndərə bilərsiniz. 24 saat ərzində cavab verməyi planlaşdırırıq.
+                    <br>
+                    <br>
+                    Sosial Media:
+                    <br>
+                    Sosial kanallarımızda bizimlə əlaqə saxlayın:
+                    <br>
+                    <span>
+                        <button>
+                            Facebook
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            Twitter
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            LinkedIn
+                            <img src="" alt="">
+                        </button>
+                    </span>
+                    <br>
+                    Əlaqə:
+                    <br>
+                    Rəyiniz bizim üçün vacibdir. Təkmilləşdirmə üçün hər hansı təklif və ya ideyanız varsa, Tapşırıq İdarəetmə Tətbiqini necə daha yaxşı edə biləcəyimizi eşitməyə həmişə açığıq.
+                    <br>
+                    <br>
+                    Biz kömək etmək üçün buradayıq və sorğunuza ən qısa zamanda cavab vermək üçün əlimizdən gələni edəcəyik!
+                {% elif current_language == 'turkish' %}
+                    Sizden haber almak isteriz! Sorularınız, geri bildirimleriniz veya uygulamayla ilgili yardıma ihtiyacınız varsa, bize ulaşmaktan çekinmeyin.
+                    <br>
+                    <br>
+                    E-posta:
+                    <br>
+                    Destek veya sorularınız için doğrudan support@taskmanagementapp.com adresine e-posta gönderebilirsiniz. 24 saat içinde yanıt vermeyi hedefliyoruz.
+                    <br>
+                    <br>
+                    Sosyal Medya:
+                    <br>
+                    Sosyal kanallarımızdan bizimle bağlantıda kalın:
+                    <br>
+                    <span>
+                        <button>
+                            Facebook
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            Twitter
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            LinkedIn
+                            <img src="" alt="">
+                        </button>
+                    </span>
+                    <br>
+                    Geri Bildirim:
+                    <br>
+                    Geri bildiriminiz bizim için önemlidir. Herhangi bir öneriniz veya iyileştirme fikriniz varsa, Görev Yönetimi Uygulamasını nasıl daha da iyi hale getirebileceğimizi duymaya her zaman açığız.
+                    <br>
+                    <br>
+                    Size yardımcı olmak için buradayız ve sorunuza en kısa sürede yanıt vermek için elimizden geleni yapacağız!
+                {% elif current_language == 'russian' %}
+                    Мы будем рады услышать от вас! Если у вас есть вопросы, отзывы или вам нужна помощь с приложением, не стесняйтесь обращаться к нам.
+                    <br>
+                    <br>
+                    Электронная почта:
+                    <br>
+                    Для поддержки или запросов вы можете написать нам напрямую по адресу support@taskmanagementapp.com. Мы постараемся ответить в течение 24 часов.
+                    <br>
+                    <br>
+                    Социальные Сети:
+                    <br>
+                    Оставайтесь на связи с нами в наших социальных каналах:
+                    <br>
+                    <span>
+                        <button>
+                            Facebook
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            Twitter
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            LinkedIn
+                            <img src="" alt="">
+                        </button>
+                    </span>
+                    <br>
+                    Обратная связь:
+                    <br>
+                    Ваши отзывы важны для нас. Если у вас есть предложения или идеи по улучшению, мы всегда открыты для того, чтобы выслушать, как мы можем сделать приложение «Управление задачами» еще лучше.
+                    <br>
+                    <br>
+                    Мы здесь, чтобы помочь, и мы сделаем все возможное, чтобы ответить на ваш запрос как можно скорее!
+                {% else %}
+                    We’d love to hear from you! Whether you have questions, feedback, or need help with the app, don’t hesitate to reach out.
+                    <br>
+                    <br>
+                    Email:
+                    <br>
+                    For support or inquiries, you can email us directly at support@taskmanagementapp.com. We aim to respond within 24 hours.
+                    <br>
+                    <br>
+                    Social Media:
+                    <br>
+                    Stay connected with us on our social channels:
+                    <br>
+                    <span>
+                        <button>
+                            Facebook
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            Twitter
+                            <img src="" alt="">
+                        </button>
+                        <button>
+                            LinkedIn
+                            <img src="" alt="">
+                        </button>
+                    </span>
+                    <br>
+                    Feedback:
+                    <br>
+                    Your feedback is important to us. If you have any suggestions or ideas for improvement, we’re always open to hearing how we can make Task Management App even better.
+                    <br>
+                    <br>
+                    We're here to help, and we’ll do our best to respond to your query as soon as possible!
+                {% endif %}
             </div>
         </div>
     </div>
-    <!-- {{ untitled_data }} -->
-    <!-- top header -->
-    <!-- left side, with google, 2gis, yandex or any free api, put a map for location -->
-    <!-- right side, small information, location address, phone number, email, etc -->
 {% endblock %}
 
 

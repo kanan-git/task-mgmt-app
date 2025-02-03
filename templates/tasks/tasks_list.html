@@ -12,43 +12,72 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <!-- NOTIFICATIONS -->
-    <!-- <div>
+    <div>
         {% if messages %}
             {% for message in messages %}
                 <p> {{ message }} </p>
             {% endfor %}
         {% endif %}
-    </div> -->
+    </div>
 
     <!-- CONTAINER -->
     <div style="background-color: rgb(100,100,100); min-height: 850px;"> <!-- . -->
         {% include '../base/control_bar.html' %}
 
-        <div style="display: flex; justify-content: center; margin: 20px 10px 0px 10px;"> <!-- style="display: flex; justify-content: center; margin: 20px 10px 20px 10px;" -->
+        <div style="display: flex; justify-content: center; margin: 20px 10px 0px 10px;">
             {% include '../base/filter.html' %}
 
-            <main style="width: 100%;"> <!-- . --> <!-- GRID_VIEW_CLASS/LIST_VIEW_CLASS, WITH SAME HTML STRUCTURE -->
+            <main style="width: 100%;">
                 <div style="
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
                 "> <!-- . -->
                     <h2 style="color: rgb(255,255,255);">
-                        {% if tasks.count > 0 %}
-                            <!-- TASKS: {{ tasks.count }} -->
-                            TASKS: {{ count }}
+                        {% if count > 0 %}
+                            {% if current_language == 'english' %}
+                                TASKS: {{ count }}
+                            {% elif current_language == 'azerbaijani' %}
+                                TAPŞIRIQLAR: {{ count }}
+                            {% elif current_language == 'turkish' %}
+                                GÖREVLER: {{ count }}
+                            {% elif current_language == 'russian' %}
+                                ЗАДАЧИ: {{ count }}
+                            {% else %}
+                                TASKS: {{ count }}
+                            {% endif %}
                         {% else %}
-                            TASKS: 0
+                            {% if current_language == 'english' %}
+                                TASKS: 0
+                            {% elif current_language == 'azerbaijani' %}
+                                TAPŞIRIQLAR: 0
+                            {% elif current_language == 'turkish' %}
+                                GÖREVLER: 0
+                            {% elif current_language == 'russian' %}
+                                ЗАДАЧИ: 0
+                            {% else %}
+                                TASKS: 0
+                            {% endif %}
                         {% endif %}
-                    </h2> <!-- . -->
+                    </h2>
 
                     <button>
-                        Clear
-                    </button> <!-- REMOVE BUTTON FOR ALL COMPLETED TASKS | ACCEPT WITH POP UP WINDOW BEFORE POST -->
+                        {% if current_language == 'english' %}
+                            Clear
+                        {% elif current_language == 'azerbaijani' %}
+                            Təmizlə
+                        {% elif current_language == 'turkish' %}
+                            Temizle
+                        {% elif current_language == 'russian' %}
+                            Прозрачный
+                        {% else %}
+                            Clear
+                        {% endif %}
+                    </button>
                 </div>
 
                 <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px;"> <!-- . -->
-                    {% if view_mode == 'grid_cards' %}
+                    {% if view_mode == 'grid' %}
                         <!-- HOMEPAGE WITH GRID VIEW -->
                         {% if tasks %}
                             {% for card in tasks %}
@@ -56,10 +85,20 @@
                             {% endfor %}
                         {% else %}
                             <div style="display: flex; justify-content: center; align-items: center; font-size: 5em">
-                                Empty
+                                {% if current_language == 'english' %}
+                                    Empty
+                                {% elif current_language == 'azerbaijani' %}
+                                    Boş
+                                {% elif current_language == 'turkish' %}
+                                    Boş
+                                {% elif current_language == 'russian' %}
+                                    Пустой
+                                {% else %}
+                                    Empty
+                                {% endif %}
                             </div>
                         {% endif %}
-                    {% elif view_mode == 'list_cards' %}
+                    {% elif view_mode == 'list' %}
                         <!-- HOMEPAGE WITH LIST VIEW -->
                         <div>
                             <table style="background-color: rgb(255,255,255); border-collapse: collapse; border: 1px solid rgb(0,0,0);">
@@ -131,9 +170,15 @@
                     {% endif %}
                 </div>
 
-                <div>
-                    PAGINATION IF OVER THE CHOOSEN LIMIT / SHOW MORE BUTTON FOR LOADING / USING BOOTSTRAP (INCLUDED LOG PAGE)
-                </div>
+                <nav aria-label="Page navigation example" style="margin-top: 30px;">
+                    <ul class="pagination justify-content-center" id="pagination_list" name="{{pages}}">
+                        {% for number in pages %}
+                            <li class="page-item">
+                                <a class="page-link" href="" id="home_pg_btn_{{number}}" name="{{number}}" onclick="paginationHome(this)"> {{ number }} </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
             </main>
         </div>
     </div>

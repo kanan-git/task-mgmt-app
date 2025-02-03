@@ -12,12 +12,36 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3> MY DASHBOARD </h3>
+        <h3>
+            {% if current_language == 'english' %}
+                MY DASHBOARD
+            {% elif current_language == 'azerbaijani' %}
+                STATISTIK PANELİM
+            {% elif current_language == 'turkish' %}
+                GÖSTERGE PANELİM
+            {% elif current_language == 'russian' %}
+                МОЯ ПАНЕЛЬ УПРАВЛЕНИЯ
+            {% else %}
+                MY DASHBOARD
+            {% endif %}
+        </h3>
 
         <hr>
 
         <div>
-            <h4> Profile Information </h4>
+            <h4>
+                {% if current_language == 'english' %}
+                    Profile Information
+                {% elif current_language == 'azerbaijani' %}
+                    Profil Məlumatı
+                {% elif current_language == 'turkish' %}
+                    Profil Bilgileri
+                {% elif current_language == 'russian' %}
+                    Информация о профиле
+                {% else %}
+                    Profile Information
+                {% endif %}
+            </h4>
 
             <form method="post">
                 {% csrf_token %}
@@ -31,7 +55,19 @@
         <hr>
 
         <div>
-            <h4> Graphic Data </h4>
+            <h4>
+                {% if current_language == 'english' %}
+                    Graphic Data
+                {% elif current_language == 'azerbaijani' %}
+                    Qrafik Məlumatlar
+                {% elif current_language == 'turkish' %}
+                    Grafik Veriler
+                {% elif current_language == 'russian' %}
+                    Графические Данные
+                {% else %}
+                    Graphic Data
+                {% endif %}
+            </h4>
 
             <div>
                 <!-- 2 AXIS GRAPH FOR SOME DATA -->
@@ -47,25 +83,107 @@
         <hr>
 
         <div>
-            <h4> Statistics of Your Activity </h4>
+            {% if current_language == 'english' %}
+                <h4> Statistics of Your Activity </h4>
 
-            <div>
-                <!-- CARD 1 FOR SOME DATA -->
-            </div>
-            <div>
-                <!-- CARD 2 FOR SOME DATA -->
-            </div>
-            <div>
-                <!-- CARD 3 FOR SOME DATA -->
-            </div>
+                <div>
+                    <!-- CARD 1 FOR SOME DATA -->
+
+                    <!-- toplam nece task yaradilib
+                    nece silinib
+                    nece priority 10 taskim olub
+                    nece lvl5
+                    nece taski tamamlamisam
+                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
+                    log a gore tam melumatlari hesabla -->
+                </div>
+                <div>
+                    <!-- CARD 2 FOR SOME DATA -->
+                </div>
+                <div>
+                    <!-- CARD 3 FOR SOME DATA -->
+                </div>
+            {% elif current_language == 'azerbaijani' %}
+                <h4> Fəaliyyətinizin Statistikası </h4>
+
+                <div>
+                    <!-- CARD 1 FOR SOME DATA -->
+
+                    <!-- toplam nece task yaradilib
+                    nece silinib
+                    nece priority 10 taskim olub
+                    nece lvl5
+                    nece taski tamamlamisam
+                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
+                    log a gore tam melumatlari hesabla -->
+                </div>
+                <div>
+                    <!-- CARD 2 FOR SOME DATA -->
+                </div>
+                <div>
+                    <!-- CARD 3 FOR SOME DATA -->
+                </div>
+            {% elif current_language == 'turkish' %}
+                <h4> Etkinliğinizin İstatistikleri </h4>
+
+                <div>
+                    <!-- CARD 1 FOR SOME DATA -->
+
+                    <!-- toplam nece task yaradilib
+                    nece silinib
+                    nece priority 10 taskim olub
+                    nece lvl5
+                    nece taski tamamlamisam
+                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
+                    log a gore tam melumatlari hesabla -->
+                </div>
+                <div>
+                    <!-- CARD 2 FOR SOME DATA -->
+                </div>
+                <div>
+                    <!-- CARD 3 FOR SOME DATA -->
+                </div>
+            {% elif current_language == 'russian' %}
+                <h4> Статистика Вашей Активности </h4>
+
+                <div>
+                    <!-- CARD 1 FOR SOME DATA -->
+
+                    <!-- toplam nece task yaradilib
+                    nece silinib
+                    nece priority 10 taskim olub
+                    nece lvl5
+                    nece taski tamamlamisam
+                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
+                    log a gore tam melumatlari hesabla -->
+                </div>
+                <div>
+                    <!-- CARD 2 FOR SOME DATA -->
+                </div>
+                <div>
+                    <!-- CARD 3 FOR SOME DATA -->
+                </div>
+            {% else %}
+                <h4> Statistics of Your Activity </h4>
+
+                <div>
+                    <!-- CARD 1 FOR SOME DATA -->
+
+                    <!-- toplam nece task yaradilib
+                    nece silinib
+                    nece priority 10 taskim olub
+                    nece lvl5
+                    nece taski tamamlamisam
+                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
+                    log a gore tam melumatlari hesabla -->
+                </div>
+                <div>
+                    <!-- CARD 2 FOR SOME DATA -->
+                </div>
+                <div>
+                    <!-- CARD 3 FOR SOME DATA -->
+                </div>
+            {% endif %}
         </div>
     </div>
-    <!-- {{ untitled_data }} -->
-    <!-- toplam nece task yaradilib -->
-    <!-- nece silinib -->
-    <!-- nece priority 10 taskim olub -->
-    <!-- nece lvl5 -->
-    <!-- nece taski tamamlamisam -->
-    <!-- nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife -->
-    <!-- log a gore tam melumatlari hesabla -->
 {% endblock %}

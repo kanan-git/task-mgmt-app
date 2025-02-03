@@ -12,7 +12,19 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3> LOG HISTORY </h3>
+        <h3>
+            {% if current_language == 'english' %}
+                LOG HISTORY
+            {% elif current_language == 'azerbaijani' %}
+                FƏALİYYƏT TARİXİ
+            {% elif current_language == 'turkish' %}
+                FAALİYET GEÇMİŞİ
+            {% elif current_language == 'russian' %}
+                ИСТОРИЯ ЖУРНАЛА
+            {% else %}
+                LOG HISTORY
+            {% endif %}
+        </h3>
 
         <br>
 
@@ -20,9 +32,9 @@
             <table>
                 <tr>
                     <th> № </th>
-                    <th> Category </th> <!-- Create, Update, Delete, Error, Authentication -->
-                    <th> Event </th>
-                    <th> Date & Time </th>
+                    <th> {% if current_language == 'english' %} Category {% elif current_language == 'azerbaijani' %} Kateqoriya {% elif current_language == 'turkish' %} Kategori {% elif current_language == 'russian' %} Категория {% else %} Category {% endif %} </th> <!-- Create, Update, Delete, Error, Authentication -->
+                    <th> {% if current_language == 'english' %} Event {% elif current_language == 'azerbaijani' %} Hadisə {% elif current_language == 'turkish' %} Aktivite {% elif current_language == 'russian' %} Событие {% else %} Event {% endif %} </th>
+                    <th> {% if current_language == 'english' %} Date & Time {% elif current_language == 'azerbaijani' %} Gün & Saat {% elif current_language == 'turkish' %} Tarih & Saat {% elif current_language == 'russian' %} Дата и Время {% else %} Date & Time {% endif %} </th>
                 </tr>
 
                 {% if log %}
@@ -36,16 +48,32 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <p> EMPTY </p>
+                        <p>
+                            {% if current_language == 'english' %}
+                                Empty
+                            {% elif current_language == 'azerbaijani' %}
+                                Boş
+                            {% elif current_language == 'turkish' %}
+                                Boş
+                            {% elif current_language == 'russian' %}
+                                Пустой
+                            {% else %}
+                                Empty
+                            {% endif %}
+                        </p>
                     </tr>
                 {% endif %}
             </table>
 
-            <div>
-                PAGINATION
-            </div>
+            <nav aria-label="Page navigation example" style="margin-top: 30px;">
+                <ul class="pagination justify-content-center" id="logPagination_list" name="{{pages}}">
+                    {% for number in pages %}
+                        <li class="page-item">
+                            <a class="page-link" href="" id="log_pg_btn_{{number}}" name="{{number}}" onclick="paginationLog(this)"> {{ number }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
         </div>
     </div>
-    <!-- {{ untitled_data }} -->
-    <!-- CREATE ARCHIVE CLASS INSIDE MODELS OR CREATE JSON FILE FOR COLLECTING NOTIFICATIONS AND EVENTS AS LOG -->
 {% endblock %}

@@ -1,45 +1,129 @@
 <!-- ALLOWING STATIC FILES -->
 {% load static %}
 
-<nav style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(235,235,235); min-height: 60px;"> <!-- style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; background-color: rgb(235,235,235);" -->
+<nav style="display: flex; justify-content: space-around; align-items: center; background-color: rgb(235,235,235); min-height: 60px;">
     <span>
         <a href="{% url 'tasks_list' %}">
-            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} width="50px"> <!-- style="width: 50px; height: auto;" -->
+            <img src="{% static 'img/logo/logo_black.png' %}" alt="task-mgmt-app" onclick={console.log(this.src)} width="50px">
         </a>
     </span>
 
     <span style="display: flex; align-items: center;">
-        <ul style="display: flex; gap: 30px; list-style: none; align-items: center; margin: 0; padding: 0;"> <!-- style="display: flex; gap: 10px; list-style: none; align-items: center; margin: 0; padding: 0;" -->
+        <ul style="display: flex; gap: 30px; list-style: none; align-items: center; margin: 0; padding: 0;">
             {% if auth_stat == False %}
                 <!-- IF GUEST -->
-                <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'tasks_list' %}"> Home </a>
+                <li onclick="reloadCurrentPage()">
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="">
+                        {% if current_language == 'english' %}
+                            Home Page
+                        {% elif current_language == 'azerbaijani' %}
+                            Əsas Səhifə
+                        {% elif current_language == 'turkish' %}
+                            Ana Sayfa
+                        {% elif current_language == 'russian' %}
+                            Домашняя Cтраница
+                        {% else %}
+                            Home Page
+                        {% endif %}
+                    </a>
                 </li>
                 <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'about' %}"> About </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'about' %}">
+                        {% if current_language == 'english' %}
+                            About
+                        {% elif current_language == 'azerbaijani' %}
+                            Haqqımızda
+                        {% elif current_language == 'turkish' %}
+                            Hakkımızda
+                        {% elif current_language == 'russian' %}
+                            О Нас
+                        {% else %}
+                            About
+                        {% endif %}
+                    </a>
                 </li>
                 <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'contact' %}"> Contact </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'contact' %}">
+                        {% if current_language == 'english' %}
+                            Contact
+                        {% elif current_language == 'azerbaijani' %}
+                            Əlaqə
+                        {% elif current_language == 'turkish' %}
+                            İletişim
+                        {% elif current_language == 'russian' %}
+                            Контакты
+                        {% else %}
+                            Contact
+                        {% endif %}
+                    </a>
                 </li>
             {% else %}
                 <!-- ELSE MEMBER -->
-                <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'tasks_list' %}"> Home </a>
+                <li onclick="reloadCurrentPage()">
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="">
+                        {% if current_language == 'english' %}
+                            Home Page
+                        {% elif current_language == 'azerbaijani' %}
+                            Əsas Səhifə
+                        {% elif current_language == 'turkish' %}
+                            Ana Sayfa
+                        {% elif current_language == 'russian' %}
+                            Домашняя Cтраница
+                        {% else %}
+                            Home Page
+                        {% endif %}
+                    </a>
                 </li>
                 <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'create_task' %}"> Create Task </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'create_task' %}">
+                        {% if current_language == 'english' %}
+                            Create Task
+                        {% elif current_language == 'azerbaijani' %}
+                            Tapşırıq Yarat
+                        {% elif current_language == 'turkish' %}
+                            Görev Oluştur
+                        {% elif current_language == 'russian' %}
+                            Создать Задачу
+                        {% else %}
+                            Create Task
+                        {% endif %}
+                    </a>
                 </li>
                 <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'about' %}"> About </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'about' %}">
+                        {% if current_language == 'english' %}
+                            About
+                        {% elif current_language == 'azerbaijani' %}
+                            Haqqımızda
+                        {% elif current_language == 'turkish' %}
+                            Hakkımızda
+                        {% elif current_language == 'russian' %}
+                            О Нас
+                        {% else %}
+                            About
+                        {% endif %}
+                    </a>
                 </li>
                 <li>
-                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'contact' %}"> Contact </a>
+                    <a style="text-decoration: none; color: rgb(0,0,0);" href="{% url 'contact' %}">
+                        {% if current_language == 'english' %}
+                            Contact
+                        {% elif current_language == 'azerbaijani' %}
+                            Əlaqə
+                        {% elif current_language == 'turkish' %}
+                            İletişim
+                        {% elif current_language == 'russian' %}
+                            Контакты
+                        {% else %}
+                            Contact
+                        {% endif %}
+                    </a>
                 </li>
             {% endif %}
         </ul>
     </span>
 
-    <span> <!-- style="display: flex; position: relative; gap: 20px;" -->
+    <span>
         <span style="
         display: flex; 
         gap: 20px; 
@@ -50,7 +134,19 @@
             padding: 0;
             ">
                 {% if auth_stat == False %}
-                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0; height: 100%;"> <b> GUEST </b> </p>
+                    <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0; height: 100%;"> <b>
+                        {% if current_language == 'english' %}
+                            GUEST
+                        {% elif current_language == 'azerbaijani' %}
+                            QONAQ
+                        {% elif current_language == 'turkish' %}
+                            MISAFIR
+                        {% elif current_language == 'russian' %}
+                            Гостевой
+                        {% else %}
+                            GUEST
+                        {% endif %}
+                    </b> </p>
                 {% else %}
                     <p onmouseenter={profile_dropdown_show()} onmouseleave={profile_dropdown_hide()} style="margin-bottom: 0; height: 100%;"> <b> {{user}} </b> </p>
                 {% endif %}
@@ -76,21 +172,81 @@
                     {% if auth_stat == False %}
                     <!-- IF GUEST -->
                         <li>
-                            <a href="{% url 'sign_in' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Login </a>
+                            <a href="{% url 'sign_in' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}>
+                                {% if current_language == 'english' %}
+                                    Login
+                                {% elif current_language == 'azerbaijani' %}
+                                    Daxil Ol
+                                {% elif current_language == 'turkish' %}
+                                    Giriş Yap
+                                {% elif current_language == 'russian' %}
+                                    Войти
+                                {% else %}
+                                    Login
+                                {% endif %}
+                            </a>
                         </li>
                         <li>
-                            <a href="{% url 'sign_up' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Register </a>
+                            <a href="{% url 'sign_up' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}>
+                                {% if current_language == 'english' %}
+                                    Register
+                                {% elif current_language == 'azerbaijani' %}
+                                    Qeydiyyat
+                                {% elif current_language == 'turkish' %}
+                                    Kayıt Ol
+                                {% elif current_language == 'russian' %}
+                                    Регистрация
+                                {% else %}
+                                    Register
+                                {% endif %}
+                            </a>
                         </li>
                     {% else %}
                         <!-- ELSE MEMBER -->
                         <li>
-                            <a href="{% url 'dashboard' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Dashboard </a>
+                            <a href="{% url 'dashboard' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}>
+                                {% if current_language == 'english' %}
+                                    Dashboard
+                                {% elif current_language == 'azerbaijani' %}
+                                    İdarə Paneli
+                                {% elif current_language == 'turkish' %}
+                                    Gösterge Paneli
+                                {% elif current_language == 'russian' %}
+                                    Панель Управления
+                                {% else %}
+                                    Dashboard
+                                {% endif %}
+                            </a>
                         </li>
                         <li>
-                            <a href="{% url 'log' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Log </a>
+                            <a href="{% url 'log' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}>
+                                {% if current_language == 'english' %}
+                                    Log History
+                                {% elif current_language == 'azerbaijani' %}
+                                    Giriş Tarixi
+                                {% elif current_language == 'turkish' %}
+                                    Günlük Geçmişi
+                                {% elif current_language == 'russian' %}
+                                    История Журнала
+                                {% else %}
+                                    Log History
+                                {% endif %}
+                            </a>
                         </li>
                         <li>
-                            <a href="{% url 'sign_out' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}> Logout </a>
+                            <a href="{% url 'sign_out' %}" style="text-decoration: none; color: rgb(0,0,0); transition: 100ms linear; position: relative;" onmouseenter={elements_move(this)} onmouseleave={elements_back(this)}>
+                                {% if current_language == 'english' %}
+                                    Logout
+                                {% elif current_language == 'azerbaijani' %}
+                                    Çıxış Et
+                                {% elif current_language == 'turkish' %}
+                                    Çıkış Yap
+                                {% elif current_language == 'russian' %}
+                                    Выход
+                                {% else %}
+                                    Logout
+                                {% endif %}
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -106,7 +262,7 @@
                 margin-bottom: 0; height: 100%;
                 " onmouseenter={language_dropdown_show()} onmouseleave={language_dropdown_hide()}>
                     <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="language" style="width: 30px;">
-                    <span> EN </span>
+                    <span id="screen_lang" name="english"> EN </span>
                 </button>
 
                 <ul id="lang_dropdown" onmouseover={language_dropdown_show()} onmouseleave={language_dropdown_hide()} style="
@@ -123,48 +279,32 @@
                 width: 120px;
                 height: fit-content;
                 ">
-                    <!-- <li id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
-                        <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" name="english" id="flag-us" style="width: 30px;">
-                        <span> EN </span>
-                    </li>
-                    <li id="lang_az" onclick={change_language(this,2)}>
-                        <img src="{% static 'img/flags/flag-az-svgrepo-com.svg' %}" alt="azerbaijani" name="azerbaijani" id="flag-az" style="width: 30px;">
-                        <span> AZ </span>
-                    </li>
-                    <li id="lang_tr" onclick={change_language(this,3)}>
-                        <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg' %}" alt="turkish" name="turkish" id="flag-tr" style="width: 30px;">
-                        <span> TR </span>
-                    </li>
-                    <li id="lang_ru" onclick={change_language(this,4)}>
-                        <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg' %}" alt="russian" name="russian" id="flag-ru" style="width: 30px;">
-                        <span> RU </span>
-                    </li> -->
-                    <form method="post" id="lang_en" onclick={change_language(this,1)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
-                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="english" name="language">
+                    <form method="post" id="lang_en" style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="english" name="lang" onclick="change_language('english')">
                             {% csrf_token %}
                             <img src="{% static 'img/flags/flag-us-svgrepo-com.svg' %}" alt="english" name="english" id="flag-us" style="width: 30px;">
-                            <span> EN </span>
+                            <span id="lang_en_text"> EN </span>
                         </button>
                     </form>
-                    <form method="post" id="lang_az" onclick={change_language(this,2)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
-                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="azerbaijani" name="language">
+                    <form method="post" id="lang_az" style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="azerbaijani" name="lang" onclick="change_language('azerbaijani')">
                             {% csrf_token %}
                             <img src="{% static 'img/flags/flag-az-svgrepo-com.svg' %}" alt="azerbaijani" name="azerbaijani" id="flag-az" style="width: 30px;">
-                            <span> AZ </span>
+                            <span id="lang_az_text"> AZ </span>
                         </button>
                     </form>
-                    <form method="post" id="lang_tr" onclick={change_language(this,3)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
-                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="turkish" name="language">
+                    <form method="post" id="lang_tr" style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="turkish" name="lang" onclick="change_language('turkish')">
                             {% csrf_token %}
                             <img src="{% static 'img/flags/flag-tr-svgrepo-com.svg' %}" alt="turkish" name="turkish" id="flag-tr" style="width: 30px;">
-                            <span> TR </span>
+                            <span id="lang_tr_text"> TR </span>
                         </button>
                     </form>
-                    <form method="post" id="lang_ru" onclick={change_language(this,4)} style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
-                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="russian" name="language">
+                    <form method="post" id="lang_ru" style="background-color: rgb(128,128,128); color: rgb(255,255,255);">
+                        <button type="submit" style="padding: 3px; border: none; outline: none; background-color: transparent;" value="russian" name="lang" onclick="change_language('russian')">
                             {% csrf_token %}
                             <img src="{% static 'img/flags/flag-ru-svgrepo-com.svg' %}" alt="russian" name="russian" id="flag-ru" style="width: 30px;">
-                            <span> RU </span>
+                            <span id="lang_ru_text"> RU </span>
                         </button>
                     </form>
                 </ul>

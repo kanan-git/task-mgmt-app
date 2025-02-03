@@ -106,10 +106,9 @@ class Task(models.Model):
     type_of_task = models.ForeignKey(TypeOfTask, on_delete=models.CASCADE, null=True, blank=True) # related_name='tasks'
     todo = models.TextField(max_length=256, null=True, blank=True)
     priority_level = models.IntegerField(choices=PRIORITY_OPTIONS, default=1)
-    todo_status = models.IntegerField(choices=STATUS_OPTIONS, default=1) # CONDITION IN HERE FOR SEPARATION, WHEN CHOOSE TYPE OF TASK, ONLY NECESSARY MODEL MUST BE VISIBLE
+    todo_status = models.IntegerField(choices=STATUS_OPTIONS, default=1)
     progression_start = models.IntegerField(default=0)
-    progression_end = models.IntegerField(default=1) # REQUIRES TRY EXCEPT OR ANY ERROR HANDLER, ONLY ALLOW START<END
-    # is_starred = models.BooleanField(default=False)
+    progression_end = models.IntegerField(default=1)
     added_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='tasks', null=True)

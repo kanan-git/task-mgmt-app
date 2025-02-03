@@ -17,33 +17,115 @@ id="filter_panel"
 > <!-- display: none block -->  <!-- style="display: none;" -->
     <div>
         <h3>
-            Filter
+            {% if current_language == 'english' %}
+                FILTER
+            {% elif current_language == 'azerbaijani' %}
+                FİLTR
+            {% elif current_language == 'turkish' %}
+                FİLTRE
+            {% elif current_language == 'russian' %}
+                ФИЛЬТР
+            {% else %}
+                FILTER
+            {% endif %}
         </h3>
     </div>
 
     <br>
 
     <div>
-        <b> Show by Status: </b>
+        <b>
+            {% if current_language == 'english' %}
+                Show by Status:
+            {% elif current_language == 'azerbaijani' %}
+                Status üzrə göstər:
+            {% elif current_language == 'turkish' %}
+                Duruma Göre Göster:
+            {% elif current_language == 'russian' %}
+                Показать по статусу:
+            {% else %}
+                Show by Status:
+            {% endif %}
+        </b>
         <br>
 
         <input type="radio" name="filter_status" id="filter_stat_all">
-        <label for="filter_stat_all"> All </label>
+        <label for="filter_stat_all">
+            {% if current_language == 'english' %}
+                All
+            {% elif current_language == 'azerbaijani' %}
+                Hamısı
+            {% elif current_language == 'turkish' %}
+                Hepsi
+            {% elif current_language == 'russian' %}
+                Все
+            {% else %}
+                All
+            {% endif %}
+        </label>
         
         <input type="radio" name="filter_status" id="filter_stat_inc">
-        <label for="filter_stat_inc"> Incomplete </label>
+        <label for="filter_stat_inc">
+            {% if current_language == 'english' %}
+                Incomplete
+            {% elif current_language == 'azerbaijani' %}
+                Başlanmayıb
+            {% elif current_language == 'turkish' %}
+                Henüz başlamadı
+            {% elif current_language == 'russian' %}
+                Еще не начато
+            {% else %}
+                Incomplete
+            {% endif %}
+        </label>
         
         <input type="radio" name="filter_status" id="filter_stat_wip">
-        <label for="filter_stat_wip"> Work In Progress </label>
+        <label for="filter_stat_wip">
+            {% if current_language == 'english' %}
+                Work In Progress
+            {% elif current_language == 'azerbaijani' %}
+                Davam Edən İş
+            {% elif current_language == 'turkish' %}
+                Devam Eden Çalışma
+            {% elif current_language == 'russian' %}
+                Работа в Процессе
+            {% else %}
+                Work In Progress
+            {% endif %}
+        </label>
         
         <input type="radio" name="filter_status" id="filter_stat_don">
-        <label for="filter_stat_don"> Done </label>
+        <label for="filter_stat_don">
+            {% if current_language == 'english' %}
+                Done
+            {% elif current_language == 'azerbaijani' %}
+                Bitdi
+            {% elif current_language == 'turkish' %}
+                Tamamlandı
+            {% elif current_language == 'russian' %}
+                Готово
+            {% else %}
+                Done
+            {% endif %}
+        </label>
     </div>
 
     <br>
 
     <div>
-        <b> Show by Category: </b>
+        <b>
+            {% if current_language == 'english' %}
+                Show by Category:
+            {% elif current_language == 'azerbaijani' %}
+                Kateqoriyaya görə göstər:
+            {% elif current_language == 'turkish' %}
+                Kategoriye Göre Göster:
+            {% elif current_language == 'russian' %}
+                Показать по категориям:
+            {% else %}
+                Show by Category:
+            {% endif %}
+        </b>
         <br>
         
         <input type="checkbox" name="filter_categ" id="filter_categ_personal">
@@ -113,7 +195,19 @@ id="filter_panel"
     <br>
 
     <div>
-        <b> Show by Priority Point: </b> <!-- MAKE CONDITION TO HANDLING MIN>=MAX POSSIBLE ISSUE -->
+        <b>
+            {% if current_language == 'english' %}
+                Show by Priority Point:
+            {% elif current_language == 'azerbaijani' %}
+                Prioritet dərəcəsinə görə göstər:
+            {% elif current_language == 'turkish' %}
+                Öncelik Puanına Göre Göster:
+            {% elif current_language == 'russian' %}
+                Показать по уровню приоритета:
+            {% else %}
+                Show by Priority Point:
+            {% endif %}
+        </b>
         <br>
         From: ←→ 1 <input id="filter_priority_min" type="range" min="1" max="10" step="1" value="1"> 10
         <br>
@@ -123,7 +217,19 @@ id="filter_panel"
     <br>
 
     <div>
-        <b> Show by Type: </b>
+        <b>
+            {% if current_language == 'english' %}
+                Show by Type:
+            {% elif current_language == 'azerbaijani' %}
+                Növə görə göstər:
+            {% elif current_language == 'turkish' %}
+                Türüne Göre Göster:
+            {% elif current_language == 'russian' %}
+                Показать по типу:
+            {% else %}
+                Show by Type:
+            {% endif %}
+        </b>
         <br>
 
         <input type="radio" name="filter_type" id="filter_type_all" checked>

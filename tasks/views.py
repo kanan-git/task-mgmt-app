@@ -57,7 +57,7 @@ def tasks_list(request):
     else:
 
         if sorting_direction == 'ascending':
-                tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)
+            tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)
         elif sorting_direction == 'descending':
             tasks = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type).reverse()
 
@@ -118,28 +118,33 @@ def tasks_list(request):
 
 # user will see him/her statistic information
 def dashboard(request):
-    auth_stat = request.user.is_authenticated
+    # GET URL PARAMETERS OR DEFAULT
+    current_language = request.GET.get('lang') or 'english'
 
+    # AUTHENTICATED OR GUEST
+    auth_stat = request.user.is_authenticated
     if request.user.is_authenticated:
         nickname = f'{request.user.first_name} {request.user.last_name}'
     else:
         nickname = 'Guest'
 
     if request.method == 'POST':
-        form = AccountForm(request.POST, instance=Profile())
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
+        # form = AccountForm(request.POST, instance=Profile())
+        # if form.is_valid():
+        #     form.save()
+        #     return redirect('dashboard')
+        ...
     else:
-        form = AccountForm(instance=Profile())
+        # form = AccountForm(instance=Profile())
+        ...
     
     context = {
         'user': nickname,
         'auth_stat': auth_stat,
 
-        'untitled_data': 'empty',
+        'current_language': current_language,
 
-        'form': form,
+        # 'form': form,
 
         'is_nav': True,
     }
@@ -149,19 +154,68 @@ def dashboard(request):
 
 # log history of tasks, their status and event information
 def log(request):
+    # GET URL PARAMETERS OR DEFAULT
+    current_language = request.GET.get('lang') or 'english'
+    
+    # COUNTING EXIST ELEMENTS INSIDE DATABASE
+    if request.user.is_authenticated:
+        count_of_events = LogHistory.objects.filter(user=request.user).count()
+    else:
+        count_of_events = 0
+
+    # AUTHENTICATED OR GUEST
     auth_stat = request.user.is_authenticated
     log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
-
     if request.user.is_authenticated:
         nickname = f'{request.user.first_name} {request.user.last_name}'
     else:
         nickname = 'Guest'
 
+    # COUNTING HOW MANY PAGE WILL BE THERE
+    last_page = count_of_events // 10
+    pages = []
+    if count_of_events % 10 > 0:
+        last_page += 1
+    for index in range(1, last_page+1):
+            pages.append(index)
+
+    # GET USER'S TASKS
+    if count_of_events == 0:
+        log_of_user = False
+        last_page = 1
+        pages = [1]
+        events_of_page = []
+    else:
+        if request.GET.get('page'):
+            page_number = int(request.GET.get('page'))
+            first_index_of_the_page = (page_number-1)*10
+            final_index_of_the_page = 10*page_number-1
+            if final_index_of_the_page >= count_of_events:
+                final_index_of_the_page = count_of_events-1
+            events_of_page = []
+
+            for i in range(first_index_of_the_page, final_index_of_the_page+1):
+                events_of_page.append(log_of_user[i])
+        else:
+            page_number = 1
+            first_index_of_the_page = 0
+            final_index_of_the_page = 9
+            if final_index_of_the_page >= count_of_events:
+                final_index_of_the_page = count_of_events-1
+            events_of_page = []
+
+            for i in range(first_index_of_the_page, final_index_of_the_page+1):
+                events_of_page.append(log_of_user[i])
+
     context = {
         'user': nickname,
         'auth_stat': auth_stat,
 
-        'log': log_of_user,
+        'current_language': current_language,
+
+        'log': events_of_page,
+        'pages': pages,
+        'count': count_of_events,
 
         'is_nav': True,
     }
@@ -256,8 +310,11 @@ def delete_task(request, pk):
 
 # opening the about page
 def about(request):
-    auth_stat = request.user.is_authenticated
+    # GET URL PARAMETERS OR DEFAULT
+    current_language = request.GET.get('lang') or 'english'
 
+    # AUTHENTICATED OR GUEST
+    auth_stat = request.user.is_authenticated
     if request.user.is_authenticated:
         nickname = f'{request.user.first_name} {request.user.last_name}'
     else:
@@ -267,17 +324,21 @@ def about(request):
         'user': nickname,
         'auth_stat': auth_stat,
 
-        'untitled_data': 'empty',
+        'current_language': current_language,
 
         'is_nav': True,
     }
+
     return render(request, 'tasks/about.html', context)
 
 
 # opening the contact page
 def contact(request):
-    auth_stat = request.user.is_authenticated
+    # GET URL PARAMETERS OR DEFAULT
+    current_language = request.GET.get('lang') or 'english'
 
+    # AUTHENTICATED OR GUEST
+    auth_stat = request.user.is_authenticated
     if request.user.is_authenticated:
         nickname = f'{request.user.first_name} {request.user.last_name}'
     else:
@@ -287,10 +348,11 @@ def contact(request):
         'user': nickname,
         'auth_stat': auth_stat,
 
-        'untitled_data': 'empty',
+        'current_language': current_language,
 
         'is_nav': True,
     }
+
     return render(request, 'tasks/contact.html', context)
 
 

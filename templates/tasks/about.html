@@ -12,7 +12,7 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3>
+        <h3 class="form_headers">
             {% if current_language == 'english' %}
                 ABOUT US
             {% elif current_language == 'azerbaijani' %}
@@ -29,8 +29,8 @@
         <br>
 
         <div>
-            <div>
-                <span>
+            <div class="sectors">
+                <span class="textside">
                     {% if current_language == 'english' %}
                         <p>
                             Welcome to Task Management App, the ultimate solution for efficiently organizing, tracking, and completing your tasks. Whether you're an individual trying to manage your personal tasks, a student balancing multiple projects, or a professional collaborating with a team, this app is designed to streamline the way you work and help you stay on top of your responsibilities.
@@ -68,31 +68,10 @@
                         </p>
                     {% endif %}
                 </span>
-                
-                <span>
-                    <img src="" alt="">
-                </span>
             </div>
 
-            <div>
-                <span>
-                    <!-- CAROUSEL IMAGES -->
-                    <img src="" alt="">
-                    <img src="" alt="">
-                </span>
-
-                <span>
-                    <!-- RADIO BUTTONS -->
-                    <button></button>
-                    <button></button>
-                </span>
-            </div>
-
-            <div>
-                <span>
-                    <img src="" alt="">
-                </span>
-                <span>
+            <div class="sectors">
+                <span class="textside">
                     {% if current_language == 'english' %}
                         <p>
                             Why Use Task Management App?
@@ -142,185 +121,187 @@
                 </span>
             </div>
             
-            <div>
-                {% if current_language == 'english' %}
-                    Key Features:
-                    <br>
-                    1. Task Creation and Customization
-                    Add tasks with clear titles, descriptions, and deadlines.
-                    Attach priority levels (Low, Medium, High) to ensure that you focus on what matters most.
-                    Add detailed notes, tags, and even subtasks to break larger projects down into manageable steps.
-                    <br>
-                    2. Task Organization and Categorization
-                    Group tasks by project, category, or status (To Do, In Progress, Completed) for easier management.
-                    Organize tasks based on urgency, deadlines, or importance to ensure nothing gets overlooked.
-                    Use labels or tags to create additional layers of categorization for more personalized task management.
-                    <br>
-                    3. User Management and Collaboration
-                    If you’re working with a team, assign tasks to specific users to clarify responsibility.
-                    Track progress on collaborative tasks and ensure everyone stays on the same page.
-                    Role-based access control allows managers to oversee tasks and track team productivity.
-                    <br>
-                    4. Reminders and Notifications
-                    Set automated reminders to ensure you never forget an important deadline.
-                    Receive email or push notifications when a task is approaching its due date or when updates occur.
-                    Stay up-to-date with real-time notifications about the progress of assigned tasks.
-                    <br>
-                    5. Dashboard and Analytics
-                    A customizable dashboard provides a snapshot of your active tasks, overdue items, and upcoming deadlines.
-                    Visual progress indicators help you track your productivity and identify bottlenecks in your workflow.
-                    Generate reports to analyze your task completion rates, team productivity, and task distribution over time.
-                    <br>
-                    6. Search and Filtering
-                    Quickly search for specific tasks by keyword, due date, priority, or project.
-                    Filter tasks to display only those that meet your selected criteria, helping you stay organized and focused.
-                    <br>
-                    7. Mobile and Cross-Device Syncing
-                    Access your tasks from any device – desktop, tablet, or mobile – ensuring that you can manage your tasks on-the-go.
-                    Real-time syncing ensures that updates made on one device are reflected immediately on others.
-                {% elif current_language == 'azerbaijani' %}
-                    Əsas Xüsusiyyətlər:
-                    <br>
-                    1. Tapşırıqların yaradılması və Fərdiləşdirmə
-                    Aydın başlıqlar, təsvirlər və son tarixlərlə tapşırıqlar əlavə edin.
-                    Diqqəti ən vacib olana yönəltməyinizi təmin etmək üçün prioritet səviyyələri (Aşağı, Orta, Yüksək) əlavə edin.
-                    Daha böyük layihələri idarə oluna bilən addımlara bölmək üçün ətraflı qeydlər, etiketlər və hətta alt tapşırıqlar əlavə edin.
-                    <br>
-                    2. Tapşırıqların təşkili və təsnifatı
-                    Daha asan idarəetmə üçün tapşırıqları layihə, kateqoriya və ya statusa görə qruplaşdırın (Görüləcək, Davam edir, Tamamlandı).
-                    Heç bir şeyin diqqətdən kənarda qalmamasını təmin etmək üçün tapşırıqları təcili, son tarixlər və ya vacibliyə əsasən təşkil edin.
-                    Daha fərdiləşdirilmiş tapşırıqların idarə edilməsi üçün əlavə kateqoriyalar yaratmaq üçün etiketlər və ya etiketlərdən istifadə edin.
-                    <br>
-                    3. İstifadəçi İdarəetmə və Əməkdaşlıq
-                    Bir komanda ilə işləyirsinizsə, məsuliyyəti aydınlaşdırmaq üçün xüsusi istifadəçilərə tapşırıqlar verin.
-                    Birgə tapşırıqlar üzrə irəliləyişi izləyin və hər kəsin eyni səhifədə qalmasını təmin edin.
-                    Rol əsaslı giriş nəzarəti menecerlərə tapşırıqlara nəzarət etməyə və komandanın məhsuldarlığını izləməyə imkan verir.
-                    <br>
-                    4. Xatırlatmalar və Bildirişlər
-                    Vacib bir son tarixi heç vaxt unutmamağınız üçün avtomatlaşdırılmış xatırlatmalar qurun.
-                    Tapşırıq son tarixə yaxınlaşdıqda və ya yeniləmələr baş verdikdə e-poçt və ya push bildirişləri alın.
-                    Təyin olunmuş tapşırıqların icrası ilə bağlı real vaxt bildirişləri ilə yeniliklərdən xəbərdar olun.
-                    <br>
-                    5. İdarə paneli və Analitika
-                    Fərdiləşdirilə bilən idarə paneli aktiv tapşırıqlarınızın, vaxtı keçmiş elementlərin və qarşıdan gələn son tarixlərin şəklini təqdim edir.
-                    Vizual tərəqqi göstəriciləri məhsuldarlığınızı izləməyə və iş prosesinizdəki maneələri müəyyən etməyə kömək edir.
-                    Tapşırıqların tamamlanma dərəcələrini, komanda məhsuldarlığını və zamanla tapşırıqların paylanmasını təhlil etmək üçün hesabatlar yaradın.
-                    <br>
-                    6. Axtarış və Filtrləmə
-                    Açar söz, son tarix, prioritet və ya layihə üzrə xüsusi tapşırıqları tez axtarın.
-                    Yalnız seçdiyiniz kriteriyalara cavab verənləri göstərmək üçün tapşırıqları süzün ki, bu da sizə mütəşəkkil və diqqətli olmağınıza kömək edir.
-                    <br>
-                    7. Mobil və Cihazlar Arası Sinxronizasiya
-                    Tapşırıqlarınıza istənilən cihazdan - iş masası, planşet və ya mobil cihazdan daxil olun və tapşırıqlarınızı yolda idarə edə bildiyinizə əmin olun.
-                    Real vaxt rejimində sinxronizasiya bir cihazda edilən yeniləmələrin dərhal digərlərində əks olunmasını təmin edir.
-                {% elif current_language == 'turkish' %}
-                    Temel Özellikler:
-                    <br>
-                    1. Görev Oluşturma ve Özelleştirme
-                    Net başlıklar, açıklamalar ve son tarihler içeren görevler ekleyin.
-                    En önemli olana odaklandığınızdan emin olmak için öncelik düzeyleri (Düşük, Orta, Yüksek) ekleyin.
-                    Daha büyük projeleri yönetilebilir adımlara bölmek için ayrıntılı notlar, etiketler ve hatta alt görevler ekleyin.
-                    <br>
-                    2. Görev Organizasyonu ve Kategorizasyonu
-                    Daha kolay yönetim için görevleri projeye, kategoriye veya duruma (Yapılacak, Devam Ediyor, Tamamlandı) göre gruplandırın.
-                    Hiçbir şeyin gözden kaçmamasını sağlamak için görevleri aciliyete, son tarihlere veya öneme göre düzenleyin.
-                    Daha kişiselleştirilmiş görev yönetimi için ek kategorizasyon katmanları oluşturmak üzere etiketler veya etiketler kullanın.
-                    <br>
-                    3. Kullanıcı Yönetimi ve İşbirliği
-                    Bir ekiple çalışıyorsanız, sorumluluğu netleştirmek için görevleri belirli kullanıcılara atayın.
-                    İşbirlikçi görevlerdeki ilerlemeyi izleyin ve herkesin aynı sayfada kalmasını sağlayın.
-                    Rol tabanlı erişim kontrolü, yöneticilerin görevleri denetlemesine ve ekip üretkenliğini takip etmesine olanak tanır. <br>
-                    4. Hatırlatıcılar ve Bildirimler
-                    Önemli bir son tarihi asla unutmamak için otomatik hatırlatıcılar ayarlayın.
-                    Bir görevin son tarihine yaklaştığında veya güncellemeler gerçekleştiğinde e-posta veya anında bildirimler alın.
-                    Atanan görevlerin ilerlemesi hakkında gerçek zamanlı bildirimlerle güncel kalın.
-                    <br>
-                    5. Gösterge Paneli ve Analizler
-                    Özelleştirilebilir bir gösterge paneli, etkin görevlerinizin, gecikmiş öğelerinizin ve yaklaşan son tarihlerinizin anlık görüntüsünü sağlar.
-                    Görsel ilerleme göstergeleri, üretkenliğinizi izlemenize ve iş akışınızdaki darboğazları belirlemenize yardımcı olur.
-                    Görev tamamlama oranlarınızı, ekip üretkenliğinizi ve zaman içindeki görev dağılımınızı analiz etmek için raporlar oluşturun.
-                    <br>
-                    6. Arama ve Filtreleme
-                    Belirli görevleri anahtar kelimeye, son tarihe, önceliğe veya projeye göre hızla arayın.
-                    Görevleri yalnızca seçtiğiniz ölçütleri karşılayanları görüntülemek için filtreleyin, düzenli ve odaklanmış kalmanıza yardımcı olur.
-                    <br>
-                    7. Mobil ve Cihazlar Arası Senkronizasyon
-                    Görevlerinize masaüstü, tablet veya mobil herhangi bir cihazdan erişin ve görevlerinizi hareket halindeyken yönetebilmenizi sağlayın. Gerçek zamanlı senkronizasyon, bir cihazda yapılan güncellemelerin anında diğer cihazlara yansımasını sağlar.
-                {% elif current_language == 'russian' %}
-                    Основные функции:
-                    <br>
-                    1. Создание и настройка задач
-                    Добавляйте задачи с понятными названиями, описаниями и сроками.
-                    Присваивайте уровни приоритета (низкий, средний, высокий), чтобы сосредоточиться на самом важном.
-                    Добавляйте подробные заметки, теги и даже подзадачи, чтобы разбить крупные проекты на управляемые этапы.
-                    <br>
-                    2. Организация и категоризация задач
-                    Группируйте задачи по проекту, категории или статусу (Сделать, В процессе, Завершено) для более простого управления.
-                    Организуйте задачи на основе срочности, сроков или важности, чтобы ничего не упустить из виду.
-                    Используйте метки или теги для создания дополнительных уровней категоризации для более персонализированного управления задачами.
-                    <br>
-                    3. Управление пользователями и совместная работа
-                    Если вы работаете с командой, назначайте задачи определенным пользователям, чтобы прояснить ответственность.
-                    Отслеживайте прогресс в совместных задачах и гарантируйте, что все остаются на одной странице.
-                    Управление доступом на основе ролей позволяет менеджерам контролировать задачи и отслеживать производительность команды.
-                    <br>
-                    4. Напоминания и уведомления
-                    Установите автоматические напоминания, чтобы никогда не забыть о важном сроке.
-                    Получайте электронные письма или push-уведомления, когда приближается срок выполнения задачи или происходят обновления.
-                    Оставайтесь в курсе событий с уведомлениями в реальном времени о ходе выполнения назначенных задач.
-                    <br>
-                    5. Панель инструментов и аналитика
-                    Настраиваемая панель инструментов предоставляет снимок ваших активных задач, просроченных элементов и приближающихся сроков.
-                    Визуальные индикаторы прогресса помогают отслеживать производительность и выявлять узкие места в рабочем процессе.
-                    Создавайте отчеты для анализа показателей выполнения задач, производительности команды и распределения задач с течением времени.
-                    <br>
-                    6. Поиск и фильтрация
-                    Быстро ищите определенные задачи по ключевому слову, сроку выполнения, приоритету или проекту.
-                    Фильтруйте задачи, чтобы отображать только те, которые соответствуют выбранным вами критериям, помогая вам оставаться организованным и сосредоточенным.
-                    <br>
-                    7. Синхронизация между мобильными устройствами и устройствами
-                    Доступ к задачам с любого устройства — настольного компьютера, планшета или мобильного телефона — гарантируя, что вы можете управлять своими задачами на ходу.
-                    Синхронизация в реальном времени гарантирует, что обновления, сделанные на одном устройстве, немедленно отражаются на других.
-                {% else %}
-                    Key Features:
-                    <br>
-                    1. Task Creation and Customization
-                    Add tasks with clear titles, descriptions, and deadlines.
-                    Attach priority levels (Low, Medium, High) to ensure that you focus on what matters most.
-                    Add detailed notes, tags, and even subtasks to break larger projects down into manageable steps.
-                    <br>
-                    2. Task Organization and Categorization
-                    Group tasks by project, category, or status (To Do, In Progress, Completed) for easier management.
-                    Organize tasks based on urgency, deadlines, or importance to ensure nothing gets overlooked.
-                    Use labels or tags to create additional layers of categorization for more personalized task management.
-                    <br>
-                    3. User Management and Collaboration
-                    If you’re working with a team, assign tasks to specific users to clarify responsibility.
-                    Track progress on collaborative tasks and ensure everyone stays on the same page.
-                    Role-based access control allows managers to oversee tasks and track team productivity.
-                    <br>
-                    4. Reminders and Notifications
-                    Set automated reminders to ensure you never forget an important deadline.
-                    Receive email or push notifications when a task is approaching its due date or when updates occur.
-                    Stay up-to-date with real-time notifications about the progress of assigned tasks.
-                    <br>
-                    5. Dashboard and Analytics
-                    A customizable dashboard provides a snapshot of your active tasks, overdue items, and upcoming deadlines.
-                    Visual progress indicators help you track your productivity and identify bottlenecks in your workflow.
-                    Generate reports to analyze your task completion rates, team productivity, and task distribution over time.
-                    <br>
-                    6. Search and Filtering
-                    Quickly search for specific tasks by keyword, due date, priority, or project.
-                    Filter tasks to display only those that meet your selected criteria, helping you stay organized and focused.
-                    <br>
-                    7. Mobile and Cross-Device Syncing
-                    Access your tasks from any device – desktop, tablet, or mobile – ensuring that you can manage your tasks on-the-go.
-                    Real-time syncing ensures that updates made on one device are reflected immediately on others.
-                {% endif %}
+            <div class="sectors">
+                <span class="textside">
+                    {% if current_language == 'english' %}
+                        Key Features:
+                        <br>
+                        1. Task Creation and Customization
+                        Add tasks with clear titles, descriptions, and deadlines.
+                        Attach priority levels (Low, Medium, High) to ensure that you focus on what matters most.
+                        Add detailed notes, tags, and even subtasks to break larger projects down into manageable steps.
+                        <br>
+                        2. Task Organization and Categorization
+                        Group tasks by project, category, or status (To Do, In Progress, Completed) for easier management.
+                        Organize tasks based on urgency, deadlines, or importance to ensure nothing gets overlooked.
+                        Use labels or tags to create additional layers of categorization for more personalized task management.
+                        <br>
+                        3. User Management and Collaboration
+                        If you’re working with a team, assign tasks to specific users to clarify responsibility.
+                        Track progress on collaborative tasks and ensure everyone stays on the same page.
+                        Role-based access control allows managers to oversee tasks and track team productivity.
+                        <br>
+                        4. Reminders and Notifications
+                        Set automated reminders to ensure you never forget an important deadline.
+                        Receive email or push notifications when a task is approaching its due date or when updates occur.
+                        Stay up-to-date with real-time notifications about the progress of assigned tasks.
+                        <br>
+                        5. Dashboard and Analytics
+                        A customizable dashboard provides a snapshot of your active tasks, overdue items, and upcoming deadlines.
+                        Visual progress indicators help you track your productivity and identify bottlenecks in your workflow.
+                        Generate reports to analyze your task completion rates, team productivity, and task distribution over time.
+                        <br>
+                        6. Search and Filtering
+                        Quickly search for specific tasks by keyword, due date, priority, or project.
+                        Filter tasks to display only those that meet your selected criteria, helping you stay organized and focused.
+                        <br>
+                        7. Mobile and Cross-Device Syncing
+                        Access your tasks from any device – desktop, tablet, or mobile – ensuring that you can manage your tasks on-the-go.
+                        Real-time syncing ensures that updates made on one device are reflected immediately on others.
+                    {% elif current_language == 'azerbaijani' %}
+                        Əsas Xüsusiyyətlər:
+                        <br>
+                        1. Tapşırıqların yaradılması və Fərdiləşdirmə
+                        Aydın başlıqlar, təsvirlər və son tarixlərlə tapşırıqlar əlavə edin.
+                        Diqqəti ən vacib olana yönəltməyinizi təmin etmək üçün prioritet səviyyələri (Aşağı, Orta, Yüksək) əlavə edin.
+                        Daha böyük layihələri idarə oluna bilən addımlara bölmək üçün ətraflı qeydlər, etiketlər və hətta alt tapşırıqlar əlavə edin.
+                        <br>
+                        2. Tapşırıqların təşkili və təsnifatı
+                        Daha asan idarəetmə üçün tapşırıqları layihə, kateqoriya və ya statusa görə qruplaşdırın (Görüləcək, Davam edir, Tamamlandı).
+                        Heç bir şeyin diqqətdən kənarda qalmamasını təmin etmək üçün tapşırıqları təcili, son tarixlər və ya vacibliyə əsasən təşkil edin.
+                        Daha fərdiləşdirilmiş tapşırıqların idarə edilməsi üçün əlavə kateqoriyalar yaratmaq üçün etiketlər və ya etiketlərdən istifadə edin.
+                        <br>
+                        3. İstifadəçi İdarəetmə və Əməkdaşlıq
+                        Bir komanda ilə işləyirsinizsə, məsuliyyəti aydınlaşdırmaq üçün xüsusi istifadəçilərə tapşırıqlar verin.
+                        Birgə tapşırıqlar üzrə irəliləyişi izləyin və hər kəsin eyni səhifədə qalmasını təmin edin.
+                        Rol əsaslı giriş nəzarəti menecerlərə tapşırıqlara nəzarət etməyə və komandanın məhsuldarlığını izləməyə imkan verir.
+                        <br>
+                        4. Xatırlatmalar və Bildirişlər
+                        Vacib bir son tarixi heç vaxt unutmamağınız üçün avtomatlaşdırılmış xatırlatmalar qurun.
+                        Tapşırıq son tarixə yaxınlaşdıqda və ya yeniləmələr baş verdikdə e-poçt və ya push bildirişləri alın.
+                        Təyin olunmuş tapşırıqların icrası ilə bağlı real vaxt bildirişləri ilə yeniliklərdən xəbərdar olun.
+                        <br>
+                        5. İdarə paneli və Analitika
+                        Fərdiləşdirilə bilən idarə paneli aktiv tapşırıqlarınızın, vaxtı keçmiş elementlərin və qarşıdan gələn son tarixlərin şəklini təqdim edir.
+                        Vizual tərəqqi göstəriciləri məhsuldarlığınızı izləməyə və iş prosesinizdəki maneələri müəyyən etməyə kömək edir.
+                        Tapşırıqların tamamlanma dərəcələrini, komanda məhsuldarlığını və zamanla tapşırıqların paylanmasını təhlil etmək üçün hesabatlar yaradın.
+                        <br>
+                        6. Axtarış və Filtrləmə
+                        Açar söz, son tarix, prioritet və ya layihə üzrə xüsusi tapşırıqları tez axtarın.
+                        Yalnız seçdiyiniz kriteriyalara cavab verənləri göstərmək üçün tapşırıqları süzün ki, bu da sizə mütəşəkkil və diqqətli olmağınıza kömək edir.
+                        <br>
+                        7. Mobil və Cihazlar Arası Sinxronizasiya
+                        Tapşırıqlarınıza istənilən cihazdan - iş masası, planşet və ya mobil cihazdan daxil olun və tapşırıqlarınızı yolda idarə edə bildiyinizə əmin olun.
+                        Real vaxt rejimində sinxronizasiya bir cihazda edilən yeniləmələrin dərhal digərlərində əks olunmasını təmin edir.
+                    {% elif current_language == 'turkish' %}
+                        Temel Özellikler:
+                        <br>
+                        1. Görev Oluşturma ve Özelleştirme
+                        Net başlıklar, açıklamalar ve son tarihler içeren görevler ekleyin.
+                        En önemli olana odaklandığınızdan emin olmak için öncelik düzeyleri (Düşük, Orta, Yüksek) ekleyin.
+                        Daha büyük projeleri yönetilebilir adımlara bölmek için ayrıntılı notlar, etiketler ve hatta alt görevler ekleyin.
+                        <br>
+                        2. Görev Organizasyonu ve Kategorizasyonu
+                        Daha kolay yönetim için görevleri projeye, kategoriye veya duruma (Yapılacak, Devam Ediyor, Tamamlandı) göre gruplandırın.
+                        Hiçbir şeyin gözden kaçmamasını sağlamak için görevleri aciliyete, son tarihlere veya öneme göre düzenleyin.
+                        Daha kişiselleştirilmiş görev yönetimi için ek kategorizasyon katmanları oluşturmak üzere etiketler veya etiketler kullanın.
+                        <br>
+                        3. Kullanıcı Yönetimi ve İşbirliği
+                        Bir ekiple çalışıyorsanız, sorumluluğu netleştirmek için görevleri belirli kullanıcılara atayın.
+                        İşbirlikçi görevlerdeki ilerlemeyi izleyin ve herkesin aynı sayfada kalmasını sağlayın.
+                        Rol tabanlı erişim kontrolü, yöneticilerin görevleri denetlemesine ve ekip üretkenliğini takip etmesine olanak tanır. <br>
+                        4. Hatırlatıcılar ve Bildirimler
+                        Önemli bir son tarihi asla unutmamak için otomatik hatırlatıcılar ayarlayın.
+                        Bir görevin son tarihine yaklaştığında veya güncellemeler gerçekleştiğinde e-posta veya anında bildirimler alın.
+                        Atanan görevlerin ilerlemesi hakkında gerçek zamanlı bildirimlerle güncel kalın.
+                        <br>
+                        5. Gösterge Paneli ve Analizler
+                        Özelleştirilebilir bir gösterge paneli, etkin görevlerinizin, gecikmiş öğelerinizin ve yaklaşan son tarihlerinizin anlık görüntüsünü sağlar.
+                        Görsel ilerleme göstergeleri, üretkenliğinizi izlemenize ve iş akışınızdaki darboğazları belirlemenize yardımcı olur.
+                        Görev tamamlama oranlarınızı, ekip üretkenliğinizi ve zaman içindeki görev dağılımınızı analiz etmek için raporlar oluşturun.
+                        <br>
+                        6. Arama ve Filtreleme
+                        Belirli görevleri anahtar kelimeye, son tarihe, önceliğe veya projeye göre hızla arayın.
+                        Görevleri yalnızca seçtiğiniz ölçütleri karşılayanları görüntülemek için filtreleyin, düzenli ve odaklanmış kalmanıza yardımcı olur.
+                        <br>
+                        7. Mobil ve Cihazlar Arası Senkronizasyon
+                        Görevlerinize masaüstü, tablet veya mobil herhangi bir cihazdan erişin ve görevlerinizi hareket halindeyken yönetebilmenizi sağlayın. Gerçek zamanlı senkronizasyon, bir cihazda yapılan güncellemelerin anında diğer cihazlara yansımasını sağlar.
+                    {% elif current_language == 'russian' %}
+                        Основные функции:
+                        <br>
+                        1. Создание и настройка задач
+                        Добавляйте задачи с понятными названиями, описаниями и сроками.
+                        Присваивайте уровни приоритета (низкий, средний, высокий), чтобы сосредоточиться на самом важном.
+                        Добавляйте подробные заметки, теги и даже подзадачи, чтобы разбить крупные проекты на управляемые этапы.
+                        <br>
+                        2. Организация и категоризация задач
+                        Группируйте задачи по проекту, категории или статусу (Сделать, В процессе, Завершено) для более простого управления.
+                        Организуйте задачи на основе срочности, сроков или важности, чтобы ничего не упустить из виду.
+                        Используйте метки или теги для создания дополнительных уровней категоризации для более персонализированного управления задачами.
+                        <br>
+                        3. Управление пользователями и совместная работа
+                        Если вы работаете с командой, назначайте задачи определенным пользователям, чтобы прояснить ответственность.
+                        Отслеживайте прогресс в совместных задачах и гарантируйте, что все остаются на одной странице.
+                        Управление доступом на основе ролей позволяет менеджерам контролировать задачи и отслеживать производительность команды.
+                        <br>
+                        4. Напоминания и уведомления
+                        Установите автоматические напоминания, чтобы никогда не забыть о важном сроке.
+                        Получайте электронные письма или push-уведомления, когда приближается срок выполнения задачи или происходят обновления.
+                        Оставайтесь в курсе событий с уведомлениями в реальном времени о ходе выполнения назначенных задач.
+                        <br>
+                        5. Панель инструментов и аналитика
+                        Настраиваемая панель инструментов предоставляет снимок ваших активных задач, просроченных элементов и приближающихся сроков.
+                        Визуальные индикаторы прогресса помогают отслеживать производительность и выявлять узкие места в рабочем процессе.
+                        Создавайте отчеты для анализа показателей выполнения задач, производительности команды и распределения задач с течением времени.
+                        <br>
+                        6. Поиск и фильтрация
+                        Быстро ищите определенные задачи по ключевому слову, сроку выполнения, приоритету или проекту.
+                        Фильтруйте задачи, чтобы отображать только те, которые соответствуют выбранным вами критериям, помогая вам оставаться организованным и сосредоточенным.
+                        <br>
+                        7. Синхронизация между мобильными устройствами и устройствами
+                        Доступ к задачам с любого устройства — настольного компьютера, планшета или мобильного телефона — гарантируя, что вы можете управлять своими задачами на ходу.
+                        Синхронизация в реальном времени гарантирует, что обновления, сделанные на одном устройстве, немедленно отражаются на других.
+                    {% else %}
+                        Key Features:
+                        <br>
+                        1. Task Creation and Customization
+                        Add tasks with clear titles, descriptions, and deadlines.
+                        Attach priority levels (Low, Medium, High) to ensure that you focus on what matters most.
+                        Add detailed notes, tags, and even subtasks to break larger projects down into manageable steps.
+                        <br>
+                        2. Task Organization and Categorization
+                        Group tasks by project, category, or status (To Do, In Progress, Completed) for easier management.
+                        Organize tasks based on urgency, deadlines, or importance to ensure nothing gets overlooked.
+                        Use labels or tags to create additional layers of categorization for more personalized task management.
+                        <br>
+                        3. User Management and Collaboration
+                        If you’re working with a team, assign tasks to specific users to clarify responsibility.
+                        Track progress on collaborative tasks and ensure everyone stays on the same page.
+                        Role-based access control allows managers to oversee tasks and track team productivity.
+                        <br>
+                        4. Reminders and Notifications
+                        Set automated reminders to ensure you never forget an important deadline.
+                        Receive email or push notifications when a task is approaching its due date or when updates occur.
+                        Stay up-to-date with real-time notifications about the progress of assigned tasks.
+                        <br>
+                        5. Dashboard and Analytics
+                        A customizable dashboard provides a snapshot of your active tasks, overdue items, and upcoming deadlines.
+                        Visual progress indicators help you track your productivity and identify bottlenecks in your workflow.
+                        Generate reports to analyze your task completion rates, team productivity, and task distribution over time.
+                        <br>
+                        6. Search and Filtering
+                        Quickly search for specific tasks by keyword, due date, priority, or project.
+                        Filter tasks to display only those that meet your selected criteria, helping you stay organized and focused.
+                        <br>
+                        7. Mobile and Cross-Device Syncing
+                        Access your tasks from any device – desktop, tablet, or mobile – ensuring that you can manage your tasks on-the-go.
+                        Real-time syncing ensures that updates made on one device are reflected immediately on others.
+                    {% endif %}
+                </span>
             </div>
             
-            <div>
-                <span>
+            <div class="sectors">
+                <span class="textside">
                     {% if current_language == 'english' %}
                         <p>
                             Stay Productive and Organized: With its clear layout, task visualization, and real-time updates, the app allows you to see exactly where your work stands and what needs attention. No more scrambling to remember what’s due or feeling overwhelmed by a disorganized list!
@@ -368,32 +349,10 @@
                         </p>
                     {% endif %}
                 </span>
-                
-                <span>
-                    <img src="" alt="">
-                </span>
             </div>
 
-            <div>
-                <span>
-                    <!-- CAROUSEL IMAGES -->
-                    <img src="" alt="">
-                    <img src="" alt="">
-                </span>
-
-                <span>
-                    <!-- RADIO BUTTONS -->
-                    <button></button>
-                    <button></button>
-                </span>
-            </div>
-
-            <div>
-                <span>
-                    <img src="" alt="">
-                </span>
-
-                <span>
+            <div class="sectors">
+                <span class="textside">
                     {% if current_language == 'english' %}
                         <p>
                             By using Django, we’re able to offer a secure and reliable platform with rapid development cycles. This means you get a highly maintainable product that can scale as your needs grow – whether you're managing 5 tasks or 500.

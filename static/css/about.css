@@ -1,0 +1,13 @@
+.sectors {
+    display: flex;
+}
+
+.textside {
+    background-color: rgb(210,210,210);
+    margin: 0 50px;
+    padding: 5px;
+}
+
+.textside p {
+    margin-bottom: 10px;
+}

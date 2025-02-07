@@ -1,9 +1,8 @@
 function NavbarCustomOnLoadEvent() {
     //===== START UP SET LANGUAGE DATA FROM LOCALSTORAGE =====//
     var local_lang_data = new URL(window.location.href).searchParams.get('lang')
-    if(local_lang_data == null) {
-        local_lang_data = 'english'
-    }
+    var portname = window.location.port
+    if(local_lang_data == null) {local_lang_data = 'english'}
     var option_en = document.getElementById('lang_en')
     var option_az = document.getElementById('lang_az')
     var option_tr = document.getElementById('lang_tr')
@@ -23,23 +22,23 @@ function NavbarCustomOnLoadEvent() {
     if(local_lang_data == 'english') {
         option_en.style.backgroundColor = `rgb(128,128,128)`
         option_en_text.style.color = `rgb(255,255,255)`
-        document.getElementById('select_language').innerHTML = '<img src="static/img/flags/flag-us-svgrepo-com.svg" alt="english" name="english" id="flag_en" style="width: 30px;"> <span id="screen_lang" name="english"> EN </span>'
+        document.getElementById('select_language').innerHTML = `<img src="http://localhost:${portname}/static/img/flags/flag-us-svgrepo-com.svg" alt="english" name="english" id="flag_en" style="width: 30px;"> <span id="screen_lang" name="english"> EN </span>`
     } else if(local_lang_data == 'azerbaijani') {
         option_az.style.backgroundColor = `rgb(128,128,128)`
         option_az_text.style.color = `rgb(255,255,255)`
-        document.getElementById('select_language').innerHTML = '<img src="static/img/flags/flag-az-svgrepo-com.svg" alt="azerbaijani" name="azerbaijani" id="flag_az" style="width: 30px;"> <span id="screen_lang" name="azerbaijani"> AZ </span>'
+        document.getElementById('select_language').innerHTML = `<img src="http://localhost:${portname}/static/img/flags/flag-az-svgrepo-com.svg" alt="azerbaijani" name="azerbaijani" id="flag_az" style="width: 30px;"> <span id="screen_lang" name="azerbaijani"> AZ </span>`
     } else if(local_lang_data == 'turkish') {
         option_tr.style.backgroundColor = `rgb(128,128,128)`
         option_tr_text.style.color = `rgb(255,255,255)`
-        document.getElementById('select_language').innerHTML = '<img src="static/img/flags/flag-tr-svgrepo-com.svg" alt="turkish" name="turkish" id="flag_tr" style="width: 30px;"> <span id="screen_lang" name="turkish"> TR </span>'
+        document.getElementById('select_language').innerHTML = `<img src="http://localhost:${portname}/static/img/flags/flag-tr-svgrepo-com.svg" alt="turkish" name="turkish" id="flag_tr" style="width: 30px;"> <span id="screen_lang" name="turkish"> TR </span>`
     } else if(local_lang_data == 'russian') {
         option_ru.style.backgroundColor = `rgb(128,128,128)`
         option_ru_text.style.color = `rgb(255,255,255)`
-        document.getElementById('select_language').innerHTML = '<img src="static/img/flags/flag-ru-svgrepo-com.svg" alt="russian" name="russian" id="flag_ru" style="width: 30px;"> <span id="screen_lang" name="russian"> RU </span>'
+        document.getElementById('select_language').innerHTML = `<img src="http://localhost:${portname}/static/img/flags/flag-ru-svgrepo-com.svg" alt="russian" name="russian" id="flag_ru" style="width: 30px;"> <span id="screen_lang" name="russian"> RU </span>`
     } else {
         option_en.style.backgroundColor = `rgb(128,128,128)`
         option_en_text.style.color = `rgb(255,255,255)`
-        document.getElementById('select_language').innerHTML = '<img src="static/img/flags/flag-us-svgrepo-com.svg" alt="english" name="english" id="flag_en" style="width: 30px;"> <span id="screen_lang" name="english"> EN </span>'
+        document.getElementById('select_language').innerHTML = `<img src="http://localhost:${portname}/static/img/flags/flag-us-svgrepo-com.svg" alt="english" name="english" id="flag_en" style="width: 30px;"> <span id="screen_lang" name="english"> EN </span>`
     }
 }
 NavbarCustomOnLoadEvent()

@@ -12,11 +12,11 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3> CREATE NEW TASK </h3>
+        <h3 class="form_headers"> CREATE NEW TASK </h3>
 
         <br>
 
-        <form method="post">
+        <form method="post" class="db_form">
             {% csrf_token %}
 
             {{ task_form.as_p }}

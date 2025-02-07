@@ -20,3 +20,80 @@
     color: rgb(0,0,0);
     filter: drop-shadow(0 0 1px rgb(0,0,0));
 }
+
+.graphic_data_container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 50px 0;
+}
+
+.text_data_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dash_cards {
+    border: 1px solid rgb(128,128,128);
+    border-radius: 10px;
+    width: 420px;
+    height: fit-content;
+    background-color: rgb(255,255,255);
+    filter: drop-shadow(-10px -10px 16px rgb(0,0,0));
+    padding: 20px;
+}
+
+.form_headers {
+    color: rgb(255,255,255);
+    margin-bottom: 50px;
+    padding-top: 20px;
+    filter: drop-shadow(0 0 8px rgb(0,0,0));
+    text-align: center;
+}
+
+.db_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.db_form p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    width: 800px;
+    padding: 10px 10px 10px 10px; /* top right bottom left */
+    margin: 0; 
+    border: none;
+    border-bottom: 1px solid rgb(128,128,128);
+    color: rgb(255,255,255);
+}
+
+.db_form button {
+    background-color: rgb(128,255,0);
+    color: rgb(0,0,0);
+    border: 1px solid rgb(0,0,0);
+    border-radius: 6px;
+    min-width: 100px;
+    margin: 20px 0 0 0;
+    padding: 15px;
+    transition: linear 100ms;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.db_form button:hover {
+    background-color: rgb(0,0,0);
+    color: rgb(128,255,0);
+    border: 1px solid rgb(128,255,0);
+}
+
+.db_form button:active {
+    background: radial-gradient(rgb(255,255,255), rgb(255,255,255), rgb(255,255,0));
+    color: rgb(255,255,0);
+    border: none;
+    outline: none;
+    filter: drop-shadow(0 0 15px rgb(255,255,0));
+}

@@ -12,7 +12,7 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3>
+        <h3 class="form_headers">
             {% if current_language == 'english' %}
                 MY DASHBOARD
             {% elif current_language == 'azerbaijani' %}
@@ -29,7 +29,7 @@
         <hr>
 
         <div>
-            <h4>
+            <h4 class="form_headers">
                 {% if current_language == 'english' %}
                     Profile Information
                 {% elif current_language == 'azerbaijani' %}
@@ -43,19 +43,19 @@
                 {% endif %}
             </h4>
 
-            <form method="post">
+            <form method="post" id="dashboard_profile_form" class="db_form">
                 {% csrf_token %}
 
-                {{ form }}
+                {{ form.as_p }}
                 
-                <input type="submit" placeholder="Update">
+                <Button type="submit"> Update </Button>
             </form>
         </div>
 
         <hr>
 
         <div>
-            <h4>
+            <h4 class="form_headers">
                 {% if current_language == 'english' %}
                     Graphic Data
                 {% elif current_language == 'azerbaijani' %}
@@ -69,121 +69,336 @@
                 {% endif %}
             </h4>
 
-            <div>
-                <!-- 2 AXIS GRAPH FOR SOME DATA -->
-            </div>
-            <div>
-                <!-- PIE DIAGRAM FOR SOME DATA -->
-            </div>
-            <div>
-                <!-- STATISTIC BARS (HISTOGRAM) FOR SOME DATA -->
+            <div class="graphic_data_container">
+                <!-- //==================== LIBRARY NO 1 • Plotly ====================// -->
+                <div id="chart1" class="scatter_two_axes"></div>
+                <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                <script>
+                    var trace1 = {
+                        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        y: [10, 20, 30, 40, 50, 1, 55 , 5, 6, 100, 0, 5],
+                        mode: 'lines',
+                        type: 'scatter'
+                    }
+                    var data = [
+                        trace1
+                    ]
+                    var layout = {
+                        // title: 'Scatter Plot with Two Axes',
+                        xaxis: {
+                            title: '',
+                        },
+                        yaxis: {
+                            title: 'Completed Tasks',
+                        },
+                        margin: {
+                            l: 40,  // Left margin
+                            r: 40,  // Right margin
+                            t: 40,  // Top margin
+                            b: 40   // Bottom margin (for x-axis labels)
+                        },
+                        autosize: true,
+                        width: 400,
+                        height: 400
+                    }
+                    Plotly.newPlot('chart1', data, layout, {responsive: true})
+                </script>
+                <style>
+                    .scatter_two_axes {
+                        width: 420px;
+                        height: 420px;
+                        max-width: 100%;
+                        max-height: 100%;
+                        padding: 10px;
+                        overflow: hidden;
+                        position: relative;
+                        border: 1px solid rgb(128,128,128);
+                        border-radius: 10px;
+                        filter: drop-shadow(-10px -10px 16px rgb(0,0,0));
+                        background-color: rgb(255,255,255);
+                    }
+
+                    .scatter_two_axes > .plotly {
+                        width: 100% !important;
+                        height: 100% !important;
+                        position: absolute;
+                    }
+                </style>
+
+                <!-- //==================== LIBRARY NO 2 • D3.js ====================// -->
+                <div class="pie_diagram display_flex_cc">
+                    <svg id="chart2" width="320" height="320"></svg>
+                    <div style="display: flex; gap: 20px; margin-top: 20px;">
+                        <p id="no1" style="display: flex; gap: 10px; align-items: center; font-size: 10px;"></p>
+                        <p id="no2" style="display: flex; gap: 10px; align-items: center; font-size: 10px;"></p>
+                        <p id="no3" style="display: flex; gap: 10px; align-items: center; font-size: 10px;"></p>
+                        <p id="no4" style="display: flex; gap: 10px; align-items: center; font-size: 10px;"></p>
+                        <p id="no5" style="display: flex; gap: 10px; align-items: center; font-size: 10px;"></p>
+                    </div>
+                </div>
+                <script src="https://d3js.org/d3.v7.min.js"></script>
+                <script>
+                    const data1 = [10, 20, 30]
+                    const width = 320
+                    const height = 320
+                    const radius = Math.min(width, height)/2
+                    const innerRad = radius/2
+
+                    // data1.forEach(
+                    //     (element, index) => {
+                    //         document.getElementById(`no${index+1}`).innerHTML = `<span class="colorbx" id="colorbx_1"></span> <span> NO${index+1} (${data1[index]}%) </span>`
+                    //     }
+                    // )
+
+                    var infoText1 = document.getElementById('no1').innerHTML = `<span class="colorbx" id="colorbx_1"></span> <span> NO1 (${data1[0]}%) </span>`
+                    var infoText2 = document.getElementById('no2').innerHTML = `<span class="colorbx" id="colorbx_2"></span> <span> NO2 (${data1[1]}%) </span>`
+                    var infoText3 = document.getElementById('no3').innerHTML = `<span class="colorbx" id="colorbx_3"></span> <span> NO3 (${data1[2]}%) </span>`
+
+                    var color = d3.scaleOrdinal(d3.schemeCategory10)
+
+                    var pie = d3.pie()
+                    var arc = d3.arc().innerRadius(innerRad).outerRadius(radius)
+
+                    var svg = d3.select('#chart2')
+                        .append('g')
+                        .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')')
+
+                    var pieData = pie(data1)
+                    
+                    svg.selectAll('path')
+                        .data(pieData)
+                        .enter().append('path')
+                        .attr('d', arc)
+                        .attr('fill', function(d, i) {
+                            document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
+                            document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
+                            document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
+                            return color(i)
+                        })
+                </script>
+                <style>
+                    .display_flex_cc {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .pie_diagram {
+                        width: 420px;
+                        height: 420px;
+                        max-width: 100%;
+                        max-height: 100%;
+                        overflow: hidden;
+                        border: 1px solid rgb(128,128,128);
+                        border-radius: 10px;
+                        filter: drop-shadow(-10px -10px 16px rgb(0,0,0));
+                        background-color: rgb(255,255,255);
+                    }
+
+                    .colorbx {
+                        display: block;
+                        width: 10px;
+                        height: 10px;
+                        outline: none;
+                        border: none;
+                        background-color: rgb(0,0,0);
+                    }
+                </style>
+                
+                <!-- //==================== LIBRARY NO 3 • ECharts ====================// -->
+                <div id="chart3" style="width: 400px; height: 420px;" class="histogram"></div>
+                <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
+                <script>
+                    var chart = echarts.init(document.getElementById('chart3'))
+                    var option = {
+                        // title: {
+                        //     text: 'Sales'
+                        // },
+                        yAxis: {
+                            type: 'category',
+                            data: ['A', 'B', 'C']
+                        },
+                        xAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                data: [14, 9, 101],
+                                type: 'bar'
+                            }
+                        ]
+                    }
+                    chart.setOption(option)
+                </script>
+                <style>
+                    .histogram {
+                        width: 420px;
+                        height: 420px;
+                        max-width: 100%;
+                        max-height: 100%;
+                        overflow: hidden;
+                        border: 1px solid rgb(128,128,128);
+                        border-radius: 10px;
+                        filter: drop-shadow(-10px -10px 16px rgb(0,0,0));
+                        background-color: rgb(255,255,255);
+                    }
+                </style>
             </div>
         </div>
 
         <hr>
-
+        
         <div>
-            {% if current_language == 'english' %}
-                <h4> Statistics of Your Activity </h4>
+            <h4 class="form_headers">
+                {% if current_language == 'english' %}
+                    Statistics of Your Activity
+                {% elif current_language == 'azerbaijani' %}
+                    Fəaliyyətinizin Statistikası
+                {% elif current_language == 'turkish' %}
+                    Etkinliğinizin İstatistikleri
+                {% elif current_language == 'russian' %}
+                    Статистика Вашей Активности
+                {% else %}
+                    Statistics of Your Activity
+                {% endif %}
+            </h4>
 
-                <div>
-                    <!-- CARD 1 FOR SOME DATA -->
+            <div class="text_data_container">
+                <!-- CARD BLOCK 1 AXES -->
+                <div class="dash_cards">
+                    {% if current_language == 'english' %}
+                        <p> • Task completed, for each month at #thisYear: 0 </p>
+                        <hr>
+                        <p> • Tasks created at #thisYear: 0 </p>
+                        <p> • Task deleted at #thisYear: 0 </p>
+                    {% elif current_language == 'azerbaijani' %}
+                        <p> Tapşırıq tamamlandı, bu #ildə hər ay üçün: 0 </p>
+                        <hr>
+                        <p> Tapşırıq #buildə yaradılmışdır: 0 </p>
+                        <p> Tapşırıq #buildə silindi: 0 </p>
+                    {% elif current_language == 'turkish' %}
+                        <p> Görev tamamlandı, her ay için #thisYear: 0 </p>
+                        <hr>
+                        <p> #thisYear'da görev oluşturuldu: 0 </p>
+                        <p> #thisYear'da görev silindi: 0 </p>
+                    {% elif current_language == 'russian' %}
+                        <p> Задача выполнена, для каждого месяца в #thisYear: 0 </p>
+                        <hr>
+                        <p> • Задача создана в #thisYear: 0 </p>
+                        <p> • Задача удалена в #thisYear: 0 </p>
+                    {% else %}
+                        <p> • Task completed, for each month at #thisYear: 0 </p>
+                        <hr>
+                        <p> • Tasks created at #thisYear: 0 </p>
+                        <p> • Task deleted at #thisYear: 0 </p>
+                    {% endif %}
+                    
+                </div>
 
-                    <!-- toplam nece task yaradilib
-                    nece silinib
-                    nece priority 10 taskim olub
-                    nece lvl5
-                    nece taski tamamlamisam
-                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
-                    log a gore tam melumatlari hesabla -->
+                <!-- CARD BLOCK 2 PIE -->
+                <div class="dash_cards">
+                    {% if current_language == 'english' %}
+                        <p> • Incomplete Tasks: 0 </p> <!--- (milestone 0 daxil) -->
+                        <p> • WIP Tasks: 0 </p> <!--- (milesone 0-x-max daxil) -->
+                        <p> • Completed Tasks: 0 </p> <!--- (milestone done daxil) -->
+                        <hr>
+                        <p> • Priority 1 Tasks Count: 0 </p> <!-- (log a gore tam melumatlari hesabla) -->
+                        <p> • Priority 2 Tasks Count: 0 </p>
+                        <p> • Priority 3 Tasks Count: 0 </p>
+                        <p> • Priority 4 Tasks Count: 0 </p>
+                        <p> • Priority 5 Tasks Count: 0 </p>
+                        <p> • Priority 6 Tasks Count: 0 </p>
+                        <p> • Priority 7 Tasks Count: 0 </p>
+                        <p> • Priority 8 Tasks Count: 0 </p>
+                        <p> • Priority 9 Tasks Count: 0 </p>
+                        <p> • Priority 10 Tasks Count: 0 </p>
+                    {% elif current_language == 'azerbaijani' %}
+                        <p> • Natamam Tapşırıqlar: 0 </p>
+                        <p> • WIP Tapşırıqlar: 0 </p>
+                        <p> • Tamamlanmış Tapşırıqlar: 0 </p>
+                        <hr>
+                        <p> • Prioritet 1 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 2 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 3 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 4 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 5 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 6 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 7 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 8 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 9 Tapşırıqların sayı: 0 </p>
+                        <p> • Prioritet 10 TpTapşırıqların sayı: 0 </p>
+                    {% elif current_language == 'turkish' %}
+                        <p> • Tamamlanmamış Görevler: 0 </p>
+                        <p> • WIP Görevler: 0 </p>
+                        <p> • Tamamlanmış Görevler: 0 </p>
+                        <hr>
+                        <p> • Öncelik Puanı 1 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 2 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 3 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 4 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 5 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 6 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 7 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 8 Görevler: 0 </p>
+                        <p> • Öncelik Puanı 9 Görevler: 0 </p>
+                    {% elif current_language == 'russian' %}
+                        <p> • Незавершенные задачи: 0 </p>
+                        <p> • Задачи в работе: 0 </p>
+                        <p> • Завершенные задачи: 0 </p>
+                        <hr>
+                        <p> • Приоритет 1 Количество задач: 0 </p>
+                        <p> • Приоритет 2 Количество задач: 0 </p>
+                        <p> • Приоритет 3 Количество задач: 0 </p>
+                        <p> • Приоритет 4 Количество задач: 0 </p>
+                        <p> • Приоритет 5 Количество задач: 0 </p>
+                        <p> • Приоритет 6 Количество задач: 0 </p>
+                        <p> • Приоритет 7 Количество задач: 0 </p>
+                        <p> • Приоритет 8 Количество задач: 0 </p>
+                        <p> • Приоритет 9 Количество задач: 0 </p>
+                    {% else %}
+                        <p> • Incomplete Tasks: 0 </p> <!--- (milestone 0 daxil) -->
+                        <p> • WIP Tasks: 0 </p> <!--- (milesone 0-x-max daxil) -->
+                        <p> • Completed Tasks: 0 </p> <!--- (milestone done daxil) -->
+                        <hr>
+                        <p> • Priority 1 Tasks Count: 0 </p> <!-- (log a gore tam melumatlari hesabla) -->
+                        <p> • Priority 2 Tasks Count: 0 </p>
+                        <p> • Priority 3 Tasks Count: 0 </p>
+                        <p> • Priority 4 Tasks Count: 0 </p>
+                        <p> • Priority 5 Tasks Count: 0 </p>
+                        <p> • Priority 6 Tasks Count: 0 </p>
+                        <p> • Priority 7 Tasks Count: 0 </p>
+                        <p> • Priority 8 Tasks Count: 0 </p>
+                        <p> • Priority 9 Tasks Count: 0 </p>
+                        <p> • Priority 10 Tasks Count: 0 </p>
+                    {% endif %}
                 </div>
-                <div>
-                    <!-- CARD 2 FOR SOME DATA -->
-                </div>
-                <div>
-                    <!-- CARD 3 FOR SOME DATA -->
-                </div>
-            {% elif current_language == 'azerbaijani' %}
-                <h4> Fəaliyyətinizin Statistikası </h4>
 
-                <div>
-                    <!-- CARD 1 FOR SOME DATA -->
-
-                    <!-- toplam nece task yaradilib
-                    nece silinib
-                    nece priority 10 taskim olub
-                    nece lvl5
-                    nece taski tamamlamisam
-                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
-                    log a gore tam melumatlari hesabla -->
+                <!-- CARD BLOCK 3 HISTOGRAM -->
+                <div class="dash_cards">
+                    {% if current_language == 'english' %}
+                        <p> • Max Consecutively Login: 0 </p>
+                        <p> • Max Activity in a Day: 0 </p>
+                        <p> • Total Activity (Auth/Create/Delete): 0 </p>
+                    {% elif current_language == 'azerbaijani' %}
+                        <p> • Maksimum Ardıcıl Giriş: 0 </p>
+                        <p> • Gündə Maksimum Fəaliyyət: 0 </p>
+                        <p> • Ümumi Fəaliyyət (Profil/Yarat/Sil): 0 </p>
+                    {% elif current_language == 'turkish' %}
+                        <p> • Maksimum Ardışık Giriş: 0 </p>
+                        <p> • Bir Günde Maksimum Aktivite: 0 </p>
+                        <p> • Toplam Etkinlik (Yetkilendirme/Oluşturma/Silme): 0 </p>
+                    {% elif current_language == 'russian' %}
+                        <p> • Макс. количество последовательных входов: 0 </p>
+                        <p> • Максимальная активность за день: 0 </p>
+                        <p> • Общая активность (авторизация/создание/удаление): 0 </p>
+                    {% else %}
+                        <p> • Max Consecutively Login: 0 </p>
+                        <p> • Max Activity in a Day: 0 </p>
+                        <p> • Total Activity (Auth/Create/Delete): 0 </p>
+                    {% endif %}
                 </div>
-                <div>
-                    <!-- CARD 2 FOR SOME DATA -->
-                </div>
-                <div>
-                    <!-- CARD 3 FOR SOME DATA -->
-                </div>
-            {% elif current_language == 'turkish' %}
-                <h4> Etkinliğinizin İstatistikleri </h4>
-
-                <div>
-                    <!-- CARD 1 FOR SOME DATA -->
-
-                    <!-- toplam nece task yaradilib
-                    nece silinib
-                    nece priority 10 taskim olub
-                    nece lvl5
-                    nece taski tamamlamisam
-                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
-                    log a gore tam melumatlari hesabla -->
-                </div>
-                <div>
-                    <!-- CARD 2 FOR SOME DATA -->
-                </div>
-                <div>
-                    <!-- CARD 3 FOR SOME DATA -->
-                </div>
-            {% elif current_language == 'russian' %}
-                <h4> Статистика Вашей Активности </h4>
-
-                <div>
-                    <!-- CARD 1 FOR SOME DATA -->
-
-                    <!-- toplam nece task yaradilib
-                    nece silinib
-                    nece priority 10 taskim olub
-                    nece lvl5
-                    nece taski tamamlamisam
-                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
-                    log a gore tam melumatlari hesabla -->
-                </div>
-                <div>
-                    <!-- CARD 2 FOR SOME DATA -->
-                </div>
-                <div>
-                    <!-- CARD 3 FOR SOME DATA -->
-                </div>
-            {% else %}
-                <h4> Statistics of Your Activity </h4>
-
-                <div>
-                    <!-- CARD 1 FOR SOME DATA -->
-
-                    <!-- toplam nece task yaradilib
-                    nece silinib
-                    nece priority 10 taskim olub
-                    nece lvl5
-                    nece taski tamamlamisam
-                    nece task yaradilib ve s melumatlar olan profile bolmesi kimi bir sehife
-                    log a gore tam melumatlari hesabla -->
-                </div>
-                <div>
-                    <!-- CARD 2 FOR SOME DATA -->
-                </div>
-                <div>
-                    <!-- CARD 3 FOR SOME DATA -->
-                </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

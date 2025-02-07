@@ -1,0 +1,71 @@
+.background {
+    background-color: rgb(100,100,100);
+    min-height: 850px;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.dflex-c {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.just-c {
+    justify-content: center;
+}
+
+.home_container {
+    display: flex;
+    margin: 20px 10px 0px 10px;
+}
+
+.home_container-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.header_color {
+    color: rgb(255,255,255);
+}
+
+.clear_btn {
+    border: 2px solid rgb(255,255,255);
+    border-radius: 6px;
+    outline: none;
+    background-color: rgb(0,128,0);
+    color: rgb(255,255,255);
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: ease-in 250ms;
+}
+
+.clear_btn_fx {
+    background-color: rgb(255,255,255);
+    color: rgb(0,128,0);
+    border: 2px solid rgb(0,128,0);
+}
+
+.task_container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+}
+
+.list_view_table {
+    background-color: rgb(255,255,255);
+    border-collapse: collapse;
+    border: 1px solid rgb(0,0,0);
+    width: 1260px;
+}
+
+.table_cell {
+    border: 1px solid rgb(0,0,0);
+    padding: 4px;
+}

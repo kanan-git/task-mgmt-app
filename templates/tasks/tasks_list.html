@@ -21,19 +21,15 @@
     </div>
 
     <!-- CONTAINER -->
-    <div style="background-color: rgb(100,100,100); min-height: 850px;"> <!-- . -->
+    <div class="background">
         {% include '../base/control_bar.html' %}
 
-        <div style="display: flex; justify-content: center; margin: 20px 10px 0px 10px;">
+        <div class="home_container just-c">
             {% include '../base/filter.html' %}
 
-            <main style="width: 100%;">
-                <div style="
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                "> <!-- . -->
-                    <h2 style="color: rgb(255,255,255);">
+            <main class="width-100">
+                <div class="home_container-main">
+                    <h2 class="header_color">
                         {% if count > 0 %}
                             {% if current_language == 'english' %}
                                 TASKS: {{ count }}
@@ -61,7 +57,7 @@
                         {% endif %}
                     </h2>
 
-                    <button>
+                    <button class="clear_btn" onmouseenter="this.classList.add('clear_btn_fx')" onmouseleave="this.classList.remove('clear_btn_fx')">
                         {% if current_language == 'english' %}
                             Clear
                         {% elif current_language == 'azerbaijani' %}
@@ -76,7 +72,7 @@
                     </button>
                 </div>
 
-                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px;"> <!-- . -->
+                <div class="task_container"> <!-- . -->
                     {% if view_mode == 'grid' %}
                         <!-- HOMEPAGE WITH GRID VIEW -->
                         {% if tasks %}
@@ -84,7 +80,7 @@
                                 {% include '../base/task_card.html' %}
                             {% endfor %}
                         {% else %}
-                            <div style="display: flex; justify-content: center; align-items: center; font-size: 5em">
+                            <div class="dflex-c" style="font-size: 5em">
                                 {% if current_language == 'english' %}
                                     Empty
                                 {% elif current_language == 'azerbaijani' %}
@@ -101,30 +97,86 @@
                     {% elif view_mode == 'list' %}
                         <!-- HOMEPAGE WITH LIST VIEW -->
                         <div>
-                            <table style="background-color: rgb(255,255,255); border-collapse: collapse; border: 1px solid rgb(0,0,0);">
+                            <table class="list_view_table">
                                 <tr>
-                                    <th style="border: 1px solid rgb(0,0,0);"> ID </th>
-                                    <th style="border: 1px solid rgb(0,0,0);"> Update/Delete </th>
-                                    <th style="border: 1px solid rgb(0,0,0);"> To Do </th>
-                                    <th style="border: 1px solid rgb(0,0,0);"> Categories </th>
-                                    <th style="border: 1px solid rgb(0,0,0);"> Priority Point </th>
-                                    <th style="border: 1px solid rgb(0,0,0);"> Status </th>
+                                    {% if current_language == 'english' %}
+                                        <th class="table_cell"> ID </th>
+                                        <th class="table_cell"> Update/Delete </th>
+                                        <th class="table_cell"> To Do </th>
+                                        <th class="table_cell"> Categories </th>
+                                        <th class="table_cell"> Priority Point </th>
+                                        <th class="table_cell"> Status </th>
+                                    {% elif current_language == 'azerbaijani' %}
+                                        <th class="table_cell"> ID </th>
+                                        <th class="table_cell"> Yenilə/Sil </th>
+                                        <th class="table_cell"> Tapşırıq </th>
+                                        <th class="table_cell"> Kateqoriya </th>
+                                        <th class="table_cell"> Prioritet Dərəcəsi </th>
+                                        <th class="table_cell"> Status </th>
+                                    {% elif current_language == 'turkish' %}
+                                        <th class="table_cell"> ID </th>
+                                        <th class="table_cell"> Güncelle/Kaldır </th>
+                                        <th class="table_cell"> Görev </th>
+                                        <th class="table_cell"> Kateqori </th>
+                                        <th class="table_cell"> Öncelik Puanı </th>
+                                        <th class="table_cell"> Durum </th>
+                                    {% elif current_language == 'russian' %}
+                                        <th class="table_cell"> ID </th>
+                                        <th class="table_cell"> Update/Delete </th>
+                                        <th class="table_cell"> To Do </th>
+                                        <th class="table_cell"> Categories </th>
+                                        <th class="table_cell"> Priority Point </th>
+                                        <th class="table_cell"> Status </th>
+                                    {% else %}
+                                        <th class="table_cell"> ID </th>
+                                        <th class="table_cell"> Обновить/Удалить </th>
+                                        <th class="table_cell"> Сделать </th>
+                                        <th class="table_cell"> Категории </th>
+                                        <th class="table_cell"> Уровень Приоритета </th>
+                                        <th class="table_cell"> Статус </th>
+                                    {% endif %}
                                 </tr>
 
                                 {% if tasks %}
                                     {% for card in tasks %}
                                         <tr>
-                                            <td style="border: 1px solid rgb(0,0,0);">
+                                            <td class="table_cell">
                                                 {{card.id}}
                                             </td>
-                                            <td style="border: 1px solid rgb(0,0,0);">
-                                                <a href="{% url 'update_task' card.id %}"> Update </a>
-                                                <a href="{% url 'delete_task' card.id %}"> Delete </a>
+                                            <td class="table_cell">
+                                                <a href="{% url 'update_task' card.id %}">
+                                                    {% if current_language == 'english' %}
+                                                        Empty
+                                                    {% elif current_language == 'azerbaijani' %}
+                                                        Boş
+                                                    {% elif current_language == 'turkish' %}
+                                                        Boş
+                                                    {% elif current_language == 'russian' %}
+                                                        Пустой
+                                                    {% else %}
+                                                        Empty
+                                                    {% endif %}
+                                                    Update
+                                                </a>
+                                                <a href="{% url 'delete_task' card.id %}">
+                                                    {% if current_language == 'english' %}
+                                                        Empty
+                                                    {% elif current_language == 'azerbaijani' %}
+                                                        Boş
+                                                    {% elif current_language == 'turkish' %}
+                                                        Boş
+                                                    {% elif current_language == 'russian' %}
+                                                        Пустой
+                                                    {% else %}
+                                                        Empty
+                                                    {% endif %}
+                                                    Delete
+                                                </a>
                                             </td>
-                                            <td style="border: 1px solid rgb(0,0,0);">
+                                            <td class="table_cell">
                                                 {{card.todo}}
                                             </td>
-                                            <td style="border: 1px solid rgb(0,0,0);">
+                                            <td class="table_cell">
                                                 {% if card.category_of_task.all %}
                                                     {% for category in card.category_of_task.all %}
                                                             {{ category.name }},
@@ -133,10 +185,10 @@
                                                     Unset
                                                 {% endif %}
                                             </td>
-                                            <td style="border: 1px solid rgb(0,0,0);">
+                                            <td class="table_cell">
                                                 {{card.priority_level}}
                                             </td>
-                                            <td style="border: 1px solid rgb(0,0,0);">
+                                            <td class="table_cell">
                                                 {% if card.type_of_task_id == 1 %}
                                                     {% if card.todo_status == 1 %}
                                                         Incomplete
@@ -182,4 +234,10 @@
             </main>
         </div>
     </div>
+
+    <!-- CUSTOM JS SCRIPTS FOR SOME EVENTS -->
+    {% block javascript_scripts %}
+        <script src="{% static 'js/control_bar.js' %}"></script>
+        <script src="{% static 'js/tasks_list.js' %}"></script>
+    {% endblock %}
 {% endblock %}

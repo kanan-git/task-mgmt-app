@@ -1,37 +1,26 @@
 <!-- ALLOWING STATIC FILES -->
 {% load static %}
 
-<div style="
-border: 1px solid rgb(128,128,128); 
-width: 500px; 
-height: 350px; 
-border-radius: 5px; 
-padding: 10px;
-overflow: hidden; 
-display: flex; 
-flex-direction: column; 
-justify-content: space-around; 
-align-items: center; 
-background-color: rgb(230, 220, 220);"> <!-- . -->
-<!-- COLOR GRADING WITH CHATGPT LATER -->
+<div class="task_card">
+<!-- COLOR GRADING LATER -->
     <div style="
     width: 100%;
     display: flex; 
     justify-content: space-around;
     align-items: center;
-    "> <!-- . -->
+    ">
         <span>
             <b> ID: </b>
             {{ card.id }}
         </span>
 
         <span>
-            <a href="{% url 'update_task' card.id %}" style="outline: none; border: none; background-color: transparent; text-decoration: none;"> <!-- . -->
-                <img src="{% static 'img/icons/edit-svgrepo-com.svg' %}" alt="update_task" style="width: 30px; height: 30px;"> <!-- . -->
+            <a href="{% url 'update_task' card.id %}" style="outline: none; border: none; background-color: transparent; text-decoration: none;">
+                <img src="{% static 'img/icons/edit-svgrepo-com.svg' %}" alt="update_task" class="card_btn">
             </a>
 
-            <a href="{% url 'delete_task' card.id %}" style="outline: none; border: none; background-color: transparent; text-decoration: none;"> <!-- . -->
-                <img src="{% static 'img/icons/trash-bin-trash-svgrepo-com.svg' %}" alt="delete_task" style="width: 30px; height: 30px;"> <!-- . -->
+            <a href="{% url 'delete_task' card.id %}" style="outline: none; border: none; background-color: transparent; text-decoration: none;">
+                <img src="{% static 'img/icons/trash-bin-trash-svgrepo-com.svg' %}" alt="delete_task" class="card_btn">
             </a>
         </span>
     </div>

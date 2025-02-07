@@ -12,38 +12,38 @@
 <!-- CONTENT OF THE PAGE -->
 {% block content %}
     <div style="background-color: rgb(100,100,100); min-height: 850px;">
-        <h3>
+        <h3 class="form_headers">
             {% if current_language == 'english' %}
-                LOG HISTORY
+                LOG HISTORY ({{count}})
             {% elif current_language == 'azerbaijani' %}
-                FƏALİYYƏT TARİXİ
+                FƏALİYYƏT TARİXİ ({{count}})
             {% elif current_language == 'turkish' %}
-                FAALİYET GEÇMİŞİ
+                FAALİYET GEÇMİŞİ ({{count}})
             {% elif current_language == 'russian' %}
-                ИСТОРИЯ ЖУРНАЛА
+                ИСТОРИЯ ЖУРНАЛА ({{count}})
             {% else %}
-                LOG HISTORY
+                LOG HISTORY ({{count}})
             {% endif %}
         </h3>
 
         <br>
 
-        <div>
-            <table>
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <table class="list_view_table">
                 <tr>
-                    <th> № </th>
-                    <th> {% if current_language == 'english' %} Category {% elif current_language == 'azerbaijani' %} Kateqoriya {% elif current_language == 'turkish' %} Kategori {% elif current_language == 'russian' %} Категория {% else %} Category {% endif %} </th> <!-- Create, Update, Delete, Error, Authentication -->
-                    <th> {% if current_language == 'english' %} Event {% elif current_language == 'azerbaijani' %} Hadisə {% elif current_language == 'turkish' %} Aktivite {% elif current_language == 'russian' %} Событие {% else %} Event {% endif %} </th>
-                    <th> {% if current_language == 'english' %} Date & Time {% elif current_language == 'azerbaijani' %} Gün & Saat {% elif current_language == 'turkish' %} Tarih & Saat {% elif current_language == 'russian' %} Дата и Время {% else %} Date & Time {% endif %} </th>
+                    <th class="table_cell"> № </th>
+                    <th class="table_cell"> {% if current_language == 'english' %} Category {% elif current_language == 'azerbaijani' %} Kateqoriya {% elif current_language == 'turkish' %} Kategori {% elif current_language == 'russian' %} Категория {% else %} Category {% endif %} </th> <!-- Create, Update, Delete, Error, Authentication -->
+                    <th class="table_cell"> {% if current_language == 'english' %} Event {% elif current_language == 'azerbaijani' %} Hadisə {% elif current_language == 'turkish' %} Aktivite {% elif current_language == 'russian' %} Событие {% else %} Event {% endif %} </th>
+                    <th class="table_cell"> {% if current_language == 'english' %} Date & Time {% elif current_language == 'azerbaijani' %} Gün & Saat {% elif current_language == 'turkish' %} Tarih & Saat {% elif current_language == 'russian' %} Дата и Время {% else %} Date & Time {% endif %} </th>
                 </tr>
 
                 {% if log %}
                     {% for row in log %}
                         <tr id={{row.id}}>
-                            <td> {{ row.id }}  </td>
-                            <td> {{ row.category }}  </td>
-                            <td> {{ row.event }}  </td>
-                            <td> {{ row.datentime }}  </td>
+                            <td class="table_cell"> {{ row.id }}  </td>
+                            <td class="table_cell"> {{ row.category }}  </td>
+                            <td class="table_cell"> {{ row.event }}  </td>
+                            <td class="table_cell"> {{ row.datentime }}  </td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -76,4 +76,9 @@
             </nav>
         </div>
     </div>
+
+    <!-- CUSTOM JS SCRIPTS FOR SOME EVENTS -->
+    {% block javascript_scripts %}
+        <script src="{% static 'js/log.js' %}"></script>
+    {% endblock %}
 {% endblock %}

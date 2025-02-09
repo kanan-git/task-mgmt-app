@@ -74,7 +74,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=16)
     def __str__(self):
-        return self.id, self.name
+        return f'{self.id} {self.name}'
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categories'

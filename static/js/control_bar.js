@@ -72,7 +72,8 @@ function SearchForTasks() {
     var current_url = new URL(window.location.href)
     current_url.searchParams.set('search', search_input_value)
     window.history.pushState({}, '', current_url)
-    window.relaod()
+    // window.relaod()
+    location.reload()
 }
 
 

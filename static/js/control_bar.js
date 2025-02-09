@@ -45,14 +45,24 @@ CustomOnLoadEvent()
 function ToggleFilterPanel() {
     current_style_value = document.getElementById('filter_panel').style.display
     if(current_style_value == `block`) {
-        document.getElementById('filter_panel').style.display = `none`
-        document.getElementById('filter_panel').style.visibility = `hidden`
+        document.getElementById('filter_panel').style.transform = `translateX(-100%)`
         document.getElementById('filter_panel').style.opacity = `0%`
+        document.getElementById('filter_panel').style.visibility = `hidden`
+        setTimeout(
+            () => {
+                document.getElementById('filter_panel').style.display = `none`
+            }, 200
+        )
     }
     else if(current_style_value == `none`) {
         document.getElementById('filter_panel').style.display = `block`
-        document.getElementById('filter_panel').style.visibility = `visible`
-        document.getElementById('filter_panel').style.opacity = `100%`
+        setTimeout(
+            () => {
+                document.getElementById('filter_panel').style.visibility = `visible`
+                document.getElementById('filter_panel').style.transform = `translateX(0%)`
+                document.getElementById('filter_panel').style.opacity = `100%`
+            }, 200
+        )
     }
 }
 

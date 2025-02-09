@@ -6,8 +6,9 @@
 style="
 display: none;
 visibility: hidden;
-transition: 150ms ease-in-out;
+transform: translateX(-100%);
 opacity: 0%;
+transition: 150ms ease-in-out;
 padding: 20px;
 border: 1px solid rgb(128,128,128);
 background-color: rgb(250, 240, 240);
@@ -15,6 +16,8 @@ max-width: 25%;
 " 
 id="filter_panel"
 > <!-- display: none block -->  <!-- style="display: none;" -->
+    {% csrf_token %}
+
     <div>
         <h3>
             {% if current_language == 'english' %}
@@ -49,7 +52,7 @@ id="filter_panel"
         </b>
         <br>
 
-        <input type="radio" name="filter_status" id="filter_stat_all">
+        <input type="radio" name="filt_stat" id="filter_stat_all" value="all" {% if filt_stat == 'all' %}checked{% endif %}>
         <label for="filter_stat_all">
             {% if current_language == 'english' %}
                 All
@@ -64,7 +67,7 @@ id="filter_panel"
             {% endif %}
         </label>
         
-        <input type="radio" name="filter_status" id="filter_stat_inc">
+        <input type="radio" name="filt_stat" id="filter_stat_inc" value="incomplete" {% if filt_stat == 'incomplete' %}checked{% endif %}>
         <label for="filter_stat_inc">
             {% if current_language == 'english' %}
                 Incomplete
@@ -79,7 +82,7 @@ id="filter_panel"
             {% endif %}
         </label>
         
-        <input type="radio" name="filter_status" id="filter_stat_wip">
+        <input type="radio" name="filt_stat" id="filter_stat_wip" value="wip" {% if filt_stat == 'wip' %}checked{% endif %}>
         <label for="filter_stat_wip">
             {% if current_language == 'english' %}
                 Work In Progress
@@ -94,7 +97,7 @@ id="filter_panel"
             {% endif %}
         </label>
         
-        <input type="radio" name="filter_status" id="filter_stat_don">
+        <input type="radio" name="filt_stat" id="filter_stat_don" value="done" {% if filt_stat == 'done' %}checked{% endif %}>
         <label for="filter_stat_don">
             {% if current_language == 'english' %}
                 Done
@@ -128,67 +131,67 @@ id="filter_panel"
         </b>
         <br>
         
-        <input type="checkbox" name="filter_categ" id="filter_categ_personal">
+        <input type="checkbox" name="filt_categ" id="filter_categ_personal" value="Personal" {% if 'Personal' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_personal"> Personal </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_work">
-        <label for="filter_categ_work"> Work / PRO </label>
+        <input type="checkbox" name="filt_categ" id="filter_categ_work" value="Work/PRO" {% if 'Work/PRO' in filt_categ %}checked{% endif %}>
+        <label for="filter_categ_work"> Work/PRO </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_home">
+        <input type="checkbox" name="filt_categ" id="filter_categ_home" value="Home" {% if 'Home' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_home"> Home </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_urgent">
+        <input type="checkbox" name="filt_categ" id="filter_categ_urgent" value="Urgent" {% if 'Urgent' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_urgent"> Urgent </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_study">
-        <label for="filter_categ_study"> Study / School </label>
+        <input type="checkbox" name="filt_categ" id="filter_categ_study" value="Study/School" {% if 'Study/School' in filt_categ %}checked{% endif %}>
+        <label for="filter_categ_study"> Study/School </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_health">
-        <label for="filter_categ_health"> Health & Sport </label>
+        <input type="checkbox" name="filt_categ" id="filter_categ_health" value="Health/Sport" {% if 'Health/Sport' in filt_categ %}checked{% endif %}>
+        <label for="filter_categ_health"> Health/Sport </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_shopping">
+        <input type="checkbox" name="filt_categ" id="filter_categ_shopping" value="Shopping" {% if 'Shopping' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_shopping"> Shopping </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_finance">
+        <input type="checkbox" name="filt_categ" id="filter_categ_finance" value="Finance" {% if 'Finance' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_finance"> Finance </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_travel">
+        <input type="checkbox" name="filt_categ" id="filter_categ_travel" value="Travel" {% if 'Travel' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_travel"> Travel </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_social">
+        <input type="checkbox" name="filt_categ" id="filter_categ_social" value="Social/Events" {% if 'Social/Events' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_social"> Social/Events </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_maintenance">
+        <input type="checkbox" name="filt_categ" id="filter_categ_maintenance" value="Maintenance" {% if 'Maintenance' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_maintenance"> Maintenance </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_ltg">
-        <label for="filter_categ_ltg"> Long Term Goals </label>
+        <input type="checkbox" name="filt_categ" id="filter_categ_ltg" value="LongTermGoals" {% if 'LongTermGoals' in filt_categ %}checked{% endif %}>
+        <label for="filter_categ_ltg"> LongTermGoals </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_misc">
+        <input type="checkbox" name="filt_categ" id="filter_categ_misc" value="Miscellaneous" {% if 'Miscellaneous' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_misc"> Miscellaneous </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_team">
+        <input type="checkbox" name="filt_categ" id="filter_categ_team" value="Team" {% if 'Team' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_team"> Team </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_creative">
+        <input type="checkbox" name="filt_categ" id="filter_categ_creative" value="Creative" {% if 'Creative' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_creative"> Creative </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_learning">
-        <label for="filter_categ_learning"> Learning & DEV </label>
+        <input type="checkbox" name="filt_categ" id="filter_categ_learning" value="Learning/DEV" {% if 'Learning/DEV' in filt_categ %}checked{% endif %}>
+        <label for="filter_categ_learning"> Learning/DEV </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_family">
+        <input type="checkbox" name="filt_categ" id="filter_categ_family" value="Family" {% if 'Family' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_family"> Family </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_tech">
-        <label for="filter_categ_tech"> Technology / IT </label>
+        <input type="checkbox" name="filt_categ" id="filter_categ_tech" value="Technology/IT" {% if 'Technology/IT' in filt_categ %}checked{% endif %}>
+        <label for="filter_categ_tech"> Technology/IT </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_volunteer">
+        <input type="checkbox" name="filt_categ" id="filter_categ_volunteer" value="Volunteer" {% if 'Volunteer' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_volunteer"> Volunteer </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_projects">
+        <input type="checkbox" name="filt_categ" id="filter_categ_projects" value="Projects" {% if 'Projects' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_projects"> Projects </label>
 
-        <input type="checkbox" name="filter_categ" id="filter_categ_unset">
+        <input type="checkbox" name="filt_categ" id="filter_categ_unset" value="Unset" {% if 'Unset' in filt_categ %}checked{% endif %}>
         <label for="filter_categ_unset"> Unset </label>
     </div>
 
@@ -209,9 +212,9 @@ id="filter_panel"
             {% endif %}
         </b>
         <br>
-        From: ←→ 1 <input id="filter_priority_min" type="range" min="1" max="10" step="1" value="1"> 10
+        From: ←→ 1 <input id="filter_priority_min" name="filt_pp_min" type="range" min="1" max="10" step="1" value="1"> 10
         <br>
-        To: ←→ 1 <input id="filter_priority_max" type="range" min="1" max="10" step="1" value="10"> 10
+        To: ←→ 1 <input id="filter_priority_max" name="filt_pp_max" type="range" min="1" max="10" step="1" value="10"> 10
     </div>
 
     <br>
@@ -232,19 +235,27 @@ id="filter_panel"
         </b>
         <br>
 
-        <input type="radio" name="filter_type" id="filter_type_all" checked>
+        <input type="radio" name="filt_type" id="filter_type_all" value="all" {% if filt_type == 'all' %}checked{% endif %}>
         <label for="filter_type_all" style="text-transform: capitalize;"> all </label>
 
-        <input type="radio" name="filter_type" id="filter_type_mil">
+        <input type="radio" name="filt_type" id="filter_type_mil" value="milestone" {% if filt_type == 'milestone' %}checked{% endif %}>
         <label for="filter_type_mil" style="text-transform: capitalize;"> milestone </label>
 
-        <input type="radio" name="filter_type" id="filter_type_ins">
+        <input type="radio" name="filt_type" id="filter_type_ins" value="instant" {% if filt_type == 'instant' %}checked{% endif %}>
         <label for="filter_type_ins" style="text-transform: capitalize;"> instant </label>
     </div>
 
     <br>
     
     <div>
-        <input style="background-color: rgb(255, 255, 255); border: 1px solid rgb(128,128,128);" type="submit" value="Filter"> <!-- DEPENDS ON WILL FILTER BE AS A FORM OR REALTIME SYSTEM -->
+        <input style="
+        background-color: transparent; 
+        padding: 5px 10px; 
+        color: rgb(0,0,0);
+        border: 1px solid rgb(0,0,0);
+        border-radius: 6px;
+        " type="submit" value="Filter" onclick="filter_form()">
     </div>
+
+    <script src="{% static 'js/filter.js' %}"></script>
 </aside>

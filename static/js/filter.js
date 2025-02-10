@@ -2,20 +2,19 @@ function onLoadFilter() {
     try {
         const currentUrl = new URL(window.location.href)
         if(currentUrl.searchParams.get('filt_priority')) {
-            document.getElementById('filter_priority_min').value = 1
-            document.getElementById('filter_priority_max').value = 10
-        } else {
             var filterParameterfromUrl = currentUrl.searchParams.get('filt_priority')
             var filtParamList = filterParameterfromUrl.split(',')
             var filter_by_prioritypoint_min = Number(filtParamList[0])
             var filter_by_prioritypoint_max = Number(filtParamList[1])
             document.getElementById('filter_priority_min').value = filter_by_prioritypoint_min
             document.getElementById('filter_priority_max').value = filter_by_prioritypoint_max
+        } else {
+            document.getElementById('filter_priority_min').value = 1
+            document.getElementById('filter_priority_max').value = 10
         }
+        // console.log('Working', filtParamList)
     } catch (error) {
-        console.log(
-            error
-        )
+        console.log(error)
     }
 }
 onLoadFilter()
@@ -29,7 +28,7 @@ function filter_form() {
     var filter_by_categList = []
     var filter_by_prioritypoint_min = parseInt(document.getElementById('filter_priority_min').value)
     var filter_by_prioritypoint_max = parseInt(document.getElementById('filter_priority_max').value)
-    var filter_by_ppList = [filter_by_prioritypoint_min,filter_by_prioritypoint_max]
+    var filter_by_ppList = `${filter_by_prioritypoint_min},${filter_by_prioritypoint_max}` // [filter_by_prioritypoint_min,filter_by_prioritypoint_max]
     var filter_by_type = document.getElementsByName('filt_type')
 
     for(i=0; i<filter_by_status.length; i++) {

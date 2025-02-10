@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 from django.db.models import Q
+from datetime import datetime
 
 # INSTALLED LIBRARIES
 from rest_framework import status
@@ -39,28 +40,10 @@ def tasks_list(request):
     sorting_direction = request.GET.get('direction') or 'ascending'
     sorting_type = request.GET.get('sortby') or 'updated_time'
     searched_string = request.GET.get('search') or ''
-    # filtStat = request.GET.get('filt_stat') or 'all'
-    # filtCateg = request.GET.get('filt_categ') or '' # None 4 Unset
-    # filtPriority = request.GET.get('filt_priority') or [1,10]
-    # filtType = request.GET.get('filt_type') or 'all'
     filtStat = request.GET.get('filt_stat') or 'all'
-    filtCateg = request.GET.get('filt_categ') or '' # [], '', None 4 Unset
-    filtPriority = request.GET.get('filt_priority') or [1,10]
+    filtCateg = request.GET.get('filt_categ') or ''
+    filtPriority = request.GET.get('filt_priority') or '1,10'
     filtType = request.GET.get('filt_type') or 'all'
-    
-    # #===== TEXTS OF ID PARAMETERS =====#
-    # listOfCategories = {
-    #         1: 'Personal', 2: 'Work/PRO', 3: 'Home', 4: 'Urgent', 5: 'Study/School', 6: 'Health/Sport', 
-    #         7: 'Shopping', 8: 'Finance', 9: 'Travel', 10: 'Social/Events', 11: 'Maintenance', 12: 'LongTermGoals', 
-    #         13: 'Miscellaneous', 14: 'Team', 15: 'Creative', 16: 'Learning/DEV', 17: 'Family', 18: 'Technology/IT', 
-    #         19: 'Volunteer', 20: 'Projects', 0: 'Unset'
-    # }
-    # listOfTypes = {
-    #     1: 'instant', 2: 'milestone'
-    # }
-    # listOfStatus = {
-    #     1: 'incomplete', 2: 'wip', 3: 'done'
-    # }
 
     #===== GET USER'S TASKS =====#
     if count_of_tasks == 0:
@@ -69,16 +52,6 @@ def tasks_list(request):
         pages = [1]
         tasks_of_page = []
     else:
-        # searched_string | ?
-        # filtPriority | +
-
-        # tasks = tasks.filter(priority_level__gte=7) # filter priority min
-        # tasks = tasks.filter(priority_level__lte=9) # filter priority max
-        # tasks = tasks.filter(todo__contains='at') # search
-
-        # priority_level
-        # todo
-
         #===== FILTER BY DIRECTION =====#
         if sorting_direction == 'ascending':
             tasksSrc = User.objects.get(id=request.user.id).tasks.all().order_by(sorting_type)
@@ -97,8 +70,6 @@ def tasks_list(request):
                     wip_tasks.append(tasks[i].id)
                 elif tasks[i].progression_start == 0 and tasks[i].progression_start != tasks[i].progression_end:
                     ic_tasks.append(tasks[i].id)
-                # elif tasks[i].progression_start == 0 and tasks[i].progression_start == tasks[i].progression_end:
-                #     done_tasks.append(tasks[i].id)
                 elif tasks[i].progression_start == tasks[i].progression_end:
                     done_tasks.append(tasks[i].id)
                 else:
@@ -109,6 +80,8 @@ def tasks_list(request):
                         ...
                     except Exception as Error:
                         print(Error)
+                if tasks[i].todo_status == 3:
+                    done_tasks.append(tasks[i].id)
             all_of_tasks = ic_tasks + wip_tasks + done_tasks
         elif filtType == 'milestone':
             ic_tasks = []
@@ -116,14 +89,11 @@ def tasks_list(request):
             done_tasks = []
             all_of_tasks = []
             tasks = tasksSrc.filter(type_of_task_id=2)
-            # tasks = tasksSrc
             for i in range(0, len(tasks)):
                 if tasks[i].progression_start > 0 and tasks[i].progression_start < tasks[i].progression_end:
                     wip_tasks.append(tasks[i].id)
                 elif tasks[i].progression_start == 0 and tasks[i].progression_start != tasks[i].progression_end:
                     ic_tasks.append(tasks[i].id)
-                # elif tasks[i].progression_start == 0 and tasks[i].progression_start == tasks[i].progression_end:
-                #     done_tasks.append(tasks[i].id)
                 elif tasks[i].progression_start == tasks[i].progression_end:
                     done_tasks.append(tasks[i].id)
                 else:
@@ -134,6 +104,8 @@ def tasks_list(request):
                         ...
                     except Exception as Error:
                         print(Error)
+                if tasks[i].todo_status == 3:
+                    done_tasks.append(tasks[i].id)
             all_of_tasks = ic_tasks + wip_tasks + done_tasks
         elif filtType == 'instant':
             ic_tasks = []
@@ -148,15 +120,16 @@ def tasks_list(request):
                     wip_tasks.append(tasks[i].id)
                 elif tasks[i].todo_status == 3:
                     done_tasks.append(tasks[i].id)
-            all_of_tasks = ic_tasks + wip_tasks + done_tasks
-
-        #===== FILTER BY PRIORITY =====#
-        # ...
-
-        #===== FILTER BY SEARCH =====#
-        # if searched_string:
-        #     tasksSearched = tasks.filter(todo__contains=searched_string)
-        # tasksSearched = tasks.filter(todo__contains=searched_string)
+                else:
+                    ic_tasks = []
+                    wip_tasks = []
+                    done_tasks = []
+                    try:
+                        ...
+                    except Exception as Error:
+                        print(Error)
+                if tasks[i].progression_start == tasks[i].progression_end:
+                    done_tasks.append(tasks[i].id)
 
         #===== FILTER BY CATEGORIES =====#
         listOfCategories = {
@@ -187,40 +160,33 @@ def tasks_list(request):
             for i in range(1, len(listOfCategories)+1):
                 if filtCategParams[index] == listOfCategories[i]:
                     listFilts.append(i)
+        #===== FILTER BY STATUS & SEARCH & PRIORITY =====#
+        priorityList = filtPriority.split(',')
+        priorityMin = int(priorityList[0])
+        priorityMax = int(priorityList[1])
+        if priorityMin > priorityMax:
+            # swap minimum and maximum values
+            x = priorityMin
+            priorityMin = priorityMax
+            priorityMax = x
         if listFilts:
-            # tasks = tasks.filter(id__in={instance.id for instance in tasksSrc})
-            # tasks = tasks.filter(category_of_task__in=listFilts, todo__contains=searched_string)
-            # fixed_tasks_list = []
-            # for i in range(0, len(tasks)):
-            #     if tasks[i] not in fixed_tasks_list:
-            #         # print(tasks[i])
-            #         fixed_tasks_list.append(tasks[i])
-            # tasks = fixed_tasks_list
-
-            #===== FILTER BY STATUS =====#
             if filtStat == 'all':
-                tasks = tasks.filter(id__in=all_of_tasks, todo__contains=searched_string, category_of_task__in=listFilts)
+                tasks = tasks.filter(id__in=all_of_tasks, todo__contains=searched_string, category_of_task__in=listFilts, priority_level__gte=priorityMin, priority_level__lte=priorityMax).distinct()
             elif filtStat == 'incomplete':
-                tasks = tasks.filter(id__in=ic_tasks, todo__contains=searched_string, category_of_task__in=listFilts)
+                tasks = tasks.filter(id__in=ic_tasks, todo__contains=searched_string, category_of_task__in=listFilts, priority_level__gte=priorityMin, priority_level__lte=priorityMax).distinct()
             elif filtStat == 'wip':
-                tasks = tasks.filter(id__in=wip_tasks, todo__contains=searched_string, category_of_task__in=listFilts)
+                tasks = tasks.filter(id__in=wip_tasks, todo__contains=searched_string, category_of_task__in=listFilts, priority_level__gte=priorityMin, priority_level__lte=priorityMax).distinct()
             elif filtStat == 'done':
-                tasks = tasks.filter(id__in=done_tasks, todo__contains=searched_string, category_of_task__in=listFilts)
-
-            # tasksWithCategories = tasks.filter(category_of_task__in=listFilts)
-            # tasks = Q(tasksFiltered) | Q(tasksWithCategories)
+                tasks = tasks.filter(id__in=done_tasks, todo__contains=searched_string, category_of_task__in=listFilts, priority_level__gte=priorityMin, priority_level__lte=priorityMax).distinct()
         else:
-            # if filtType == 'instant':
             if filtStat == 'all':
-                tasks = tasks.filter(id__in=all_of_tasks, todo__contains=searched_string)
+                tasks = tasks.filter(id__in=all_of_tasks, todo__contains=searched_string, priority_level__gte=priorityMin, priority_level__lte=priorityMax)
             elif filtStat == 'incomplete':
-                tasks = tasks.filter(id__in=ic_tasks, todo__contains=searched_string)
+                tasks = tasks.filter(id__in=ic_tasks, todo__contains=searched_string, priority_level__gte=priorityMin, priority_level__lte=priorityMax)
             elif filtStat == 'wip':
-                tasks = tasks.filter(id__in=wip_tasks, todo__contains=searched_string)
+                tasks = tasks.filter(id__in=wip_tasks, todo__contains=searched_string, priority_level__gte=priorityMin, priority_level__lte=priorityMax)
             elif filtStat == 'done':
-                tasks = tasks.filter(id__in=done_tasks, todo__contains=searched_string)
-            # tasks = tasks.filter(todo__contains=searched_string
-        # print(tasks, type(tasks))
+                tasks = tasks.filter(id__in=done_tasks, todo__contains=searched_string, priority_level__gte=priorityMin, priority_level__lte=priorityMax)
 
         #===== COUNTING HOW MANY PAGE WILL BE THERE =====#
         last_page = len(tasks) // 9
@@ -261,10 +227,30 @@ def tasks_list(request):
         
     #===== AUTHENTICATED OR GUEST =====#
     auth_stat = request.user.is_authenticated
-    if request.user.is_authenticated and request.user.first_name or request.user.is_authenticated and request.user.last_name:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+    if request.user.is_authenticated:
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
+
+    # CLEAR ALL OF COMPLETED MILESTONE AND INSTANT TASKS
+    if request.POST.get('clear_completed'):
+        if count_of_tasks:
+            if done_tasks:
+                for i in done_tasks:
+                    for task in tasks:
+                        if task.id == i:
+                            print(task)
+                            log_history(request.user, 'delete', f'Task #{task.id} permanently deleted.')
+                            task.delete()
+                messages.success(request, 'All completed tasks removed.')
+                return redirect('tasks_list')
+            else:
+                messages.info(request, 'There is no completed task yet.')
+        else:
+            messages.info(request, 'There is no tasks to clear.')
 
     #===== SENDING REQUIRED INFORMATION TO THE HOMEPAGE =====#
     context = {
@@ -300,11 +286,106 @@ def tasks_list(request):
 def dashboard(request):
     # GET URL PARAMETERS OR DEFAULT
     current_language = request.GET.get('lang') or 'english'
+    
+    """
+        • Task completed, for each month at #thisYear: 0 → evvel, log a status elave etmek lazimdir, completed tasklari tanimaq ucun
+        • Tasks created at #thisYear: 0
+        • Task deleted at #thisYear: 0
+
+        • Max Consecutively Login: 0
+        • Max Activity in a Day: 0
+        • Total Activity (Auth/Create/Delete): 0
+    """
+
+    # TOTAL COUNT OF ELEMENTS
+    if request.user.is_authenticated:
+        count_of_tasks = User.objects.get(id=request.user.id).tasks.all().count
+        count_of_events = LogHistory.objects.filter(user=request.user).count()
+    else:
+        count_of_tasks = 0
+        count_of_events = 0
+    
+    # RESOURCES
+    current_year = datetime.now().year
+    tasksSrc = User.objects.get(id=request.user.id).tasks.all()
+    tasks = tasksSrc.filter(added_time__month=2, added_time__year=2025)
+
+    # z = tasks[0].added_time
+    # print(type(z), z.year)
+    # x = str(tasks[0].added_time).split(' ')
+    # y = x[0].split('-')
+    # print(y)
+    # print(datetime.now().year, datetime.now().month)
+    # if(z.year == datetime.now().year):
+    #     print('working')
+
+    # TASKS WITH PRIORITY LEVEL & STATUS
+    priority1TasksCount = 0
+    priority2TasksCount = 0
+    priority3TasksCount = 0
+    priority4TasksCount = 0
+    priority5TasksCount = 0
+    priority6TasksCount = 0
+    priority7TasksCount = 0
+    priority8TasksCount = 0
+    priority9TasksCount = 0
+    priority10TasksCount = 0
+    IncompleteTasks = 0
+    WIPTasks = 0
+    CompletedTasks = 0
+    for task in tasksSrc:
+        if task.priority_level == 1:
+            priority1TasksCount += 1
+        elif task.priority_level == 2:
+            priority2TasksCount += 1
+        elif task.priority_level == 3:
+            priority3TasksCount += 1
+        elif task.priority_level == 4:
+            priority4TasksCount += 1
+        elif task.priority_level == 5:
+            priority5TasksCount += 1
+        elif task.priority_level == 6:
+            priority6TasksCount += 1
+        elif task.priority_level == 7:
+            priority7TasksCount += 1
+        elif task.priority_level == 8:
+            priority8TasksCount += 1
+        elif task.priority_level == 9:
+            priority9TasksCount += 1
+        elif task.priority_level == 10:
+            priority10TasksCount += 1
+
+        if task.todo_status == 1:
+            IncompleteTasks += 1
+        elif task.todo_status == 2:
+            WIPTasks += 1
+        elif task.todo_status == 3:
+            CompletedTasks += 1
+    priorities = {
+        'p1': priority1TasksCount,
+        'p2': priority2TasksCount,
+        'p3': priority3TasksCount,
+        'p4': priority4TasksCount,
+        'p5': priority5TasksCount,
+        'p6': priority6TasksCount,
+        'p7': priority7TasksCount,
+        'p8': priority8TasksCount,
+        'p9': priority9TasksCount,
+        'p10': priority10TasksCount
+    }
+    statusList = {
+        'incomplete': IncompleteTasks,
+        'wip': WIPTasks,
+        'done': CompletedTasks
+    }
 
     # AUTHENTICATED OR GUEST
     auth_stat = request.user.is_authenticated
     if request.user.is_authenticated:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
 
@@ -325,6 +406,10 @@ def dashboard(request):
         'current_language': current_language,
 
         # 'form': form,
+
+        'priorities': priorities,
+        'statusList': statusList,
+        'current_year': current_year,
 
         'is_nav': True,
     }
@@ -347,7 +432,10 @@ def log(request):
     auth_stat = request.user.is_authenticated
     log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
     if request.user.is_authenticated:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
 
@@ -408,8 +496,14 @@ def log(request):
 def create_task(request):
     auth_stat = request.user.is_authenticated
 
+    # AUTHENTICATED OR GUEST
+    auth_stat = request.user.is_authenticated
+    log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
     if request.user.is_authenticated:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
 
@@ -445,8 +539,14 @@ def create_task(request):
 def update_task(request, pk):
     auth_stat = request.user.is_authenticated
 
+    # AUTHENTICATED OR GUEST
+    auth_stat = request.user.is_authenticated
+    log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
     if request.user.is_authenticated:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
 
@@ -495,8 +595,12 @@ def about(request):
 
     # AUTHENTICATED OR GUEST
     auth_stat = request.user.is_authenticated
+    log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
     if request.user.is_authenticated:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
 
@@ -519,8 +623,12 @@ def contact(request):
 
     # AUTHENTICATED OR GUEST
     auth_stat = request.user.is_authenticated
+    log_of_user = LogHistory.objects.filter(user=request.user).order_by('-datentime')
     if request.user.is_authenticated:
-        nickname = f'{request.user.first_name} {request.user.last_name}'
+        if request.user.first_name or request.user.last_name:
+            nickname = f'{request.user.first_name} {request.user.last_name}'
+        else:
+            nickname = 'Anonymous'
     else:
         nickname = 'Guest'
 

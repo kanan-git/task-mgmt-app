@@ -57,19 +57,22 @@
                         {% endif %}
                     </h2>
 
-                    <button class="clear_btn" onmouseenter="this.classList.add('clear_btn_fx')" onmouseleave="this.classList.remove('clear_btn_fx')">
-                        {% if current_language == 'english' %}
-                            Clear
-                        {% elif current_language == 'azerbaijani' %}
-                            Təmizlə
-                        {% elif current_language == 'turkish' %}
-                            Temizle
-                        {% elif current_language == 'russian' %}
-                            Прозрачный
-                        {% else %}
-                            Clear
-                        {% endif %}
-                    </button>
+                    <form method="post" class="clear_btn" onmouseenter="this.classList.add('clear_btn_fx')" onmouseleave="this.classList.remove('clear_btn_fx')">
+                        {% csrf_token %}
+                        <button class="clear_btn" name="clear_completed" value=True style="width: 100%; height: 100%; border: none; outline: none; margin: 0;">
+                            {% if current_language == 'english' %}
+                                Clear
+                            {% elif current_language == 'azerbaijani' %}
+                                Təmizlə
+                            {% elif current_language == 'turkish' %}
+                                Temizle
+                            {% elif current_language == 'russian' %}
+                                Прозрачный
+                            {% else %}
+                                Clear
+                            {% endif %}
+                        </button>
+                    </form>
                 </div>
 
                 <div class="task_container"> <!-- . -->
@@ -146,31 +149,29 @@
                                             <td class="table_cell">
                                                 <a href="{% url 'update_task' card.id %}">
                                                     {% if current_language == 'english' %}
-                                                        Empty
+                                                        Update
                                                     {% elif current_language == 'azerbaijani' %}
-                                                        Boş
+                                                        Yenilə
                                                     {% elif current_language == 'turkish' %}
-                                                        Boş
+                                                        Güncelle
                                                     {% elif current_language == 'russian' %}
-                                                        Пустой
+                                                        Обновить
                                                     {% else %}
-                                                        Empty
+                                                        Update
                                                     {% endif %}
-                                                    Update
                                                 </a>
                                                 <a href="{% url 'delete_task' card.id %}">
                                                     {% if current_language == 'english' %}
-                                                        Empty
+                                                        Delete
                                                     {% elif current_language == 'azerbaijani' %}
-                                                        Boş
+                                                        Sil
                                                     {% elif current_language == 'turkish' %}
-                                                        Boş
+                                                        Sil
                                                     {% elif current_language == 'russian' %}
-                                                        Пустой
+                                                        Удалить
                                                     {% else %}
-                                                        Empty
+                                                        Delete
                                                     {% endif %}
-                                                    Delete
                                                 </a>
                                             </td>
                                             <td class="table_cell">

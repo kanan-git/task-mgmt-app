@@ -74,6 +74,7 @@
                 <div id="chart1" class="scatter_two_axes"></div>
                 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
                 <script>
+                    document.addEventListener('DOMContentLoaded', () => {})
                     var trace1 = {
                         x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                         y: [10, 20, 30, 40, 50, 1, 55 , 5, 6, 100, 0, 5],
@@ -138,43 +139,55 @@
                 </div>
                 <script src="https://d3js.org/d3.v7.min.js"></script>
                 <script>
-                    const data1 = [10, 20, 30]
-                    const width = 320
-                    const height = 320
-                    const radius = Math.min(width, height)/2
-                    const innerRad = radius/2
+                    document.addEventListener('DOMContentLoaded', () => {
+                        var value1 = Number(document.getElementById('incomplete').textContent)
+                        var value2 = Number(document.getElementById('wip').textContent)
+                        var value3 = Number(document.getElementById('done').textContent)
 
-                    // data1.forEach(
-                    //     (element, index) => {
-                    //         document.getElementById(`no${index+1}`).innerHTML = `<span class="colorbx" id="colorbx_1"></span> <span> NO${index+1} (${data1[index]}%) </span>`
-                    //     }
-                    // )
+                        var sum = value1 + value2 + value3
+                        var percentage1 = Math.round((value1/sum)*100)
+                        var percentage2 = Math.round((value2/sum)*100)
+                        var percentage3 = Math.round((value3/sum)*100)
 
-                    var infoText1 = document.getElementById('no1').innerHTML = `<span class="colorbx" id="colorbx_1"></span> <span> NO1 (${data1[0]}%) </span>`
-                    var infoText2 = document.getElementById('no2').innerHTML = `<span class="colorbx" id="colorbx_2"></span> <span> NO2 (${data1[1]}%) </span>`
-                    var infoText3 = document.getElementById('no3').innerHTML = `<span class="colorbx" id="colorbx_3"></span> <span> NO3 (${data1[2]}%) </span>`
+                        const data1 = [value1, value2, value3]
+                        const width = 320
+                        const height = 320
+                        const radius = Math.min(width, height)/2
+                        const innerRad = radius/2
 
-                    var color = d3.scaleOrdinal(d3.schemeCategory10)
+                        // data1.forEach(
+                        //     (element, index) => {
+                        //         document.getElementById(`no${index+1}`).innerHTML = `<span class="colorbx" id="colorbx_1"></span> <span> NO${index+1} (${data1[index]}%) </span>`
+                        //     }
+                        // )
+    
+                        var infoText1 = document.getElementById('no1').innerHTML = `<span class="colorbx" id="colorbx_1"></span> <span> Incomplete (${percentage1}%) </span>`
+                        var infoText2 = document.getElementById('no2').innerHTML = `<span class="colorbx" id="colorbx_2"></span> <span> Work In Progress (${percentage2}%) </span>`
+                        var infoText3 = document.getElementById('no3').innerHTML = `<span class="colorbx" id="colorbx_3"></span> <span> Done (${percentage3}%) </span>`
+                        
+                        var color = d3.scaleOrdinal(d3.schemeCategory10)
+    
+                        var pie = d3.pie()
+                        var arc = d3.arc().innerRadius(innerRad).outerRadius(radius)
+    
+                        var svg = d3.select('#chart2')
+                            .append('g')
+                            .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')')
+    
+                        var pieData = pie(data1)
+                        
+                        svg.selectAll('path')
+                            .data(pieData)
+                            .enter().append('path')
+                            .attr('d', arc)
+                            .attr('fill', function(d, i) {
+                                document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
+                                document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
+                                document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
+                                return color(i)
+                            })
+                    })
 
-                    var pie = d3.pie()
-                    var arc = d3.arc().innerRadius(innerRad).outerRadius(radius)
-
-                    var svg = d3.select('#chart2')
-                        .append('g')
-                        .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')')
-
-                    var pieData = pie(data1)
-                    
-                    svg.selectAll('path')
-                        .data(pieData)
-                        .enter().append('path')
-                        .attr('d', arc)
-                        .attr('fill', function(d, i) {
-                            document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
-                            document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
-                            document.getElementById(`colorbx_${i+1}`).style.backgroundColor = color(i)
-                            return color(i)
-                        })
                 </script>
                 <style>
                     .display_flex_cc {
@@ -210,6 +223,7 @@
                 <div id="chart3" style="width: 400px; height: 420px;" class="histogram"></div>
                 <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js"></script>
                 <script>
+                    document.addEventListener('DOMContentLoaded', () => {})
                     var chart = echarts.init(document.getElementById('chart3'))
                     var option = {
                         // title: {
@@ -268,30 +282,30 @@
                 <!-- CARD BLOCK 1 AXES -->
                 <div class="dash_cards">
                     {% if current_language == 'english' %}
-                        <p> • Task completed, for each month at #thisYear: 0 </p>
+                        <p> • Task completed, for each month at {{current_year}}: 0 </p>
                         <hr>
-                        <p> • Tasks created at #thisYear: 0 </p>
-                        <p> • Task deleted at #thisYear: 0 </p>
+                        <p> • Tasks created at {{current_year}}: 0 </p>
+                        <p> • Task deleted at {{current_year}}: 0 </p>
                     {% elif current_language == 'azerbaijani' %}
-                        <p> Tapşırıq tamamlandı, bu #ildə hər ay üçün: 0 </p>
+                        <p> Tapşırıq tamamlandı, bu {{current_year}} hər ay üçün: 0 </p>
                         <hr>
-                        <p> Tapşırıq #buildə yaradılmışdır: 0 </p>
-                        <p> Tapşırıq #buildə silindi: 0 </p>
+                        <p> Tapşırıq {{current_year}} yaradılmışdır: 0 </p>
+                        <p> Tapşırıq {{current_year}} silindi: 0 </p>
                     {% elif current_language == 'turkish' %}
-                        <p> Görev tamamlandı, her ay için #thisYear: 0 </p>
+                        <p> Görev tamamlandı, her ay için {{current_year}}: 0 </p>
                         <hr>
-                        <p> #thisYear'da görev oluşturuldu: 0 </p>
-                        <p> #thisYear'da görev silindi: 0 </p>
+                        <p> {{current_year}}'da görev oluşturuldu: 0 </p>
+                        <p> {{current_year}}'da görev silindi: 0 </p>
                     {% elif current_language == 'russian' %}
-                        <p> Задача выполнена, для каждого месяца в #thisYear: 0 </p>
+                        <p> Задача выполнена, для каждого месяца в {{current_year}}: 0 </p>
                         <hr>
-                        <p> • Задача создана в #thisYear: 0 </p>
-                        <p> • Задача удалена в #thisYear: 0 </p>
+                        <p> • Задача создана в {{current_year}}: 0 </p>
+                        <p> • Задача удалена в {{current_year}}: 0 </p>
                     {% else %}
-                        <p> • Task completed, for each month at #thisYear: 0 </p>
+                        <p> • Task completed, for each month at {{current_year}}: 0 </p>
                         <hr>
-                        <p> • Tasks created at #thisYear: 0 </p>
-                        <p> • Task deleted at #thisYear: 0 </p>
+                        <p> • Tasks created at {{current_year}}: 0 </p>
+                        <p> • Task deleted at {{current_year}}: 0 </p>
                     {% endif %}
                     
                 </div>
@@ -299,20 +313,20 @@
                 <!-- CARD BLOCK 2 PIE -->
                 <div class="dash_cards">
                     {% if current_language == 'english' %}
-                        <p> • Incomplete Tasks: 0 </p> <!--- (milestone 0 daxil) -->
-                        <p> • WIP Tasks: 0 </p> <!--- (milesone 0-x-max daxil) -->
-                        <p> • Completed Tasks: 0 </p> <!--- (milestone done daxil) -->
+                        <p> • Incomplete Tasks: <span id="incomplete">{{statusList.incomplete}}</span> </p> <!--- (milestone 0 daxil) -->
+                        <p> • WIP Tasks: <span id="wip">{{statusList.wip}}</span> </p> <!--- (milesone 0-x-max daxil) -->
+                        <p> • Completed Tasks: <span id="done">{{statusList.done}}</span> </p> <!--- (milestone done daxil) -->
                         <hr>
-                        <p> • Priority 1 Tasks Count: 0 </p> <!-- (log a gore tam melumatlari hesabla) -->
-                        <p> • Priority 2 Tasks Count: 0 </p>
-                        <p> • Priority 3 Tasks Count: 0 </p>
-                        <p> • Priority 4 Tasks Count: 0 </p>
-                        <p> • Priority 5 Tasks Count: 0 </p>
-                        <p> • Priority 6 Tasks Count: 0 </p>
-                        <p> • Priority 7 Tasks Count: 0 </p>
-                        <p> • Priority 8 Tasks Count: 0 </p>
-                        <p> • Priority 9 Tasks Count: 0 </p>
-                        <p> • Priority 10 Tasks Count: 0 </p>
+                        <p> • Priority 1 Tasks Count: {{priorities.p1}} </p> <!-- (log a gore tam melumatlari hesabla) -->
+                        <p> • Priority 2 Tasks Count: {{priorities.p2}} </p>
+                        <p> • Priority 3 Tasks Count: {{priorities.p3}} </p>
+                        <p> • Priority 4 Tasks Count: {{priorities.p4}} </p>
+                        <p> • Priority 5 Tasks Count: {{priorities.p5}} </p>
+                        <p> • Priority 6 Tasks Count: {{priorities.p6}} </p>
+                        <p> • Priority 7 Tasks Count: {{priorities.p7}} </p>
+                        <p> • Priority 8 Tasks Count: {{priorities.p8}} </p>
+                        <p> • Priority 9 Tasks Count: {{priorities.p9}} </p>
+                        <p> • Priority 10 Tasks Count: {{priorities.p10}} </p>
                     {% elif current_language == 'azerbaijani' %}
                         <p> • Natamam Tapşırıqlar: 0 </p>
                         <p> • WIP Tapşırıqlar: 0 </p>
